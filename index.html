@@ -5,151 +5,208 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serralheria do Gil | Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
     <style>
-        :root {
-            --bg: #050505;
-            --gold: #d4af37;
-            --gold-light: #f1d592;
-            --purple: #6a0dad;
-            --card-bg: #121212;
-            --text: #ffffff;
+        :root { --gold: #d4af37; --purple: #6a0dad; --glass: rgba(20, 20, 20, 0.6); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        /* Fundo Animado "Cinema" */
+        body {
+            background: #000; color: #fff; min-height: 100vh; overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #1a0524 0%, #000 100%);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--bg); color: var(--text); overflow-x: hidden; }
+        .cinematic-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 50% -20%, rgba(106, 13, 173, 0.15), transparent 70%);
+            animation: pulseBg 10s infinite alternate;
+        }
 
-        /* Login Screen */
+        /* Tela de Login */
         #login-screen {
-            position: fixed; inset: 0; z-index: 9999;
-            background: radial-gradient(circle at top right, #1a1a1a, #000);
-            display: flex; justify-content: center; align-items: center;
+            position: fixed; inset: 0; z-index: 9999; display: flex; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); transition: opacity 0.8s ease;
         }
         .login-card {
-            background: var(--card-bg); border: 1px solid var(--gold);
-            padding: 40px 30px; border-radius: 28px; text-align: center;
-            width: 90%; max-width: 380px; box-shadow: 0 0 40px rgba(212, 175, 55, 0.15);
+            background: rgba(30, 30, 30, 0.4); border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 40px; border-radius: 30px; text-align: center; width: 90%; max-width: 350px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(212, 175, 55, 0.05);
+            transform: translateY(0); animation: floatCard 6s ease-in-out infinite;
         }
 
-        /* App Layout */
-        header {
-            position: fixed; top: 0; width: 100%; height: 70px;
-            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(15px);
-            display: none; justify-content: space-between; align-items: center;
-            padding: 0 25px; border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000;
-        }
-        .container { 
-            max-width: 500px; margin: 0 auto; padding: 100px 20px 50px; 
-            display: none; flex-direction: column; gap: 15px;
-        }
-
-        /* Buttons Style Video */
+        /* Botões Estilo Premium */
         .btn-link {
-            background: var(--card-bg); border: 1px solid #222;
-            padding: 18px 22px; border-radius: 18px; display: flex;
-            align-items: center; text-decoration: none; color: white;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            opacity: 0; transform: translateY(20px);
+            position: relative; background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.08); padding: 18px 24px; border-radius: 20px;
+            display: flex; align-items: center; text-decoration: none; color: white;
+            margin-bottom: 16px; overflow: hidden; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            opacity: 0; transform: translateY(50px) scale(0.9);
+        }
+        .btn-link::before { /* Efeito de brilho ao passar o mouse */
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
         }
         .btn-link:hover {
-            border-color: var(--gold); transform: scale(1.05);
-            background: #1a1a1a; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border-color: var(--gold); transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(212, 175, 55, 0.2);
         }
-        .btn-link i { font-size: 1.5rem; margin-right: 20px; width: 35px; text-align: center; }
-        .btn-link span { font-weight: 400; font-size: 1.05rem; flex-grow: 1; }
-        .btn-link .arrow { font-size: 0.8rem; opacity: 0.3; }
+        .btn-link:hover::before { left: 100%; }
+        .btn-link:active { transform: scale(0.98); }
 
-        /* Floating Elements */
-        .wa-float {
-            position: fixed; bottom: 30px; right: 30px; background: #25d366;
-            width: 65px; height: 65px; border-radius: 50%; display: none;
-            justify-content: center; align-items: center; font-size: 32px;
-            color: white; box-shadow: 0 10px 30px rgba(37,211,102,0.4);
-            animation: pulse 2s infinite; z-index: 2000;
-        }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.7); } 70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
-        .fade-in { animation: fadeInAnim 0.6s forwards; }
-        @keyframes fadeInAnim { to { opacity: 1; transform: translateY(0); } }
+        /* Animações Keyframes */
+        @keyframes pulseBg { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+        @keyframes floatCard { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes enterItem { to { opacity: 1; transform: translateY(0) scale(1); } }
+        
+        .container { max-width: 500px; margin: 0 auto; padding: 100px 20px 50px; display: none; }
+        header { position: fixed; top: 0; width: 100%; padding: 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        
+        /* Loading Spinner no Botão */
+        .loader { width: 18px; height: 18px; border: 2px solid #000; border-bottom-color: transparent; border-radius: 50%; display: inline-block; animation: rotation 1s linear infinite; margin-right: 10px; }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
+    <div class="cinematic-bg"></div>
+
     <div id="login-screen">
         <div class="login-card">
-            <h1 style="color:var(--gold); font-weight:600; margin-bottom:5px;">Serralheria do Gil</h1>
-            <p style="color:#666; font-size:0.9rem; margin-bottom:35px;">Acesse para ver orçamentos e rotas</p>
-            <button onclick="login()" style="background:#fff; border:none; width:100%; padding:16px; border-radius:14px; display:flex; align-items:center; justify-content:center; gap:12px; cursor:pointer; font-weight:600; transition: 0.3s;">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> Entrar com Google
+            <h1 style="color:var(--gold); font-weight:600; font-size: 1.8rem; letter-spacing: 1px; margin-bottom:5px; text-transform: uppercase;">Serralheria do Gil</h1>
+            <div style="width: 50px; height: 2px; background: var(--gold); margin: 0 auto 20px;"></div>
+            <p style="color:#aaa; font-size:0.9rem; margin-bottom:35px;">Portal exclusivo para clientes</p>
+            
+            <button id="btn-login" onclick="handleLogin()" style="background:#fff; border:none; width:100%; padding:16px; border-radius: 16px; display:flex; align-items:center; justify-content:center; gap:12px; cursor:pointer; font-weight:600; font-size: 1rem; transition: 0.3s; color: black;">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="22"> 
+                <span id="btn-text">Entrar com Google</span>
             </button>
+            <p id="error-msg" style="color: #ff4444; font-size: 0.8rem; margin-top: 15px; display: none;"></p>
         </div>
     </div>
 
     <header id="app-header">
-        <div style="width:40px"></div>
-        <h2 style="color:var(--gold); font-size:1.1rem; letter-spacing:1px;">SERRALHERIA DO GIL</h2>
+        <div style="width:30px"></div>
+        <h2 style="color:var(--gold); font-size:1rem; letter-spacing:2px; text-transform:uppercase;">Serralheria do Gil</h2>
         <button onclick="logout()" style="background:none; border:none; color:var(--purple); cursor:pointer;"><i class="fas fa-sign-out-alt fa-lg"></i></button>
     </header>
 
     <div class="container" id="app-content">
         <a href="https://wa.me/5541995008252?text=Olá,%20gostaria%20de%20um%20orçamento." class="btn-link">
-            <i class="fab fa-whatsapp" style="color:#25d366"></i><span>WhatsApp</span><i class="fas fa-chevron-right arrow"></i>
+            <i class="fab fa-whatsapp" style="color:#25d366; font-size: 1.6rem; width: 40px;"></i>
+            <span style="flex-grow:1;">WhatsApp</span>
+            <i class="fas fa-chevron-right" style="opacity:0.3; font-size:0.8rem;"></i>
         </a>
         <a href="https://www.instagram.com/serralheriadogil/" class="btn-link">
-            <i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram</span><i class="fas fa-chevron-right arrow"></i>
+            <i class="fab fa-instagram" style="color:#e4405f; font-size: 1.6rem; width: 40px;"></i>
+            <span style="flex-grow:1;">Instagram</span>
+            <i class="fas fa-chevron-right" style="opacity:0.3; font-size:0.8rem;"></i>
         </a>
         <a href="https://www.facebook.com/profile.php?id=100063654495574" class="btn-link">
-            <i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span><i class="fas fa-chevron-right arrow"></i>
+            <i class="fab fa-facebook" style="color:#1877f2; font-size: 1.6rem; width: 40px;"></i>
+            <span style="flex-grow:1;">Facebook</span>
+            <i class="fas fa-chevron-right" style="opacity:0.3; font-size:0.8rem;"></i>
         </a>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=-25.503451,-49.124578" class="btn-link">
-            <i class="fas fa-map-marker-alt" style="color:#ea4335"></i><span>Ver Rota</span><i class="fas fa-chevron-right arrow"></i>
+        <a href="https://www.google.com/maps/search/?api=1&query=Rua+Tubarão,+203,+São+José+dos+Pinhais+-+PR" target="_blank" class="btn-link">
+            <i class="fas fa-map-marker-alt" style="color:#ea4335; font-size: 1.6rem; width: 40px;"></i>
+            <span style="flex-grow:1;">Ver Rota</span>
+            <i class="fas fa-chevron-right" style="opacity:0.3; font-size:0.8rem;"></i>
         </a>
         <a href="mailto:Serralheriadogil@hotmail.com" class="btn-link">
-            <i class="fas fa-envelope" style="color:var(--gold)"></i><span>E-mail</span><i class="fas fa-chevron-right arrow"></i>
+            <i class="fas fa-envelope" style="color:var(--gold); font-size: 1.6rem; width: 40px;"></i>
+            <span style="flex-grow:1;">E-mail</span>
+            <i class="fas fa-chevron-right" style="opacity:0.3; font-size:0.8rem;"></i>
         </a>
         <div class="btn-link" style="cursor:pointer" onclick="toggleComments()">
-            <i class="fas fa-star" style="color:#ffcc00"></i><span>Avaliações</span><i class="fas fa-chevron-down arrow"></i>
+            <i class="fas fa-star" style="color:#ffcc00; font-size: 1.6rem; width: 40px;"></i>
+            <span style="flex-grow:1;">Avaliações</span>
+            <i class="fas fa-chevron-down" style="opacity:0.3; font-size:0.8rem;"></i>
         </div>
 
-        <div id="comment-section" style="display:none; margin-top:10px; padding:20px; background:#111; border-radius:20px; border:1px solid #222;">
-            <textarea id="comment-text" placeholder="Como foi sua experiência?" style="width:100%; height:80px; background:#000; color:#fff; border:1px solid #333; border-radius:12px; padding:12px; outline:none; margin-bottom:12px;"></textarea>
-            <button onclick="sendComment()" style="width:100%; padding:15px; background:var(--purple); color:white; border:none; border-radius:12px; font-weight:600; cursor:pointer;">Enviar Feedback</button>
-            <div id="comments-display" style="margin-top:20px;"></div>
+        <div id="comment-section" style="display:none; margin-top:10px; animation: enterItem 0.5s ease;">
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                <textarea id="comment-text" placeholder="Escreva sua experiência..." style="width:100%; height:100px; background:rgba(0,0,0,0.5); color:#fff; border:1px solid #333; border-radius:12px; padding:15px; outline:none; margin-bottom:15px; resize:none;"></textarea>
+                <button onclick="sendComment()" style="width:100%; padding:15px; background: linear-gradient(45deg, var(--purple), #4a0880); color:white; border:none; border-radius:12px; font-weight:600; cursor:pointer; box-shadow: 0 5px 15px rgba(106, 13, 173, 0.4);">Publicar Avaliação</button>
+            </div>
+            <div id="comments-display" style="margin-top:25px;"></div>
         </div>
     </div>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
+            authDomain: "serralheria-do-gil.firebaseapp.com",
+            projectId: "serralheria-do-gil",
+            storageBucket: "serralheria-do-gil.firebasestorage.app",
+            messagingSenderId: "267882427773",
+            appId: "1:267882427773:web:bf1689a6adda79f3334814"
+        };
 
-    <a href="https://wa.me/5541995008252" class="wa-float" id="wa-icon"><i class="fab fa-whatsapp"></i></a>
-        // Controle de Sessão Rígido
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const provider = new firebase.auth.GoogleAuthProvider();
+        // Monitoramento de Auth
         auth.onAuthStateChanged(user => {
             const loginUI = document.getElementById('login-screen');
             const contentUI = document.getElementById('app-content');
             const headerUI = document.getElementById('app-header');
-            const waUI = document.getElementById('wa-icon');
 
             if (user) {
-                loginUI.style.opacity = "0";
+                // Efeito de Saída Suave do Login
+                loginUI.style.opacity = '0';
+                loginUI.style.pointerEvents = 'none';
+                
                 setTimeout(() => {
                     loginUI.style.display = 'none';
                     contentUI.style.display = 'flex';
                     headerUI.style.display = 'flex';
-                    waUI.style.display = 'flex';
                     
-                    // Animação Cascata (Estilo Vídeo)
-                    document.querySelectorAll('.btn-link').forEach((btn, i) => {
-                        setTimeout(() => btn.classList.add('fade-in'), i * 120);
+                    // Animação Sequencial dos Botões (Cinema Style)
+                    const items = document.querySelectorAll('.btn-link');
+                    items.forEach((item, index) => {
+                        item.style.animation = `enterItem 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards ${index * 0.1}s`;
                     });
-                }, 400);
+                }, 500);
+                
                 loadComments();
             } else {
                 loginUI.style.display = 'flex';
-                loginUI.style.opacity = "1";
+                loginUI.style.opacity = '1';
+                loginUI.style.pointerEvents = 'all';
                 contentUI.style.display = 'none';
                 headerUI.style.display = 'none';
-                waUI.style.display = 'none';
+                resetLoginButton();
             }
         });
 
-        function login() { auth.signInWithPopup(provider).catch(e => console.log(e)); }
+        function handleLogin() {
+            const btnText = document.getElementById('btn-text');
+            const errorMsg = document.getElementById('error-msg');
+            
+            // Feedback Visual de Carregamento
+            btnText.innerHTML = '<span class="loader"></span> Entrando...';
+            errorMsg.style.display = 'none';
+
+            auth.signInWithPopup(provider)
+                .catch((error) => {
+                    console.error("Erro Login:", error);
+                    resetLoginButton();
+                    
+                    // Mostra erro na tela pro usuário saber o que houve
+                    errorMsg.innerText = "Erro: " + error.message;
+                    errorMsg.style.display = 'block';
+                    
+                    if(error.code === 'auth/unauthorized-domain') {
+                        alert("ERRO CRÍTICO: Domínio não autorizado no Firebase. Adicione este site lá!");
+                    }
+                });
+        }
+
+        function resetLoginButton() {
+            document.getElementById('btn-text').innerText = "Entrar com Google";
+        }
+
         function logout() { auth.signOut(); window.location.reload(); }
 
         function toggleComments() {
@@ -160,12 +217,15 @@
         async function sendComment() {
             const txt = document.getElementById('comment-text');
             if(!txt.value.trim()) return;
-            await db.collection("comments").add({
-                user: auth.currentUser.displayName,
-                text: txt.value,
-                date: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            txt.value = "";
+            
+            try {
+                await db.collection("comments").add({
+                    user: auth.currentUser.displayName,
+                    text: txt.value,
+                    date: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                txt.value = "";
+            } catch (e) { alert("Erro ao comentar: " + e.message); }
         }
 
         function loadComments() {
@@ -175,9 +235,9 @@
                 snap.forEach(doc => {
                     const d = doc.data();
                     box.innerHTML += `
-                        <div style="background:#000; padding:15px; border-radius:12px; margin-bottom:10px; border-left:2px solid var(--gold);">
-                            <strong style="color:var(--gold); font-size:0.8rem;">${d.user}</strong>
-                            <p style="font-size:0.9rem; color:#ccc; margin-top:4px;">${d.text}</p>
+                        <div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:15px; margin-bottom:12px; border-left:3px solid var(--gold); animation: enterItem 0.5s ease;">
+                            <strong style="color:var(--gold); font-size:0.85rem; display:block; margin-bottom:5px;">${d.user}</strong>
+                            <p style="font-size:0.95rem; color:#ddd; line-height:1.4;">${d.text}</p>
                         </div>`;
                 });
             });
