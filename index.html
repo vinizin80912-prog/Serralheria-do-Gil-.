@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serralheria do Gil | Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Serralheria do Gil | Premium Access</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,133 +11,105 @@
 
     <style>
         :root {
-            --bg-dark: #0a0a0a;
-            --card-bg: #141414;
+            --bg-dark: #000000;
+            --card-bg: #0d0d0d;
             --gold: #FFD700;
-            --border-color: #262626;
-            --text-gray: #a1a1aa;
+            --border-color: #1a1a1a;
+            --text-gray: #888;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             background-color: var(--bg-dark);
             color: #ffffff;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-y: auto; /* Scroll habilitado */
-            line-height: 1.6;
+            overflow-x: hidden;
         }
 
+        .hidden { display: none !important; }
+
+        /* TELA DE LOGIN ESTILO OVERLAY */
+        #login-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .login-card {
+            background: #080808;
+            border: 1px solid var(--border-color);
+            padding: 40px 25px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* BOTÃO GOOGLE PREMIUM */
+        .btn-google {
+            background: #ffffff;
+            color: #000;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 12px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: 0.3s;
+        }
+
+        /* CONTEÚDO PRINCIPAL COM SCROLL */
         .container {
             width: 100%;
-            max-width: 450px;
+            max-width: 480px;
             margin: 0 auto;
-            padding: 40px 20px 100px;
+            padding: 50px 20px 100px;
         }
 
-        /* HEADER ESTILO VÍDEO */
         .badge {
             display: inline-block;
             background: rgba(255, 215, 0, 0.1);
             color: var(--gold);
-            padding: 4px 12px;
+            padding: 5px 15px;
             border-radius: 50px;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 15px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-
-        header h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-        }
-
-        /* BOTÕES ESTILO LISTA (VÍDEO) */
-        .action-grid {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 40px;
-        }
-
-        .btn-main {
-            flex: 1;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 12px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: 0.3s;
-        }
-
-        .btn-main.primary {
-            background: var(--gold);
-            color: #000;
-            border: none;
-        }
-
-        /* LISTA DE SERVIÇOS */
-        .section-label {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: left;
         }
 
         .service-item {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 12px;
+            padding: 22px;
+            border-radius: 16px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             text-decoration: none;
             color: #fff;
-            transition: transform 0.2s;
         }
 
-        .service-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .service-icon {
-            color: var(--gold);
-            font-size: 1.2rem;
-            width: 25px;
-            text-align: center;
-        }
-
-        .service-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        /* BOTÃO SOCIAL (BORDA BRANCA SOLICITADA) */
         .btn-social-box {
             border: 4px solid #ffffff; /* Regra de Ouro */
             background: transparent;
             margin-top: 15px;
-            padding: 18px;
+            padding: 20px;
             border-radius: 15px;
             display: flex;
             align-items: center;
@@ -148,118 +120,109 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <span class="badge">Tradição e Segurança</span>
-            <h1>Serralheria do Gil</h1>
-            <p>Especialista em estruturas metálicas, portões e segurança para sua residência em Curitiba e Região.</p>
-            
-            <div class="action-grid">
-                <a href="https://wa.me/5541995008252" class="btn-main primary">
-                    <i class="fas fa-file-invoice-dollar"></i> Orçamento
-                </a>
-                <a href="#servicos" class="btn-main">
-                    <i class="fas fa-list"></i> Serviços
-                </a>
-            </div>
-            
-            <p style="font-size: 0.75rem; color: var(--gold)">
-                <i class="fas fa-map-marker-alt"></i> Curitiba - PR | São José dos Pinhais
+    <div id="login-screen">
+        <div class="login-card">
+            <i class="fas fa-user-shield fa-3x" style="color: var(--gold); margin-bottom: 20px;"></i>
+            <h2 style="font-weight: 800; letter-spacing: -1px;">Acesso Restrito</h2>
+            <p style="color: var(--text-gray); font-size: 0.85rem; margin-top: 10px;">
+                Faça login para ver orçamentos e serviços da Serralheria do Gil.
             </p>
+            <button id="btnLogin" class="btn-google">
+                <i class="fab fa-google"></i> Entrar com Google
+            </button>
+            <button id="btnBypass" style="background:transparent; border:none; color:#333; margin-top:20px; font-size:0.7rem;">
+                Modo Visitante
+            </button>
+        </div>
+    </div>
+
+    <div id="app-content" class="container hidden">
+        <header style="text-align: center; margin-bottom: 40px;">
+            <span class="badge">Tradição & Segurança</span>
+            <h1 style="font-size: 2rem; font-weight: 800;">Serralheria do Gil</h1>
+            <p style="color: var(--text-gray); margin-bottom: 20px;">Curitiba e São José dos Pinhais</p>
+            <a href="http://googleusercontent.com/maps.google.com/4" class="btn-google" style="width: auto; display: inline-flex; padding: 8px 20px; font-size: 0.8rem;">
+                <i class="fas fa-location-dot"></i> Ver no Mapa
+            </a>
         </header>
 
-        <main id="servicos">
-            <h2 class="section-label">Nossos Serviços</h2>
+        <section>
+            <h3 style="margin-bottom: 20px; font-weight: 800; color: var(--gold);">NOSSOS SERVIÇOS</h3>
             
             <a href="https://wa.me/5541995008252" class="service-item">
-                <div class="service-info">
-                    <i class="fas fa-gate service-icon"></i>
-                    <span class="service-name">Portões sob medida</span>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <i class="fas fa-gate" style="color:var(--gold)"></i>
+                    <span style="font-weight:700">Portões sob medida</span>
                 </div>
-                <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: #444;"></i>
+                <i class="fas fa-chevron-right" style="color:#333"></i>
             </a>
 
             <a href="https://wa.me/5541995008252" class="service-item">
-                <div class="service-info">
-                    <i class="fas fa-shield-alt service-icon"></i>
-                    <span class="service-name">Grades de Proteção</span>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <i class="fas fa-shield-alt" style="color:var(--gold)"></i>
+                    <span style="font-weight:700">Grades de Proteção</span>
                 </div>
-                <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: #444;"></i>
+                <i class="fas fa-chevron-right" style="color:#333"></i>
             </a>
 
             <a href="https://wa.me/5541995008252" class="service-item">
-                <div class="service-info">
-                    <i class="fas fa-warehouse service-icon"></i>
-                    <span class="service-name">Estruturas Metálicas</span>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <i class="fas fa-warehouse" style="color:var(--gold)"></i>
+                    <span style="font-weight:700">Estruturas Metálicas</span>
                 </div>
-                <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: #444;"></i>
+                <i class="fas fa-chevron-right" style="color:#333"></i>
             </a>
+        </section>
 
-            <a href="https://wa.me/5541995008252" class="service-item">
-                <div class="service-info">
-                    <i class="fas fa-fire service-icon"></i>
-                    <span class="service-name">Soldas e Reformas</span>
-                </div>
-                <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: #444;"></i>
-            </a>
-
-            <h2 class="section-label" style="margin-top: 40px;">Contato e Social</h2>
+        <section style="margin-top: 40px;">
+            <h3 style="margin-bottom: 20px; font-weight: 800;">CONTATO</h3>
             
             <a href="https://instagram.com/serralheriadogil" class="btn-social-box">
-                <i class="fab fa-instagram" style="margin-right: 15px;"></i> Instagram Oficial
-            </a>
-
-            <a href="https://facebook.com/serralheriadogil" class="btn-social-box">
-                <i class="fab fa-facebook-f" style="margin-right: 15px;"></i> Facebook
+                <i class="fab fa-instagram" style="margin-right: 15px; font-size: 1.2rem;"></i> Instagram
             </a>
 
             <a href="mailto:Serralheriadogil@hotmail.com" class="btn-social-box">
-                <i class="fas fa-envelope" style="margin-right: 15px;"></i> Serralheriadogil@hotmail.com
+                <i class="fas fa-envelope" style="margin-right: 15px; font-size: 1.2rem;"></i> Serralheriadogil@hotmail.com
             </a>
-        </main>
-                <footer style="margin-top: 60px; text-align: center; border-top: 1px solid var(--border-color); padding-top: 30px;">
-            <p style="color: #444; font-size: 0.7rem; font-weight: 800; letter-spacing: 2px;">
-                © 2026 SERRALHERIA DO GIL<br>DESENVOLVIDO PARA MOBILE
-            </p>
-        </footer>
-    </div>
+        </section>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    <script>
-        // Animação GSAP - Entrada Fluida
-        gsap.from("header", {
-            duration: 1.2,
-            y: 30,
-            opacity: 0,
-            ease: "power4.out"
-        });
+        // Chaves Obrigatórias do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
+            authDomain: "serralheria-do-gil.firebaseapp.com",
+            appId: "1:267882427773:web:bf1689a6adda79f3334814"
+        };
 
-        gsap.from(".service-item", {
-            duration: 0.8,
-            y: 20,
-            opacity: 0,
-            stagger: 0.1,
-            ease: "power3.out",
-            delay: 0.4
-        });
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
-        gsap.from(".btn-social-box", {
-            duration: 1,
-            scale: 0.95,
-            opacity: 0,
-            stagger: 0.1,
-            ease: "power2.out",
-            delay: 0.8
-        });
+        const loginScreen = document.getElementById('login-screen');
+        const appContent = document.getElementById('app-content');
 
-        // Efeito de clique suave
-        document.querySelectorAll('.service-item').forEach(item => {
-            item.addEventListener('mousedown', () => {
-                gsap.to(item, { scale: 0.98, duration: 0.1 });
+        function unlockApp() {
+            gsap.to(loginScreen, { 
+                opacity: 0, 
+                duration: 0.5, 
+                onComplete: () => {
+                    loginScreen.classList.add('hidden');
+                    appContent.classList.remove('hidden');
+                    // Animação de subida fluida (Estilo App)
+                    gsap.from(".service-item", {
+                        y: 40, opacity: 0, stagger: 0.1, duration: 0.8, ease: "power4.out"
+                    });
+                }
             });
-            item.addEventListener('mouseup', () => {
-                gsap.to(item, { scale: 1, duration: 0.1 });
-            });
-        });
+        }
+
+        document.getElementById('btnLogin').onclick = () => {
+            signInWithPopup(auth, provider).then(() => unlockApp()).catch(err => console.error(err));
+        };
+
+        document.getElementById('btnBypass').onclick = () => unlockApp();
     </script>
 </body>
 </html>
