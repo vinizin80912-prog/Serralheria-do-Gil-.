@@ -2,78 +2,58 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Serralheria do Gil | Oficial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serralheria do Gil</title>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&display=swap" rel="stylesheet">
 
     <style>
-        :root { --gold: #FFD700; --bg: #000000; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg); color: white; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background-color: #000; color: #fff; text-align: center; }
 
-        /* Botões com Contraste Real */
-        .btn-link {
-            display: flex; align-items: center; justify-content: center;
-            width: 90%; max-width: 400px; margin: 15px auto;
-            padding: 22px; border-radius: 18px;
-            text-decoration: none; font-weight: 900; text-transform: uppercase;
-            border: 2px solid rgba(255,255,255,0.2);
-            transition: 0.3s;
+        /* Botões com visibilidade garantida e cores vibrantes */
+        .btn-acao {
+            display: block; width: 90%; max-width: 400px; margin: 15px auto;
+            padding: 20px; border-radius: 15px; text-decoration: none;
+            font-weight: bold; font-size: 1.1rem; border: 2px solid #fff;
         }
+        .btn-ouro { background-color: #FFD700; color: #000; }
+        .btn-social { background-color: #1a1a1a; color: #fff; border: 1px solid #444; }
 
-        .btn-gold { background: var(--gold); color: #000; border: 2px solid #fff; }
-        .btn-social { background: #1a1a1a; color: #fff; border: 1px solid #333; }
-
-        .icon-social { margin-right: 15px; font-size: 1.5rem; }
-        
-        #login-overlay {
-            position: fixed; inset: 0; background: #000; z-index: 10000;
+        #login-screen {
+            position: fixed; inset: 0; background: #000; z-index: 1000;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
     </style>
 </head>
 <body>
 
-    <div id="login-overlay">
-        <h1 style="color:var(--gold); margin-bottom:30px; font-size:2rem;">GIL SERRALHERIA</h1>
-        <button onclick="login()" style="padding:20px 40px; border-radius:50px; background:#fff; font-weight:900; border:none; cursor:pointer; font-size:1.1rem; box-shadow: 0 0 20px rgba(255,255,255,0.3);">
-            <i class="fab fa-google"></i> ENTRAR COM GOOGLE
+    <div id="login-screen">
+        <h1 style="color:#FFD700; margin-bottom:20px;">GIL SERRALHERIA</h1>
+        <button onclick="login()" style="padding:15px 30px; border-radius:10px; font-weight:bold; cursor:pointer;">
+            ENTRAR COM GOOGLE
         </button>
     </div>
 
-    <div id="app-content" style="display:none;">
-        <header style="padding:25px; text-align:center; border-bottom:2px solid var(--gold);">
-            <span style="color:var(--gold); font-weight:900; letter-spacing:2px;">SERRALHERIA DO GIL</span>
-        </header>
+    <div id="main-content" style="display:none; padding-top: 20px;">
+        <h2 style="color:#FFD700;">ORÇAMENTOS</h2>
+        
+        <a href="https://wa.me/5541995008252" class="btn-acao btn-ouro">ORÇAMENTO GERAL</a>
+        <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Grade" class="btn-acao btn-ouro">ORÇAMENTO DE GRADE</a>
 
-        <div style="padding: 40px 10px;">
-            <a href="https://wa.me/5541995008252" class="btn-link btn-gold">
-                ORÇAMENTO GERAL
-            </a>
-
-            <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Grade" class="btn-link btn-gold">
-                ORÇAMENTO DE GRADE
-            </a>
-
-            <p style="text-align:center; margin: 40px 0 20px; color:var(--gold); font-weight:900;">NOSSAS REDES</p>
-
-            <a href="https://wa.me/5541995008252" class="btn-link btn-social">
-                <i class="fab fa-whatsapp icon-social" style="color:#25D366;"></i> WHATSAPP
-            </a>
-
-            <a href="https://www.instagram.com/serralheriadogil/" class="btn-link btn-social">
-                <i class="fab fa-instagram icon-social" style="color:#E1306C;"></i> INSTAGRAM
-            </a>
-
-            <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="btn-link btn-social">
-                <i class="fab fa-facebook-f icon-social" style="color:#1877F2;"></i> FACEBOOK
-            </a>
-        </div>
+        <h2 style="color:#FFD700; margin-top:30px;">REDES SOCIAIS</h2>
+        
+        <a href="https://wa.me/5541995008252" class="btn-acao btn-social">
+            <i class="fab fa-whatsapp" style="color:#25D366;"></i> WHATSAPP
+        </a>
+        <a href="https://www.instagram.com/serralheriadogil/" class="btn-acao btn-social">
+            <i class="fab fa-instagram" style="color:#E1306C;"></i> INSTAGRAM
+        </a>
+        <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="btn-acao btn-social">
+            <i class="fab fa-facebook-f" style="color:#1877F2;"></i> FACEBOOK
+        </a>
     </div>
 
     <script>
@@ -87,23 +67,17 @@
         };
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const provider = new firebase.auth.GoogleAuthProvider();
 
         auth.onAuthStateChanged(user => {
             if (user) {
-                // Remove o login e mostra o conteúdo instantaneamente
-                document.getElementById('login-overlay').style.display = 'none';
-                document.getElementById('app-content').style.display = 'block';
-                
-                // Animação leve só para não ficar seco
-                gsap.from(".btn-link", { y: 20, opacity: 0, stagger: 0.1, duration: 0.5 });
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
             }
         });
 
-        function login() { 
-            auth.signInWithPopup(provider).catch(error => {
-                alert("Erro no login: " + error.message);
-            }); 
+        function login() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).catch(err => alert("Erro: " + err.message));
         }
     </script>
 </body>
