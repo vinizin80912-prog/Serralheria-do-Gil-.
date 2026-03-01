@@ -3,194 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Serralheria do Gil | Premium</title>
+    <title>Serralheria do Gil | Absolute Premium</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary: #FFC107; /* Amarelo Ouro */
-            --accent: #FFD54F;
-            --bg-dark: #000000;
-            --glass: rgba(255, 255, 255, 0.1);
-            --card-bg: #1a1a1a; /* Cinza chumbo para dar contraste no preto */
+            --primary: #FFC107;
+            --bg: #000000;
+            --card-dark: #121212;
+            --glass: rgba(255, 255, 255, 0.05);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         
         body { 
-            background: var(--bg-dark); 
+            background: var(--bg); 
             color: white; 
             overflow-x: hidden;
-            min-height: 160vh; /* Para o scroll ser longo e as animações aparecerem */
+            min-height: 180vh; /* Espaço de sobra para o scroll animado */
         }
 
-        /* Login */
+        /* --- ANIMAÇÃO DE BRILHO (SHINE) --- */
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .btn-premium {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            padding: 22px;
+            border-radius: 22px;
+            margin-bottom: 18px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--card-dark);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* O efeito de luz passando no botão */
+        .btn-premium::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-25deg);
+            animation: shine 4s infinite;
+        }
+
+        .btn-premium:hover {
+            transform: scale(1.03) translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
+        }
+
+        .icon-box {
+            width: 55px; height: 55px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 18px; font-size: 1.5rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,193,7,0.1);
+            color: var(--primary);
+        }
+
+        /* Cores das Redes */
+        .btn-whatsapp { background: #075E54; border: none; }
+        .btn-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); border: none; }
+        .btn-facebook { background: #1877F2; border: none; }
+        .btn-gmail { background: #EA4335; border: none; }
+
+        .section-label {
+            text-align: center; color: var(--primary);
+            font-weight: 900; letter-spacing: 4px; font-size: 0.8rem;
+            margin: 80px 0 30px; text-transform: uppercase;
+        }
+
         #login-overlay {
             position: fixed; inset: 0; background: #000; z-index: 9999;
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* Header */
         header {
-            position: fixed; top: 0; width: 100%; height: 70px;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(15px);
+            position: fixed; top: 0; width: 100%; height: 80px;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
             display: flex; justify-content: center; align-items: center;
             z-index: 1000; border-bottom: 1px solid var(--glass);
-        }
-
-        .container { max-width: 450px; margin: 0 auto; padding: 100px 20px 50px; }
-
-        /* --- BOTÕES "ZICA" (CONTRASTE ALTO) --- */
-        
-        .btn-main {
-            background: linear-gradient(135deg, var(--primary), #FF8F00);
-            color: #000;
-            padding: 22px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            font-weight: 800;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 25px rgba(255, 193, 7, 0.3);
-            border: none;
-            transition: 0.3s;
-        }
-
-        .btn-service {
-            background: var(--card-bg);
-            border: 2px solid var(--glass);
-            padding: 20px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: white;
-            margin-bottom: 15px;
-            transition: 0.4s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-
-        .btn-service:hover, .btn-service:active {
-            border-color: var(--primary);
-            background: #252525;
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
-        }
-
-        .icon-box {
-            width: 50px; height: 50px; background: rgba(255,255,255,0.05);
-            border-radius: 15px; display: flex; align-items: center;
-            justify-content: center; margin-right: 15px; font-size: 1.4rem;
-            color: var(--primary); /* Ícones sempre em destaque */
-            border: 1px solid rgba(255,193,7,0.2);
-        }
-
-        /* Seção Redes Sociais - Botões Coloridos */
-        .social-card {
-            padding: 20px;
-            border-radius: 25px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: 0.3s;
-        }
-
-        .wa-btn { background: #25D366; color: #fff; border: none; }
-        .ig-btn { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); border: none; }
-        .fb-btn { background: #1877F2; border: none; }
-        .gm-btn { background: #EA4335; border: none; }
-
-        .section-title {
-            text-align: center; color: var(--primary);
-            text-transform: uppercase; letter-spacing: 3px;
-            font-size: 0.8rem; margin: 60px 0 30px; font-weight: 800;
         }
     </style>
 </head>
 <body>
     <div id="login-overlay">
-        <div style="background:#111; padding:40px; border-radius:30px; border:1px solid var(--primary); text-align:center; width:85%; max-width:350px;">
-            <h1 style="color:var(--primary); margin-bottom:20px;">Faça Login Para Continuar</h1>
-            <button onclick="login()" style="width:100%; padding:18px; border-radius:50px; border:none; background:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; gap:10px; cursor:pointer;">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> GOOGLE LOGIN
+        <div style="text-align:center; padding:50px; border-radius:40px; border:1px solid var(--primary); background:#0a0a0a; width:90%; max-width:380px;">
+            <h1 style="color:var(--primary); font-weight:900; margin-bottom:10px;">GIL SERRALHERIA</h1>
+            <p style="color:#555; font-size:0.8rem; margin-bottom:30px;">FAÇA LOGIN PARA CONTINUAR</p>
+            <button onclick="login()" style="width:100%; padding:20px; border-radius:50px; border:none; background:#fff; font-weight:900; display:flex; align-items:center; justify-content:center; gap:12px; cursor:pointer; box-shadow: 0 10px 20px rgba(255,255,255,0.1);">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="22"> LOGIN COM GOOGLE
             </button>
         </div>
     </div>
 
     <div id="app-content" style="display:none; opacity:0;">
         <header>
-            <span style="font-weight:800; letter-spacing:2px; color:var(--primary);">Serralheria do Gil</span>
+            <span style="font-weight:900; letter-spacing:3px; color:var(--primary);">SERRALHERIA DO GIL</span>
         </header>
 
-        <div class="container">
-            <div style="text-align:center; margin-bottom:50px;">
-                <h2 style="font-size:2.2rem; line-height:1.2; margin-bottom:15px;">Transformando Aço em <span style="color:var(--primary)">Arte e Segurança.</span></h2>
-                <p style="color:#777;">Toque em um dos botões abaixo para falar diretamente conosco.</p>
+        <div class="container" style="max-width:480px; margin:0 auto; padding:120px 20px 100px;">
+            <div id="hero" style="text-align:center; margin-bottom:60px;">
+                <h2 style="font-size:2.8rem; font-weight:900; line-height:1; margin-bottom:20px;">Força e <span style="color:var(--primary)">Arte</span> em Aço.</h2>
+                <p style="color:#888; font-size:1rem;">Escolha uma opção abaixo para um orçamento imediato.</p>
             </div>
 
-            <a href="https://wa.me/5541995008252?text=Olá!%20Gostaria%20de%20fazer%20um%20orçamento%20geral." class="btn-main reveal-item">
-                <div class="icon-box" style="background:rgba(0,0,0,0.2); border:none; color:#000;"><i class="fas fa-comment-dots"></i></div>
-                <div style="flex:1">ORÇAMENTO RÁPIDO</div>
-                <i class="fas fa-chevron-right"></i>
+            <a href="https://wa.me/5541995008252?text=Olá,%20gostaria%20de%20fazer%20um%20orçamento%20geral." class="btn-premium reveal-item" style="background:var(--primary); color:#000; border:none;">
+                <div class="icon-box" style="background:rgba(0,0,0,0.1); border:none; color:#000;"><i class="fas fa-hammer"></i></div>
+                <div style="flex:1"><b>ORÇAMENTO GERAL</b></div>
+                <i class="fas fa-arrow-right"></i>
             </a>
 
-            <div class="section-title reveal-item">Serviços Disponíveis</div>
-
-            <a href="https://wa.me/5541995008252?text=Olá!%20Quero%20um%20orçamento%20de%20Grade." class="btn-service reveal-item">
+            <a href="https://wa.me/5541995008252?text=Olá,%20gostaria%20de%20um%20orçamento%20de%20uma%20GRADE." class="btn-premium reveal-item">
                 <div class="icon-box"><i class="fas fa-shield-alt"></i></div>
-                <div style="flex:1">Grades de Proteção</div>
+                <div style="flex:1">Orçamento de Grade</div>
                 <i class="fas fa-chevron-right" style="opacity:0.3"></i>
             </a>
 
-            <a href="https://wa.me/5541995008252?text=Olá!%20Quero%20um%20orçamento%20de%20Portão." class="btn-service reveal-item">
+            <a href="https://wa.me/5541995008252?text=Olá,%20gostaria%20de%20um%20orçamento%20de%20um%20PORTÃO." class="btn-premium reveal-item">
                 <div class="icon-box"><i class="fas fa-door-open"></i></div>
-                <div style="flex:1">Portões Automáticos</div>
+                <div style="flex:1">Orçamento de Portão</div>
                 <i class="fas fa-chevron-right" style="opacity:0.3"></i>
             </a>
 
-            <a href="https://wa.me/5541995008252?text=Olá!%20Quero%20um%20orçamento%20de%20Estrutura." class="btn-service reveal-item">
-                <div class="icon-box"><i class="fas fa-warehouse"></i></div>
-                <div style="flex:1">Estruturas Metálicas</div>
-                <i class="fas fa-chevron-right" style="opacity:0.3"></i>
-            </a>
+            <div class="section-label reveal-item">Nossas Redes</div>
 
-            <div class="section-title reveal-item">Nossas Redes</div>
-
-            <div style="margin-bottom: 80px;">
-                <a href="https://wa.me/5541995008252" class="social-card wa-btn reveal-item">
-                    <div class="icon-box" style="background:rgba(255,255,255,0.2); color:#fff; border:none;"><i class="fab fa-whatsapp"></i></div>
-                    WhatsApp Oficial
+            <div style="margin-bottom: 100px;">
+                <a href="https://wa.me/5541995008252" target="_blank" class="btn-premium btn-whatsapp reveal-item">
+                    <div class="icon-box" style="background:rgba(255,255,255,0.1); color:#fff; border:none;"><i class="fab fa-whatsapp"></i></div>
+                    WhatsApp Profissional
                 </a>
 
-                <a href="https://www.instagram.com/serralheriadogil/" class="social-card ig-btn reveal-item">
-                    <div class="icon-box" style="background:rgba(255,255,255,0.2); color:#fff; border:none;"><i class="fab fa-instagram"></i></div>
-                    Instagram Oficial
+                <a href="https://www.instagram.com/serralheriadogil/" target="_blank" class="btn-premium btn-instagram reveal-item">
+                    <div class="icon-box" style="background:rgba(255,255,255,0.1); color:#fff; border:none;"><i class="fab fa-instagram"></i></div>
+                    Siga no Instagram
                 </a>
 
-                <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" class="social-card fb-btn reveal-item">
-                    <div class="icon-box" style="background:rgba(255,255,255,0.2); color:#fff; border:none;"><i class="fab fa-facebook-f"></i></div>
+                <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="btn-premium btn-facebook reveal-item">
+                    <div class="icon-box" style="background:rgba(255,255,255,0.1); color:#fff; border:none;"><i class="fab fa-facebook-f"></i></div>
                     Página no Facebook
                 </a>
 
-                <a href="mailto:Serralheriadogil@hotmail.com" class="social-card gm-btn reveal-item">
-                    <div class="icon-box" style="background:rgba(255,255,255,0.2); color:#fff; border:none;"><i class="fas fa-envelope"></i></div>
-                    E-mail (Gmail/Outlook)
+                <a href="mailto:Serralheriadogil@hotmail.com" class="btn-premium btn-gmail reveal-item">
+                    <div class="icon-box" style="background:rgba(255,255,255,0.1); color:#fff; border:none;"><i class="fas fa-envelope"></i></div>
+                    Mande um E-mail
+                </a>
+                
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Rua+Tubarão,+203,+São+José+dos+Pinhais0" target="_blank" class="btn-premium reveal-item">
+                    <div class="icon-box"><i class="fas fa-location-dot"></i></div>
+                    Localização (SJP)
                 </a>
             </div>
 
-            <footer style="text-align:center; color:#444; font-size:0.7rem; padding-bottom:30px;">
-                © 2026 Serralheria do Gil | SJP - PR
+            <footer style="text-align:center; color:#333; font-size:0.7rem; padding-bottom:50px; font-weight:800; text-transform:uppercase; letter-spacing:2px;">
+                © 2026 Serralheria do Gil
             </footer>
         </div>
     </div>
@@ -209,40 +194,47 @@
 
         auth.onAuthStateChanged(user => {
             if (user) {
-                gsap.to("#login-overlay", { y: -1000, duration: 1.2, ease: "expo.inOut", onComplete: () => {
-                    document.getElementById('login-overlay').style.display = 'none';
-                    document.getElementById('app-content').style.display = 'block';
-                    startAnims();
-                }});
+                // Animação de entrada épica
+                gsap.to("#login-overlay", { 
+                    opacity: 0, 
+                    scale: 1.5, 
+                    duration: 1, 
+                    ease: "power4.inOut", 
+                    onComplete: () => {
+                        document.getElementById('login-overlay').style.display = 'none';
+                        document.getElementById('app-content').style.display = 'block';
+                        startAnims();
+                    }
+                });
             }
         });
 
         function startAnims() {
-            // Fade do conteúdo
-            gsap.to("#app-content", { opacity: 1, duration: 1 });
+            gsap.to("#app-content", { opacity: 1, duration: 1.5 });
 
-            // Animação de montagem dos botões (Caindo e quicando)
+            // Os botões caem e quicam (Bounce)
             gsap.from(".reveal-item", {
                 y: 100,
                 opacity: 0,
-                duration: 1,
+                duration: 1.2,
                 stagger: 0.15,
-                ease: "back.out(1.7)"
+                ease: "back.out(2)"
             });
 
-            // ScrollReveal: Ativa conforme você rola a tela para baixo
+            // ScrollReveal para quando rolar pra baixo
             const sr = ScrollReveal({
-                distance: '60px',
-                duration: 1000,
+                distance: '100px',
+                duration: 1500,
+                delay: 200,
                 reset: false
             });
 
-            sr.reveal('.btn-service', { origin: 'left', interval: 200 });
-            sr.reveal('.social-card', { origin: 'bottom', interval: 200 });
+            sr.reveal('.section-label', { origin: 'bottom' });
+            sr.reveal('.btn-premium', { origin: 'left', interval: 150 });
         }
 
         function login() {
-            auth.signInWithPopup(provider).catch(alert);
+            auth.signInWithPopup(provider).catch(e => alert(e.message));
         }
     </script>
 </body>
