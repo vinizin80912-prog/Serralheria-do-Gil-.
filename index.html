@@ -10,22 +10,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Fundo preto absoluto sem transições */
-        body { background-color: #000 !important; color: #fff; text-align: center; margin: 0; padding: 0; }
+        /* Fundo preto absoluto sem transições de cor */
+        body { 
+            background-color: #000000 !important; 
+            color: #ffffff !important; 
+            margin: 0; 
+            padding: 0; 
+            text-align: center;
+        }
 
-        /* Botões com visibilidade 100% garantida */
+        /* Botões estáticos - sem efeitos de hover ou movimento */
         .btn-link {
-            display: block; width: 90%; max-width: 400px; margin: 15px auto;
-            padding: 22px; border-radius: 15px; text-decoration: none;
-            font-weight: 900; font-size: 1.2rem; border: 3px solid #fff !important;
-            opacity: 1 !important; visibility: visible !important;
+            display: block !important; 
+            width: 90%; 
+            max-width: 400px; 
+            margin: 15px auto;
+            padding: 25px; 
+            border-radius: 10px; 
+            text-decoration: none;
+            font-weight: 900; 
+            font-size: 1.3rem; 
+            border: 4px solid #ffffff !important;
+            /* Garante que o botão apareça na hora */
+            opacity: 1 !important; 
+            visibility: visible !important;
         }
         
-        /* Amarelo Ouro para Orçamentos */
-        .ouro { background-color: #FFD700 !important; color: #000 !important; }
-        
-        /* Redes Sociais com cores sólidas */
-        .social-btn { background-color: #222 !important; color: #fff !important; }
+        .ouro { background-color: #FFD700 !important; color: #000000 !important; }
+        .social { background-color: #222222 !important; color: #ffffff !important; }
 
         #login-overlay {
             position: fixed; inset: 0; background: #000; z-index: 9999;
@@ -37,24 +49,26 @@
 
     <div id="login-overlay">
         <h1 style="color:#FFD700; margin-bottom:30px;">GIL SERRALHERIA</h1>
-        <button onclick="login()" style="padding:20px 40px; border-radius:10px; font-weight:bold; cursor:pointer;">
+        <button onclick="login()" style="padding:20px 40px; border-radius:10px; font-weight:bold; cursor:pointer; font-size:1.2rem;">
             ENTRAR COM GOOGLE
         </button>
     </div>
 
-    <div id="app" style="display:none; padding-top: 20px;">
+    <div id="app" style="display:none; padding-top: 30px;">
         <h2 style="color:#FFD700; margin-bottom:20px;">ORÇAMENTOS</h2>
+        
         <a href="https://wa.me/5541995008252" class="btn-link ouro">ORÇAMENTO GERAL</a>
         <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Grade" class="btn-link ouro">ORÇAMENTO DE GRADE</a>
 
         <h2 style="color:#FFD700; margin: 40px 0 20px;">REDES SOCIAIS</h2>
-        <a href="https://wa.me/5541995008252" class="btn-link social-btn">
+        
+        <a href="https://wa.me/5541995008252" class="btn-link social">
             <i class="fab fa-whatsapp" style="color:#25D366;"></i> WHATSAPP
         </a>
-        <a href="https://www.instagram.com/serralheriadogil/" class="btn-link social-btn">
+        <a href="https://www.instagram.com/serralheriadogil/" class="btn-link social">
             <i class="fab fa-instagram" style="color:#E1306C;"></i> INSTAGRAM
         </a>
-        <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="btn-link social-btn">
+        <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="btn-link social">
             <i class="fab fa-facebook-f" style="color:#1877F2;"></i> FACEBOOK
         </a>
     </div>
@@ -72,7 +86,7 @@
 
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                // Troca de tela instantânea sem GSAP ou transições
+                // Comando seco para trocar a tela
                 document.getElementById('login-overlay').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
             }
@@ -80,7 +94,7 @@
 
         function login() {
             const provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider).catch(e => alert("Erro: " + e.message));
+            firebase.auth().signInWithPopup(provider).catch(e => alert("Erro no Login: " + e.message));
         }
     </script>
 </body>
