@@ -10,29 +10,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Estilo estático para máxima visibilidade */
+        /* Estilo estático para garantir visibilidade */
         body { background-color: #000000 !important; color: #ffffff !important; margin: 0; text-align: center; font-family: sans-serif; }
 
         .btn-link {
             display: flex !important; align-items: center; justify-content: center;
-            width: 90%; max-width: 400px; margin: 12px auto;
-            padding: 20px; border-radius: 10px; text-decoration: none;
-            font-weight: 900; font-size: 1.1rem; border: 3px solid #ffffff !important;
+            width: 92%; max-width: 400px; margin: 12px auto;
+            padding: 22px; border-radius: 12px; text-decoration: none;
+            font-weight: 900; font-size: 1.1rem; border: 4px solid #ffffff !important;
             opacity: 1 !important; visibility: visible !important;
         }
         
-        /* Cores sólidas para evitar botões escuros */
+        /* Destaque para serviços */
         .ouro { background-color: #FFD700 !important; color: #000000 !important; }
-        .social { background-color: #222222 !important; color: #ffffff !important; }
+        .social { background-color: #1a1a1a !important; color: #ffffff !important; }
 
-        .icon-btn { margin-right: 15px; font-size: 1.4rem; width: 25px; text-align: center; }
+        .icon-btn { margin-right: 15px; font-size: 1.5rem; width: 30px; text-align: center; }
 
         #login-overlay {
             position: fixed; inset: 0; background: #000; z-index: 9999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        h2 { color: #FFD700; margin: 30px 0 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 1.2rem; }
+        h2 { color: #FFD700; margin: 30px 0 15px; text-transform: uppercase; font-size: 1.3rem; }
     </style>
 </head>
 <body>
@@ -44,28 +44,30 @@
         </button>
     </div>
 
-    <div id="app" style="display:none; padding: 20px 0 50px;">
+    <div id="app" style="display:none; padding: 20px 0 60px;">
         <h1 style="color:#FFD700; font-size: 1.8rem; margin-bottom: 5px;">GIL SERRALHERIA</h1>
-        <p style="color: #888; margin-bottom: 25px;">Tradição e Segurança em Curitiba e SJP</p>
+        <p style="color: #bbb; margin-bottom: 25px;">Curitiba e São José dos Pinhais</p>
 
         <h2>Solicite seu Orçamento</h2>
+        
         <a href="https://wa.me/5541995008252?text=Orcamento%20Geral" class="btn-link ouro">
-            <i class="fas fa-tools icon-btn"></i> ORÇAMENTO GERAL
+            <i class="fas fa-hammer icon-btn"></i> ORÇAMENTO GERAL
         </a>
         <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Portão" class="btn-link ouro">
-            <i class="fas fa-door-open icon-btn"></i> PORTÕES ELETRÔNICOS
+            <i class="fas fa-door-open icon-btn"></i> PORTÃO ELETRÔNICO
         </a>
         <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Grade" class="btn-link ouro">
-            <i class="fas fa-shield-alt icon-btn"></i> GRADES DE SEGURANÇA
+            <i class="fas fa-shield-alt icon-btn"></i> GRADES E JANELAS
         </a>
         <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Corrimão" class="btn-link ouro">
             <i class="fas fa-grip-lines icon-btn"></i> CORRIMÃO E SACADAS
         </a>
         <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Cobertura" class="btn-link ouro">
-            <i class="fas fa-umbrella icon-btn"></i> COBERTURAS METÁLICAS
+            <i class="fas fa-tools icon-btn"></i> COBERTURAS
         </a>
 
-        <h2>Redes Sociais</h2>
+        <h2>Acompanhe o Gil</h2>
+        
         <a href="https://wa.me/5541995008252" class="btn-link social">
             <i class="fab fa-whatsapp icon-btn" style="color:#25D366;"></i> WHATSAPP
         </a>
@@ -76,12 +78,7 @@
             <i class="fab fa-facebook-f icon-btn" style="color:#1877F2;"></i> FACEBOOK
         </a>
 
-        <h2>Localização</h2>
-        <a href="https://maps.app.goo.gl/YourActualGoogleMapsLink" target="_blank" class="btn-link social">
-            <i class="fas fa-map-marker-alt icon-btn" style="color:#FF4444;"></i> VER NO MAPA
-        </a>
-
-        <footer style="margin-top: 40px; color: #444; font-size: 0.8rem;">
+        <footer style="margin-top: 50px; color: #555; font-size: 0.9rem;">
             © 2026 GIL SERRALHERIA
         </footer>
     </div>
@@ -99,6 +96,7 @@
 
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
+                /* Exibição instantânea sem animações que travam */
                 document.getElementById('login-overlay').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
             }
