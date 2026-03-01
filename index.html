@@ -33,7 +33,7 @@
             overflow-x: hidden;
         }
         
-        /* TELA DE LOGIN */
+        /* TELA DE LOGIN - AGORA OBRIGATÓRIA */
         #login-screen {
             position: fixed;
             top: 0;
@@ -106,7 +106,7 @@
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
         }
         
-        /* APP PRINCIPAL */
+        /* APP PRINCIPAL - COMEÇA ESCONDIDO */
         #main-app {
             display: none;
             opacity: 0;
@@ -270,7 +270,7 @@
     </style>
 </head>
 <body>
-    <!-- TELA DE LOGIN -->
+    <!-- TELA DE LOGIN - OBRIGATÓRIA -->
     <div id="login-screen">
         <div class="login-container">
             <i class="fas fa-hard-hat login-logo"></i>
@@ -283,7 +283,7 @@
         </div>
     </div>
 
-    <!-- APP PRINCIPAL -->
+    <!-- APP PRINCIPAL - SÓ APARECE DEPOIS DO LOGIN -->
     <div id="main-app">
         <!-- HEADER -->
         <header>
@@ -369,7 +369,7 @@
             </div>
         </section>
 
-        <!-- REDES SOCIAIS -->
+        <!-- REDES SOCIAIS - FACEBOOK ATUALIZADO -->
         <section class="redes-sociais">
             <h2 class="section-title">Acompanhe Nosso Trabalho</h2>
             
@@ -384,14 +384,14 @@
                     WhatsApp
                 </a>
                 
-                <a href="#" class="btn-rede btn-facebook" target="_blank">
+                <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" class="btn-rede btn-facebook" target="_blank">
                     <i class="fab fa-facebook-f"></i>
-                    Facebook (em breve)
+                    Facebook
                 </a>
             </div>
         </section>
 
-        <!-- MAPA E CONTATO -->
+        <!-- MAPA E CONTATO - EMAIL ATUALIZADO -->
         <section class="contato-section">
             <h2 class="section-title">Onde Estamos</h2>
             
@@ -406,51 +406,44 @@
             
             <div class="email-card">
                 <i class="fas fa-envelope"></i>
-                <p>gil.serralheria@gmail.com</p>
-                <a href="mailto:gil.serralheria@gmail.com" class="btn-email">
+                <p>Serralheriadogil@hotmail.com</p>
+                <a href="mailto:Serralheriadogil@hotmail.com" class="btn-email">
                     Enviar E-mail
                 </a>
             </div>
         </section>
 
-        <!-- DEPOIMENTOS -->
-        <section class="depoimentos">
-            <h2 class="section-title">O que dizem nossos clientes</h2>
+        <!-- SEÇÃO DE COMENTÁRIOS FUNCIONAL -->
+        <section class="comentarios-section">
+            <h2 class="section-title">Avaliações dos Clientes</h2>
             
-            <div class="depoimentos-grid" id="depoimentos-container">
-                <!-- Depoimentos serão carregados do Firebase -->
-                <div class="depoimento-card">
-                    <div class="estrelas">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+            <!-- Formulário para deixar comentário -->
+            <div class="comentario-form" id="comentario-form">
+                <h3>Deixe sua avaliação</h3>
+                <div class="estrelas-input">
+                    <span>Clique nas estrelas:</span>
+                    <div class="estrelas-select" id="estrelas-select">
+                        <i class="far fa-star" data-valor="1"></i>
+                        <i class="far fa-star" data-valor="2"></i>
+                        <i class="far fa-star" data-valor="3"></i>
+                        <i class="far fa-star" data-valor="4"></i>
+                        <i class="far fa-star" data-valor="5"></i>
                     </div>
-                    <p>"Trabalho impecável! Meu portão ficou perfeito e o atendimento foi excelente. Recomendo demais!"</p>
-                    <span class="cliente">- Carlos M.</span>
                 </div>
-                
-                <div class="depoimento-card">
-                    <div class="estrelas">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p>"Cobertura de vidro ficou maravilhosa. Profissionais competentes e pontuais. Nota 10!"</p>
-                    <span class="cliente">- Ana Paula R.</span>
-                </div>
+                <textarea id="comentario-texto" placeholder="Conte sua experiência com a Serralheria do Gil..." rows="4"></textarea>
+                <button class="btn-enviar-comentario" onclick="enviarComentario()">
+                    <i class="fas fa-paper-plane"></i>
+                    Publicar Avaliação
+                </button>
             </div>
             
-            <a href="https://wa.me/5541995008252?text=Olá! Gostaria de deixar meu depoimento sobre o trabalho de vocês" class="btn-avaliacao" target="_blank">
-                <i class="fas fa-star"></i>
-                DEIXAR AVALIAÇÃO
-            </a>
+            <!-- Lista de comentários -->
+            <div class="comentarios-lista" id="comentarios-lista">
+                <!-- Comentários serão carregados aqui -->
+            </div>
         </section>
 
-        <!-- FOOTER -->
+        <!-- FOOTER - EMAIL ATUALIZADO -->
         <footer>
             <div class="footer-content">
                 <h3>Serralheria do Gil</h3>
@@ -458,8 +451,9 @@
                 <p>WhatsApp: +55 41 9500-8252</p>
                 <div class="footer-social">
                     <a href="https://instagram.com/serralheriadogil" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://wa.me/5541995008252" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    <a href="mailto:gil.serralheria@gmail.com"><i class="fas fa-envelope"></i></a>
+                    <a href="mailto:Serralheriadogil@hotmail.com"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
             <p class="copyright">© 2026 Todos os direitos reservados</p>
@@ -600,7 +594,7 @@
             font-size: 0.95rem;
         }
         
-        /* BOTÕES COM BORDA BRANCA DE 4PX PARA ACESSIBILIDADE */
+        /* BOTÕES COM BORDA BRANCA DE 4PX */
         .btn-instagram {
             background: var(--cinza-escuro);
             color: var(--branco);
@@ -675,69 +669,188 @@
             color: #000;
         }
         
-        /* DEPOIMENTOS */
-        .depoimentos {
+        /* SEÇÃO DE COMENTÁRIOS */
+        .comentarios-section {
             padding: 60px 20px;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
-        .depoimentos-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 600px;
-            margin: 0 auto 30px;
-        }
-        
-        .depoimento-card {
+        /* Formulário de comentário */
+        .comentario-form {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 2px solid var(--amarelo-ouro);
             border-radius: 20px;
-            padding: 25px;
+            padding: 30px;
+            margin-bottom: 40px;
         }
         
-        .estrelas {
+        .comentario-form h3 {
             color: var(--amarelo-ouro);
-            margin-bottom: 15px;
-            font-size: 1rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.3rem;
         }
         
-        .depoimento-card p {
-            color: #ccc;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            font-style: italic;
+        .estrelas-input {
+            margin-bottom: 20px;
+            text-align: center;
         }
         
-        .cliente {
-            color: var(--amarelo-ouro);
-            font-weight: 600;
+        .estrelas-input span {
+            display: block;
+            color: #888;
+            margin-bottom: 10px;
             font-size: 0.9rem;
         }
         
-        .btn-avaliacao {
+        .estrelas-select {
             display: flex;
-            align-items: center;
             justify-content: center;
             gap: 10px;
-            width: 90%;
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 18px;
-            background: linear-gradient(135deg, var(--amarelo-ouro) 0%, var(--amarelo-escuro) 100%);
+            font-size: 2rem;
+            color: #444;
+            cursor: pointer;
+        }
+        
+        .estrelas-select i {
+            transition: all 0.2s ease;
+        }
+        
+        .estrelas-select i.active {
+            color: var(--amarelo-ouro);
+            transform: scale(1.1);
+        }
+        
+        .estrelas-select i:hover {
+            color: var(--amarelo-ouro);
+        }
+        
+        .comentario-form textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: var(--branco);
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+        
+        .comentario-form textarea:focus {
+            outline: none;
+            border-color: var(--amarelo-ouro);
+        }
+        
+        .comentario-form textarea::placeholder {
+            color: #666;
+        }
+        
+        .btn-enviar-comentario {
+            width: 100%;
+            padding: 16px;
+            background: var(--amarelo-ouro);
             color: #000;
             border: none;
             border-radius: 50px;
             font-size: 1rem;
             font-weight: bold;
-            text-decoration: none;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             transition: all 0.3s ease;
-            animation: pulse 2s infinite;
         }
         
-        .btn-avaliacao:hover {
+        .btn-enviar-comentario:hover {
             transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+        }
+        
+        /* Lista de comentários */
+        .comentarios-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .comentario-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .comentario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .comentario-autor {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .comentario-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--amarelo-ouro);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .comentario-info h4 {
+            color: var(--branco);
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+        
+        .comentario-info span {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        .comentario-estrelas {
+            color: var(--amarelo-ouro);
+            font-size: 0.9rem;
+        }
+        
+        .comentario-texto {
+            color: #ccc;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .sem-comentarios {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+            font-style: italic;
         }
         
         /* FOOTER */
@@ -792,7 +905,7 @@
             font-size: 0.85rem;
         }
         
-        /* FLOATING WHATSAPP */
+        /* WHATSAPP FLOAT */
         .whatsapp-float {
             position: fixed;
             bottom: 20px;
@@ -823,24 +936,36 @@
     </a>
 
     <script>
-        // CONFIGURAÇÃO FIREBASE
+        // CONFIGURAÇÃO FIREBASE COM SUAS KEYS
         const firebaseConfig = {
             apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
             authDomain: "serralheria-do-gil.firebaseapp.com",
             projectId: "serralheria-do-gil",
-            storageBucket: "serralheria-do-gil.appspot.com",
+            storageBucket: "serralheria-do-gil.firebasestorage.app",
             messagingSenderId: "267882427773",
-            appId: "1:267882427773:web:bf1689a6adda79f3334814"
+            appId: "1:267882427773:web:bf1689a6adda79f3334814",
+            measurementId: "G-1Z6NCYH6CE"
         };
         
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
         
-        // VERIFICAR ESTADO DE LOGIN
+        // VARIÁVEIS GLOBAIS
+        let estrelasSelecionadas = 0;
+        let usuarioAtual = null;
+        
+        // VERIFICAR ESTADO DE LOGIN - AGORA OBRIGATÓRIO
         auth.onAuthStateChanged((user) => {
             if (user) {
+                usuarioAtual = user;
                 showMainApp();
+                carregarComentarios();
+            } else {
+                // Se não tiver logado, garante que a tela de login está visível
+                document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('main-app').style.display = 'none';
+                document.getElementById('whatsapp-float').style.display = 'none';
             }
         });
         
@@ -849,35 +974,36 @@
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider)
                 .then((result) => {
+                    usuarioAtual = result.user;
                     showMainApp();
+                    carregarComentarios();
                 })
                 .catch((error) => {
                     console.error("Erro no login:", error);
-                    alert("Erro ao fazer login. Tente novamente.");
+                    alert("Erro ao fazer login: " + error.message);
                 });
         }
         
-        // MOSTRAR APP PRINCIPAL COM ANIMAÇÃO SUAVE
+        // MOSTRAR APP PRINCIPAL
         function showMainApp() {
             const loginScreen = document.getElementById('login-screen');
             const mainApp = document.getElementById('main-app');
             const whatsappFloat = document.getElementById('whatsapp-float');
             
-            // Esconde login imediatamente
+            // Esconde login
             loginScreen.style.display = 'none';
             
             // Mostra app
             mainApp.style.display = 'block';
             whatsappFloat.style.display = 'flex';
             
-            // Animação de entrada com GSAP
+            // Animação de entrada
             gsap.to(mainApp, {
                 opacity: 1,
                 duration: 0.5,
                 ease: "power2.out"
             });
             
-            // Anima elementos subindo
             gsap.from("header", {
                 y: -100,
                 opacity: 0,
@@ -895,8 +1021,136 @@
                 delay: 0.4
             });
             
-            // Inicializa ScrollReveal
             initScrollReveal();
+            initEstrelas();
+        }
+        
+        // INICIALIZAR SELEÇÃO DE ESTRELAS
+        function initEstrelas() {
+            const estrelas = document.querySelectorAll('.estrelas-select i');
+            
+            estrelas.forEach((estrela, index) => {
+                estrela.addEventListener('click', () => {
+                    estrelasSelecionadas = index + 1;
+                    atualizarEstrelas();
+                });
+                
+                estrela.addEventListener('mouseenter', () => {
+                    highlightEstrelas(index + 1);
+                });
+            });
+            
+            document.querySelector('.estrelas-select').addEventListener('mouseleave', () => {
+                atualizarEstrelas();
+            });
+        }
+        
+        function highlightEstrelas(quantidade) {
+            const estrelas = document.querySelectorAll('.estrelas-select i');
+            estrelas.forEach((estrela, index) => {
+                if (index < quantidade) {
+                    estrela.classList.remove('far');
+                    estrela.classList.add('fas', 'active');
+                } else {
+                    estrela.classList.remove('fas', 'active');
+                    estrela.classList.add('far');
+                }
+            });
+        }
+        
+        function atualizarEstrelas() {
+            highlightEstrelas(estrelasSelecionadas);
+        }
+        
+        // ENVIAR COMENTÁRIO
+        function enviarComentario() {
+            const texto = document.getElementById('comentario-texto').value.trim();
+            
+            if (estrelasSelecionadas === 0) {
+                alert('Por favor, selecione uma avaliação em estrelas!');
+                return;
+            }
+            
+            if (texto === '') {
+                alert('Por favor, escreva um comentário!');
+                return;
+            }
+            
+            if (!usuarioAtual) {
+                alert('Você precisa estar logado para comentar!');
+                return;
+            }
+            
+            const comentario = {
+                nome: usuarioAtual.displayName || 'Usuário',
+                foto: usuarioAtual.photoURL || null,
+                estrelas: estrelasSelecionadas,
+                texto: texto,
+                data: firebase.firestore.FieldValue.serverTimestamp(),
+                userId: usuarioAtual.uid
+            };
+            
+            db.collection('comentarios').add(comentario)
+                .then(() => {
+                    // Limpa formulário
+                    document.getElementById('comentario-texto').value = '';
+                    estrelasSelecionadas = 0;
+                    atualizarEstrelas();
+                    
+                    // Recarrega comentários
+                    carregarComentarios();
+                    
+                    alert('Avaliação publicada com sucesso!');
+                })
+                .catch((error) => {
+                    console.error('Erro ao enviar:', error);
+                    alert('Erro ao publicar. Tente novamente.');
+                });
+        }
+        
+        // CARREGAR COMENTÁRIOS
+        function carregarComentarios() {
+            const container = document.getElementById('comentarios-lista');
+            
+            db.collection('comentarios')
+                .orderBy('data', 'desc')
+                .onSnapshot((snapshot) => {
+                    if (snapshot.empty) {
+                        container.innerHTML = '<div class="sem-comentarios">Nenhuma avaliação ainda. Seja o primeiro!</div>';
+                        return;
+                    }
+                    
+                    container.innerHTML = '';
+                    
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        const dataFormatada = data.data ? new Date(data.data.toDate()).toLocaleDateString('pt-BR') : 'Agora';
+                        const iniciais = data.nome ? data.nome.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'U';
+                        
+                        const comentarioHTML = `
+                            <div class="comentario-item">
+                                <div class="comentario-header">
+                                    <div class="comentario-autor">
+                                        <div class="comentario-avatar">${iniciais}</div>
+                                        <div class="comentario-info">
+                                            <h4>${data.nome}</h4>
+                                            <span>${dataFormatada}</span>
+                                        </div>
+                                    </div>
+                                    <div class="comentario-estrelas">
+                                        ${'★'.repeat(data.estrelas)}${'☆'.repeat(5 - data.estrelas)}
+                                    </div>
+                                </div>
+                                <p class="comentario-texto">${data.texto}</p>
+                            </div>
+                        `;
+                        
+                        container.innerHTML += comentarioHTML;
+                    });
+                }, (error) => {
+                    console.error('Erro ao carregar:', error);
+                    container.innerHTML = '<div class="sem-comentarios">Erro ao carregar comentários.</div>';
+                });
         }
         
         // SCROLLREVEAL
@@ -914,23 +1168,20 @@
                 origin: 'bottom',
                 distance: '50px',
                 duration: 1000,
-                delay: 200,
-                easing: 'cubic-bezier(0.5, 0, 0, 1)'
+                delay: 200
             });
             
             ScrollReveal().reveal('.btn-rede', {
                 origin: 'bottom',
                 distance: '30px',
                 duration: 600,
-                interval: 100,
-                delay: 100
+                interval: 100
             });
             
-            ScrollReveal().reveal('.depoimento-card', {
+            ScrollReveal().reveal('.comentario-form', {
                 origin: 'bottom',
                 distance: '40px',
-                duration: 800,
-                interval: 150
+                duration: 800
             });
             
             ScrollReveal().reveal('.endereco-card, .email-card', {
@@ -940,42 +1191,6 @@
                 interval: 150
             });
         }
-        
-        // CARREGAR DEPOIMENTOS DO FIREBASE
-        function carregarDepoimentos() {
-            db.collection('depoimentos')
-                .orderBy('data', 'desc')
-                .limit(5)
-                .get()
-                .then((snapshot) => {
-                    const container = document.getElementById('depoimentos-container');
-                    if (!snapshot.empty) {
-                        container.innerHTML = '';
-                        snapshot.forEach((doc) => {
-                            const data = doc.data();
-                            const estrelas = '★'.repeat(data.estrelas || 5);
-                            container.innerHTML += `
-                                <div class="depoimento-card">
-                                    <div class="estrelas">${estrelas}</div>
-                                    <p>"${data.texto}"</p>
-                                    <span class="cliente">- ${data.nome}</span>
-                                </div>
-                            `;
-                        });
-                    }
-                })
-                .catch((error) => {
-                    console.log("Usando depoimentos padrão");
-                });
-        }
-        
-        // Inicializar quando DOM estiver pronto
-        document.addEventListener('DOMContentLoaded', () => {
-            // Carrega depoimentos se estiver logado
-            if (auth.currentUser) {
-                carregarDepoimentos();
-            }
-        });
     </script>
 </body>
 </html>
