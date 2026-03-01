@@ -10,17 +10,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        body { background-color: #000 !important; color: #fff; text-align: center; margin: 0; }
-        
-        /* Botões com borda branca obrigatória para não sumirem no preto */
+        /* Fundo preto absoluto sem transições */
+        body { background-color: #000 !important; color: #fff; text-align: center; margin: 0; padding: 0; }
+
+        /* Botões com visibilidade 100% garantida */
         .btn-link {
             display: block; width: 90%; max-width: 400px; margin: 15px auto;
             padding: 22px; border-radius: 15px; text-decoration: none;
             font-weight: 900; font-size: 1.2rem; border: 3px solid #fff !important;
+            opacity: 1 !important; visibility: visible !important;
         }
         
+        /* Amarelo Ouro para Orçamentos */
         .ouro { background-color: #FFD700 !important; color: #000 !important; }
-        .social { background-color: #1a1a1a !important; color: #fff !important; }
+        
+        /* Redes Sociais com cores sólidas */
+        .social-btn { background-color: #222 !important; color: #fff !important; }
 
         #login-overlay {
             position: fixed; inset: 0; background: #000; z-index: 9999;
@@ -40,16 +45,16 @@
     <div id="app" style="display:none; padding-top: 20px;">
         <h2 style="color:#FFD700; margin-bottom:20px;">ORÇAMENTOS</h2>
         <a href="https://wa.me/5541995008252" class="btn-link ouro">ORÇAMENTO GERAL</a>
-        <a href="https://wa.me/5541995008252?text=Orçamento de Grade" class="btn-link ouro">ORÇAMENTO DE GRADE</a>
+        <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Grade" class="btn-link ouro">ORÇAMENTO DE GRADE</a>
 
         <h2 style="color:#FFD700; margin: 40px 0 20px;">REDES SOCIAIS</h2>
-        <a href="https://wa.me/5541995008252" class="btn-link social">
+        <a href="https://wa.me/5541995008252" class="btn-link social-btn">
             <i class="fab fa-whatsapp" style="color:#25D366;"></i> WHATSAPP
         </a>
-        <a href="https://www.instagram.com/serralheriadogil/" class="btn-link social">
+        <a href="https://www.instagram.com/serralheriadogil/" class="btn-link social-btn">
             <i class="fab fa-instagram" style="color:#E1306C;"></i> INSTAGRAM
         </a>
-        <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="btn-link social">
+        <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="btn-link social-btn">
             <i class="fab fa-facebook-f" style="color:#1877F2;"></i> FACEBOOK
         </a>
     </div>
@@ -67,6 +72,7 @@
 
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
+                // Troca de tela instantânea sem GSAP ou transições
                 document.getElementById('login-overlay').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
             }
