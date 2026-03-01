@@ -3,115 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Serralheria do Gil | Contraste Total</title>
+    <title>Serralheria do Gil | Premium Edition</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --neon-yellow: #FFEA00;
-            --neon-green: #39FF14;
-            --fb-blue: #1877F2;
-            --insta-pink: #E1306C;
-            --mail-red: #FF4B2B;
+            --gold: #FFC107;
+            --gold-bright: #FFD54F;
+            --bg-dark: #050505;
+            --card-bg: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         
-        body { background: #000; color: white; overflow-x: hidden; }
+        body { 
+            background: var(--bg-dark); 
+            color: white; 
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% -20%, #1a1a1a 0%, #050505 80%);
+        }
 
+        /* HEADER PREMIUM */
         header {
-            position: fixed; top: 0; width: 100%; height: 70px;
-            background: #000; border-bottom: 4px solid var(--neon-yellow);
+            position: fixed; top: 0; width: 100%; height: 80px;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
             display: flex; justify-content: center; align-items: center; z-index: 1000;
+            border-bottom: 1px solid rgba(255, 193, 7, 0.3);
         }
 
-        .container { max-width: 450px; margin: 0 auto; padding: 100px 20px 60px; }
+        .container { max-width: 480px; margin: 0 auto; padding: 120px 20px 80px; }
 
-        /* --- BOTÕES COM CORES QUE NÃO SOMEM --- */
-        .btn-link {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            padding: 22px;
-            border-radius: 20px;
-            margin-bottom: 18px;
-            font-weight: 900;
-            text-transform: uppercase;
-            border: 3px solid white; /* Borda branca para destaque total */
-            box-shadow: 0 5px 15px rgba(255,255,255,0.1);
-            transition: 0.2s;
+        /* TEXTOS */
+        .hero-title { font-size: 2.8rem; font-weight: 900; line-height: 1; margin-bottom: 10px; text-align: center; }
+        .hero-subtitle { color: #888; text-align: center; margin-bottom: 40px; font-size: 0.95rem; }
+
+        /* --- BOTÃO DE ORÇAMENTO (O PRINCIPAL) --- */
+        .btn-main {
+            position: relative;
+            display: flex; align-items: center; justify-content: space-between;
+            background: linear-gradient(135deg, var(--gold), #FF8F00);
+            padding: 22px 30px; border-radius: 20px; text-decoration: none;
+            color: #000; font-weight: 800; text-transform: uppercase;
+            margin-bottom: 20px; box-shadow: 0 10px 30px rgba(255, 193, 7, 0.3);
+            transition: 0.3s; border: none;
         }
 
-        /* Cores de fundo sólidas */
-        .bg-yellow { background: var(--neon-yellow); color: #000; }
-        .bg-green  { background: var(--neon-green); color: #000; }
-        .bg-blue   { background: var(--fb-blue); color: #fff; }
-        .bg-pink   { background: var(--insta-pink); color: #fff; }
-        .bg-red    { background: var(--mail-red); color: #fff; }
+        /* --- GRID DE ORÇAMENTOS ESPECÍFICOS --- */
+        .grid-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px; }
 
-        .icon-circle {
-            width: 45px; height: 45px; background: rgba(0,0,0,0.15);
-            border-radius: 12px; display: flex; align-items: center;
-            justify-content: center; margin-right: 15px; font-size: 1.5rem;
+        .btn-secondary {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 25px 15px; border-radius: 20px; text-decoration: none;
+            color: white; text-align: center; display: flex; flex-direction: column;
+            align-items: center; gap: 10px; transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        
+        .btn-secondary i { color: var(--gold); font-size: 1.5rem; }
+        .btn-secondary span { font-size: 0.85rem; font-weight: 600; }
+
+        /* --- SEÇÃO DE REDES SOCIAIS (AGORA BEM VISÍVEL) --- */
+        .social-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px; border-radius: 22px; margin-bottom: 15px;
+            display: flex; align-items: center; text-decoration: none;
+            color: white; transition: 0.3s;
         }
 
-        .section-title {
-            text-align: center; color: var(--neon-yellow); font-weight: 900;
-            margin: 40px 0 20px; font-size: 1.2rem; text-transform: uppercase;
+        .social-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold); }
+
+        .social-icon {
+            width: 50px; height: 50px; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 15px; font-size: 1.4rem;
         }
+
+        /* Cores das Redes */
+        .ic-fb { background: #1877F2; box-shadow: 0 0 15px rgba(24, 119, 242, 0.4); }
+        .ic-ig { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+        .ic-wa { background: #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.4); }
+
+        /* LOGIN OVERLAY */
+        #login-overlay {
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+
+        .login-card {
+            background: #111; padding: 40px; border-radius: 35px;
+            border: 1px solid rgba(255, 193, 7, 0.5); text-align: center;
+            width: 100%; max-width: 380px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
     </style>
 </head>
+
 <body>
-    <div id="login-overlay" style="position:fixed; inset:0; background:#000; z-index:9999; display:flex; align-items:center; justify-content:center;">
-        <div style="text-align:center; width:80%;">
-            <h1 style="color:var(--neon-yellow); margin-bottom:30px;">GIL SERRALHERIA</h1>
-            <button onclick="login()" style="width:100%; padding:20px; border-radius:50px; background:#fff; font-weight:900; border:none; cursor:pointer;">ENTRAR COM GOOGLE</button>
+    <div id="login-overlay">
+        <div class="login-card">
+            <div style="width:70px; height:70px; background:var(--gold); border-radius:20px; margin:0 auto 20px; display:flex; align-items:center; justify-content:center;">
+                <i class="fas fa-lock" style="color:#000; font-size:1.5rem;"></i>
+            </div>
+            <h1 style="color:white; margin-bottom:10px; font-weight:900;">Acesso Exclusivo</h1>
+            <p style="color:#666; margin-bottom:30px; font-size:0.9rem;">Portal da Serralheria do Gil</p>
+            <button onclick="login()" style="width:100%; padding:20px; border-radius:18px; border:none; background:#fff; color:#000; font-weight:900; display:flex; align-items:center; justify-content:center; gap:12px; cursor:pointer; font-size:1rem;">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="22"> ENTRAR AGORA
+            </button>
         </div>
     </div>
 
-    <div id="app-content" style="display:none;">
-        <header><span style="color:var(--neon-yellow); font-weight:900;">GIL SERRALHERIA</span></header>
+    <div id="app-content" style="display:none; opacity:0;">
+        <header>
+            <span style="font-weight:900; color:var(--gold); letter-spacing:4px; font-size:1.1rem;">GIL SERRALHERIA</span>
+        </header>
 
         <div class="container">
-            <a href="https://wa.me/5541995008252?text=Orçamento Geral" class="btn-link bg-yellow">
-                <div class="icon-circle"><i class="fas fa-hammer"></i></div>
-                Orçamento Geral
+            <h1 class="hero-title reveal">Qualidade que <span style="color:var(--gold)">Protege.</span></h1>
+            <p class="hero-subtitle reveal">Portões, grades e estruturas metálicas de alto padrão.</p>
+
+            <a href="https://wa.me/5541995008252" class="btn-main reveal">
+                <span><i class="fas fa-calculator" style="margin-right:10px;"></i> Orçamento Geral</span>
+                <i class="fas fa-chevron-right"></i>
             </a>
 
-            <a href="https://wa.me/5541995008252?text=Orçamento de Grade" class="btn-link bg-yellow">
-                <div class="icon-circle"><i class="fas fa-shield-alt"></i></div>
-                Orçamento de Grade
+            <div class="grid-buttons">
+                <a href="https://wa.me/5541995008252?text=Orçamento de Grade" class="btn-secondary reveal">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Grades</span>
+                </a>
+                <a href="https://wa.me/5541995008252?text=Orçamento de Portão" class="btn-secondary reveal">
+                    <i class="fas fa-door-open"></i>
+                    <span>Portões</span>
+                </a>
+                <a href="https://wa.me/5541995008252?text=Orçamento de Estrutura" class="btn-secondary reveal">
+                    <i class="fas fa-warehouse"></i>
+                    <span>Estruturas</span>
+                </a>
+                <a href="https://wa.me/5541995008252?text=Orçamento de Reforma" class="btn-secondary reveal">
+                    <i class="fas fa-tools"></i>
+                    <span>Reformas</span>
+                </a>
+            </div>
+
+            <p style="color:var(--gold); font-weight:800; font-size:0.75rem; letter-spacing:3px; text-align:center; margin-bottom:20px; text-transform:uppercase;">Conecte-se Conosco</p>
+
+            <a href="https://wa.me/5541995008252" class="social-card reveal">
+                <div class="social-icon ic-wa"><i class="fab fa-whatsapp"></i></div>
+                <div style="flex:1"><strong>WhatsApp</strong><br><small style="color:#888;">Fale direto com o Gil</small></div>
             </a>
 
-            <div class="section-title">Nossas Redes</div>
-
-            <a href="https://wa.me/5541995008252" class="btn-link bg-green">
-                <div class="icon-circle"><i class="fab fa-whatsapp"></i></div>
-                WhatsApp do Gil
+            <a href="https://www.instagram.com/serralheriadogil/" class="social-card reveal">
+                <div class="social-icon ic-ig"><i class="fab fa-instagram"></i></div>
+                <div style="flex:1"><strong>Instagram</strong><br><small style="color:#888;">Veja nossos projetos</small></div>
             </a>
 
-            <a href="https://www.instagram.com/serralheriadogil/" class="btn-link bg-pink">
-                <div class="icon-circle"><i class="fab fa-instagram"></i></div>
-                Instagram
+            <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="social-card reveal">
+                <div class="social-icon ic-fb"><i class="fab fa-facebook-f"></i></div>
+                <div style="flex:1"><strong>Facebook</strong><br><small style="color:#888;">Acompanhe nossa página</small></div>
             </a>
 
-            <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="btn-link bg-blue">
-                <div class="icon-circle"><i class="fab fa-facebook-f"></i></div>
-                Facebook
-            </a>
-
-            <a href="mailto:Serralheriadogil@hotmail.com" class="btn-link bg-red">
-                <div class="icon-circle"><i class="fas fa-envelope"></i></div>
-                Enviar E-mail
-            </a>
+            <footer style="text-align:center; margin-top:60px; padding-bottom:40px; color:#444; font-size:0.8rem;">
+                © 2026 SERRALHERIA DO GIL • CURITIBA/SJP
+            </footer>
         </div>
     </div>
-        <script>
+
+    <script>
         const firebaseConfig = {
             apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
             authDomain: "serralheria-do-gil.firebaseapp.com",
@@ -126,14 +191,20 @@
 
         auth.onAuthStateChanged(user => {
             if (user) {
-                document.getElementById('login-overlay').style.display = 'none';
-                document.getElementById('app-content').style.display = 'block';
-                // Animação rápida só para dar o efeito "Zica"
-                gsap.from(".btn-link", { y: 50, opacity: 0, stagger: 0.1, duration: 0.5, ease: "back.out" });
+                gsap.to("#login-overlay", { opacity: 0, scale: 0.9, duration: 0.6, onComplete: () => {
+                    document.getElementById('login-overlay').style.display = 'none';
+                    document.getElementById('app-content').style.display = 'block';
+                    gsap.to("#app-content", { opacity: 1, duration: 0.5 });
+                    
+                    // Animação de entrada dos elementos
+                    gsap.from(".reveal", {
+                        y: 30, opacity: 0, stagger: 0.1, duration: 0.8, ease: "power2.out"
+                    });
+                }});
             }
         });
 
-        function login() { auth.signInWithPopup(provider).catch(alert); }
+        function login() { auth.signInWithPopup(provider); }
     </script>
 </body>
 </html>
