@@ -10,24 +10,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* Estilo estático para máxima visibilidade */
         body { background-color: #000000 !important; color: #ffffff !important; margin: 0; text-align: center; font-family: sans-serif; }
 
         .btn-link {
-            display: block !important; width: 90%; max-width: 400px; margin: 12px auto;
+            display: flex !important; align-items: center; justify-content: center;
+            width: 90%; max-width: 400px; margin: 12px auto;
             padding: 20px; border-radius: 10px; text-decoration: none;
-            font-weight: 900; font-size: 1.2rem; border: 3px solid #ffffff !important;
+            font-weight: 900; font-size: 1.1rem; border: 3px solid #ffffff !important;
             opacity: 1 !important; visibility: visible !important;
         }
         
+        /* Cores sólidas para evitar botões escuros */
         .ouro { background-color: #FFD700 !important; color: #000000 !important; }
         .social { background-color: #222222 !important; color: #ffffff !important; }
+
+        .icon-btn { margin-right: 15px; font-size: 1.4rem; width: 25px; text-align: center; }
 
         #login-overlay {
             position: fixed; inset: 0; background: #000; z-index: 9999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        h2 { color: #FFD700; margin: 30px 0 15px; text-transform: uppercase; letter-spacing: 2px; }
+        h2 { color: #FFD700; margin: 30px 0 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 1.2rem; }
     </style>
 </head>
 <body>
@@ -43,32 +48,41 @@
         <h1 style="color:#FFD700; font-size: 1.8rem; margin-bottom: 5px;">GIL SERRALHERIA</h1>
         <p style="color: #888; margin-bottom: 25px;">Tradição e Segurança em Curitiba e SJP</p>
 
-        <h2>Nossos Serviços</h2>
-        <a href="https://wa.me/5541995008252?text=Orcamento%20Geral" class="btn-link ouro">ORÇAMENTO GERAL</a>
-        <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Portão" class="btn-link ouro">PORTÕES ELETRÔNICOS</a>
-        <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Grade" class="btn-link ouro">GRADES DE SEGURANÇA</a>
-        <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Corrimão" class="btn-link ouro">CORRIMÃO E SACADAS</a>
-        <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Cobertura" class="btn-link ouro">COBERTURAS METÁLICAS</a>
+        <h2>Solicite seu Orçamento</h2>
+        <a href="https://wa.me/5541995008252?text=Orcamento%20Geral" class="btn-link ouro">
+            <i class="fas fa-tools icon-btn"></i> ORÇAMENTO GERAL
+        </a>
+        <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Portão" class="btn-link ouro">
+            <i class="fas fa-door-open icon-btn"></i> PORTÕES ELETRÔNICOS
+        </a>
+        <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Grade" class="btn-link ouro">
+            <i class="fas fa-shield-alt icon-btn"></i> GRADES DE SEGURANÇA
+        </a>
+        <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Corrimão" class="btn-link ouro">
+            <i class="fas fa-grip-lines icon-btn"></i> CORRIMÃO E SACADAS
+        </a>
+        <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Cobertura" class="btn-link ouro">
+            <i class="fas fa-umbrella icon-btn"></i> COBERTURAS METÁLICAS
+        </a>
 
         <h2>Redes Sociais</h2>
         <a href="https://wa.me/5541995008252" class="btn-link social">
-            <i class="fab fa-whatsapp" style="color:#25D366;"></i> WHATSAPP
+            <i class="fab fa-whatsapp icon-btn" style="color:#25D366;"></i> WHATSAPP
         </a>
         <a href="https://www.instagram.com/serralheriadogil/" class="btn-link social">
-            <i class="fab fa-instagram" style="color:#E1306C;"></i> INSTAGRAM
+            <i class="fab fa-instagram icon-btn" style="color:#E1306C;"></i> INSTAGRAM
         </a>
         <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="btn-link social">
-            <i class="fab fa-facebook-f" style="color:#1877F2;"></i> FACEBOOK
+            <i class="fab fa-facebook-f icon-btn" style="color:#1877F2;"></i> FACEBOOK
         </a>
 
         <h2>Localização</h2>
-        <p style="margin-bottom: 15px; color: #ccc;">Atendimento em Curitiba e Região</p>
-        <a href="https://www.google.com/maps/search/?api=1&query=Serralheria+Curitiba" target="_blank" class="btn-link social">
-            <i class="fas fa-map-marker-alt" style="color:#FF4444;"></i> VER NO MAPA
+        <a href="https://maps.app.goo.gl/YourActualGoogleMapsLink" target="_blank" class="btn-link social">
+            <i class="fas fa-map-marker-alt icon-btn" style="color:#FF4444;"></i> VER NO MAPA
         </a>
 
         <footer style="margin-top: 40px; color: #444; font-size: 0.8rem;">
-            © 2026 GIL SERRALHERIA - TODOS OS DIREITOS RESERVADOS
+            © 2026 GIL SERRALHERIA
         </footer>
     </div>
 
