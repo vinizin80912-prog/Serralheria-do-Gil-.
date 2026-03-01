@@ -33,14 +33,14 @@
             line-height: 1.6;
         }
         
-        /* TELA DE LOGIN - SEMPRE VISÍVEL INICIALMENTE */
+        /* TELA DE LOGIN */
         #login-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            background: radial-gradient(ellipse at center, rgba(255,215,0,0.25) 0%, rgba(26,26,26,0.8) 40%, #000000 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -50,7 +50,7 @@
         }
         
         .login-container {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.7);
             border: 2px solid var(--amarelo-ouro);
             border-radius: 20px;
             padding: 40px 30px;
@@ -58,22 +58,25 @@
             max-width: 400px;
             text-align: center;
             backdrop-filter: blur(10px);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
         }
         
         .login-logo {
             font-size: 3rem;
             color: var(--amarelo-ouro);
             margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
         
         .login-container h1 {
             color: var(--amarelo-ouro);
             font-size: 1.8rem;
             margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
         
         .login-container p {
-            color: #888;
+            color: #ccc;
             margin-bottom: 30px;
             font-size: 0.9rem;
         }
@@ -94,19 +97,20 @@
             gap: 10px;
             transition: all 0.3s ease;
             animation: pulse 2s infinite;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
         
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
-            50% { box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.2); }
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.7); }
         }
         
         .login-btn:hover {
             transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
         }
         
-        /* APP PRINCIPAL - COMEÇA ESCONDIDO */
+        /* APP PRINCIPAL */
         #main-app {
             display: none;
             opacity: 0;
@@ -121,13 +125,13 @@
             left: 0;
             width: 100%;
             padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(10px);
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
         }
         
         .header-logo {
@@ -137,6 +141,7 @@
             color: var(--amarelo-ouro);
             font-weight: bold;
             font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
         
         .header-logo i {
@@ -157,14 +162,15 @@
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
         }
         
         .header-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
         }
         
-        /* HERO SECTION */
+        /* HERO SECTION - ILUMINAÇÃO AUMENTADA NO CENTRO */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -174,11 +180,24 @@
             text-align: center;
             padding: 100px 20px 50px;
             position: relative;
-            background: radial-gradient(ellipse at center, rgba(255,215,0,0.1) 0%, transparent 70%);
+            background: radial-gradient(ellipse at center, rgba(255,215,0,0.2) 0%, rgba(255,215,0,0.05) 30%, transparent 60%, #000000 100%);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
         }
         
         .hero-badge {
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(255, 215, 0, 0.15);
             border: 1px solid var(--amarelo-ouro);
             color: var(--amarelo-ouro);
             padding: 8px 20px;
@@ -188,6 +207,10 @@
             text-transform: uppercase;
             margin-bottom: 20px;
             display: inline-block;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
         }
         
         .hero h1 {
@@ -195,14 +218,20 @@
             margin-bottom: 20px;
             color: var(--amarelo-ouro);
             font-weight: bold;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
         
         .hero p {
-            color: #aaa;
+            color: #ddd;
             font-size: 1.1rem;
             max-width: 600px;
             margin-bottom: 40px;
             line-height: 1.6;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
         }
         
         .btn-principal {
@@ -224,24 +253,28 @@
             margin-bottom: 15px;
             transition: all 0.3s ease;
             animation: glow 2s ease-in-out infinite alternate;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
         }
         
         @keyframes glow {
-            from { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
-            to { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.3); }
+            from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.2); }
+            to { box-shadow: 0 0 40px rgba(255, 215, 0, 0.7), 0 0 80px rgba(255, 215, 0, 0.4); }
         }
         
         .btn-principal:hover {
             transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
         }
         
         .btn-secundario {
             width: 90%;
             max-width: 400px;
             padding: 18px;
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
             color: var(--branco);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.4);
             border-radius: 50px;
             font-size: 1rem;
             cursor: pointer;
@@ -251,11 +284,16 @@
             gap: 10px;
             text-decoration: none;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(5px);
         }
         
         .btn-secundario:hover {
             border-color: var(--amarelo-ouro);
             color: var(--amarelo-ouro);
+            background: rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
         
         .localizacao {
@@ -263,12 +301,16 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #888;
+            color: #bbb;
             font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
         }
         
         .localizacao i {
             color: var(--amarelo-ouro);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
     </style>
 </head>
@@ -442,7 +484,7 @@
         /* SEÇÃO SERVIÇOS */
         .servicos {
             padding: 60px 20px;
-            background-color: var(--preto-absoluto);
+            background: radial-gradient(ellipse at center top, rgba(255,215,0,0.08) 0%, transparent 50%, #000000 100%);
         }
         
         .section-title {
@@ -451,6 +493,7 @@
             margin-bottom: 40px;
             color: var(--branco);
             font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
         }
         
         .servicos-grid {
@@ -462,8 +505,8 @@
         }
         
         .servico-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             padding: 20px;
             display: flex;
@@ -473,12 +516,14 @@
             color: var(--branco);
             transition: all 0.3s ease;
             position: relative;
+            backdrop-filter: blur(5px);
         }
         
         .servico-card:hover {
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(255, 215, 0, 0.15);
             border-color: var(--amarelo-ouro);
             transform: translateX(10px);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
         }
         
         .servico-icon {
@@ -492,6 +537,7 @@
             color: var(--amarelo-ouro);
             font-size: 1.2rem;
             flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
         }
         
         .servico-card span {
@@ -501,7 +547,7 @@
         }
         
         .seta {
-            color: #666;
+            color: #888;
             transition: all 0.3s ease;
         }
         
@@ -513,17 +559,19 @@
         /* ESPECIALIDADES */
         .especialidades {
             padding: 40px 20px;
-            background-color: var(--preto-absoluto);
+            background: radial-gradient(ellipse at center, rgba(255,215,0,0.05) 0%, transparent 60%, #000000 100%);
         }
         
         .espec-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             padding: 40px 30px;
             text-align: center;
             max-width: 500px;
             margin: 0 auto;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.1);
         }
         
         .espec-icon {
@@ -537,16 +585,18 @@
             margin: 0 auto 20px;
             color: #000;
             font-size: 1.5rem;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
         }
         
         .espec-card h3 {
             color: var(--branco);
             margin-bottom: 15px;
             font-size: 1.3rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
         }
         
         .espec-card p {
-            color: #aaa;
+            color: #ccc;
             line-height: 1.6;
             font-size: 0.95rem;
         }
@@ -554,7 +604,7 @@
         /* REDES SOCIAIS */
         .redes-sociais {
             padding: 40px 20px;
-            background-color: var(--preto-absoluto);
+            background: radial-gradient(ellipse at center bottom, rgba(255,215,0,0.08) 0%, transparent 50%, #000000 100%);
         }
         
         .botoes-redes {
@@ -576,56 +626,67 @@
             gap: 10px;
             transition: all 0.3s ease;
             font-size: 1rem;
+            backdrop-filter: blur(5px);
         }
         
         .btn-instagram {
-            background: var(--cinza-escuro);
+            background: rgba(26, 26, 26, 0.8);
             color: var(--branco);
             border: 4px solid var(--branco);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
         }
         
         .btn-whatsapp {
             background: var(--amarelo-ouro);
             color: #000;
             border: 4px solid var(--amarelo-ouro);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
         }
         
         .btn-facebook {
-            background: var(--cinza-escuro);
+            background: rgba(26, 26, 26, 0.8);
             color: var(--branco);
             border: 4px solid var(--branco);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
         }
         
         .btn-rede:hover {
             transform: scale(1.03);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-whatsapp:hover {
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
         }
     </style>
     <style>
         /* CONTATO */
         .contato-section {
             padding: 40px 20px;
-            background-color: var(--preto-absoluto);
+            background: radial-gradient(ellipse at center, rgba(255,215,0,0.05) 0%, transparent 60%, #000000 100%);
         }
         
         .endereco-card, .email-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             padding: 30px;
             text-align: center;
             max-width: 400px;
             margin: 0 auto 20px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
         }
         
         .endereco-card i, .email-card i {
             font-size: 2.5rem;
             color: var(--amarelo-ouro);
             margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
         
         .endereco-card p, .email-card p {
-            color: #aaa;
+            color: #ddd;
             margin-bottom: 20px;
             font-size: 1rem;
         }
@@ -642,17 +703,19 @@
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
         }
         
         .btn-maps:hover, .btn-email:hover {
             background: var(--amarelo-ouro);
             color: #000;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
         }
         
         /* FOOTER */
         footer {
-            background: rgba(255, 255, 255, 0.02);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
             padding: 40px 20px;
             text-align: center;
         }
@@ -661,10 +724,11 @@
             color: var(--amarelo-ouro);
             margin-bottom: 10px;
             font-size: 1.3rem;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
         }
         
         .footer-content p {
-            color: #666;
+            color: #888;
             font-size: 0.9rem;
             margin-bottom: 5px;
         }
@@ -679,7 +743,7 @@
         .footer-social a {
             width: 45px;
             height: 45px;
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(255, 215, 0, 0.15);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -688,17 +752,19 @@
             font-size: 1.2rem;
             transition: all 0.3s ease;
             text-decoration: none;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
         }
         
         .footer-social a:hover {
             background: var(--amarelo-ouro);
             color: #000;
             transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
         }
         
         .copyright {
             margin-top: 30px;
-            color: #444;
+            color: #555;
             font-size: 0.85rem;
         }
         
@@ -717,13 +783,14 @@
             color: white;
             font-size: 1.8rem;
             text-decoration: none;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 4px 30px rgba(37, 211, 102, 0.5);
             z-index: 999;
             transition: all 0.3s ease;
         }
         
         .whatsapp-float:hover {
             transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 4px 40px rgba(37, 211, 102, 0.7);
         }
     </style>
 
@@ -742,10 +809,8 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         
-        // FORÇAR LOGOUT AO CARREGAR A PÁGINA (SEMPRE!)
+        // FORÇAR LOGOUT AO CARREGAR
         auth.signOut().then(() => {
-            console.log("Logout forçado - tela de login deve aparecer");
-            // Garante que a tela de login está visível
             document.getElementById('login-screen').style.display = 'flex';
             document.getElementById('main-app').style.display = 'none';
             document.getElementById('whatsapp-float').style.display = 'none';
@@ -756,10 +821,8 @@
         // VERIFICAR ESTADO DE LOGIN
         auth.onAuthStateChanged((user) => {
             if (user) {
-                // Usuário logado - mostra app
                 showMainApp();
             } else {
-                // Usuário deslogado - mostra login
                 document.getElementById('login-screen').style.display = 'flex';
                 document.getElementById('main-app').style.display = 'none';
                 document.getElementById('whatsapp-float').style.display = 'none';
@@ -789,7 +852,6 @@
             mainApp.style.display = 'block';
             whatsappFloat.style.display = 'flex';
             
-            // Animação suave
             gsap.to(mainApp, {
                 opacity: 1,
                 duration: 0.5,
@@ -813,7 +875,6 @@
                 delay: 0.4
             });
             
-            // ScrollReveal
             ScrollReveal().reveal('.servico-card', {
                 origin: 'left',
                 distance: '50px',
