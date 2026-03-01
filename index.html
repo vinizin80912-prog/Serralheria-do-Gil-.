@@ -1,206 +1,171 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Serralheria do Gil | Link Oficial</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serralheria do Gil | Link Oficial</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
 
-<!-- FONTES E ICONES -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
-
-<!-- FIREBASE CDN -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
-
-// CONFIG FIREBASE
-const firebaseConfig = {
-  apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
-  authDomain: "serralheria-do-gil.firebaseapp.com",
-  projectId: "serralheria-do-gil",
-  storageBucket: "serralheria-do-gil.firebasestorage.app",
-  messagingSenderId: "267882427773",
-  appId: "1:267882427773:web:bf1689a6adda79f3334814",
-  measurementId: "G-1Z6NCYH6CE"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
-
-// FUNCOES LOGIN/LOGOUT
-window.login = async () => { await signInWithPopup(auth, provider); }
-window.logout = async () => { await signOut(auth); }
-
-// FUNCOES COMENTARIOS
-window.sendComment = async () => {
-  const text = document.getElementById('comment-text').value.trim();
-  const user = auth.currentUser;
-  if(!text || !user) return;
-  await addDoc(collection(db, "comments"), {
-    name: user.displayName,
-    text: text,
-    timestamp: serverTimestamp()
-  });
-  document.getElementById('comment-text').value = '';
-}
-
-// MOSTRAR COMENTARIOS
-window.loadComments = () => {
-  const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
-  onSnapshot(q, snapshot => {
-    const container = document.getElementById('comments-display');
-    container.innerHTML = '';
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      container.innerHTML += `
-        <div class="comment-card">
-          <span>${data.name}</span>
-          <p>${data.text}</p>
-        </div>`;
-    });
-  });
-}
-
-// TOGGLE COMENTARIOS
-window.toggleComments = () => {
-  const sec = document.getElementById('comments-section');
-  sec.style.display = sec.style.display==='block' ? 'none' : 'block';
-}
-
-// VERIFICAR AUTENTICACAO
-onAuthStateChanged(auth, user => {
-  if(user){
-    document.getElementById('login-screen').style.display='none';
-    document.getElementById('main-content').style.display='block';
-    document.getElementById('header-nav').style.display='flex';
-    document.getElementById('wa-float').style.display='flex';
-    animateButtons();
-    loadComments();
-  } else {
-    document.getElementById('login-screen').style.display='flex';
-    document.getElementById('main-content').style.display='none';
-    document.getElementById('header-nav').style.display='none';
-    document.getElementById('wa-float').style.display='none';
-  }
-});
-
-// ANIMACOES
-function animateButtons(){
-  const items = document.querySelectorAll('.link-item');
-  items.forEach((item, i) => {
-    setTimeout(()=>{ item.classList.add('show-animate'); }, i*150);
-  });
-}
-</script>
-
-<style>
-:root{
-  --bg-color:#0a0a0a; --gold:#d4af37; --purple:#6a0dad; --text-white:#fff;
-  --card-bg: rgba(21,21,21,0.95); --transition: all 0.3s ease;
-}
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background: radial-gradient(circle,#1a1a1a 0%,var(--bg-color)100%);color:var(--text-white);min-height:100vh;overflow-x:hidden;}
-
-/* LOGIN */
-#login-screen{display:flex;justify-content:center;align-items:center;height:100vh;width:100%;position:fixed;z-index:1000;background:var(--bg-color);}
-.login-card{background:var(--card-bg);padding:40px;border-radius:20px;border:2px solid var(--gold);text-align:center;backdrop-filter:blur(10px);box-shadow:0 0 30px rgba(212,175,55,0.2);max-width:350px;width:90%;}
-.login-card h1{color:var(--gold);margin-bottom:10px;font-weight:600;}
-.login-card p{font-size:0.9rem;margin-bottom:30px;color:#ccc;}
-.btn-google{background:white;color:#000;border:none;padding:12px 20px;border-radius:50px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;transition:var(--transition);}
-.btn-google:hover{transform:scale(1.05);box-shadow:0 5px 15px rgba(255,255,255,0.3);}
-
-/* MAIN */
-#main-content{display:none;padding-top:80px;padding-bottom:50px;}
-header{position:fixed;top:0;width:100%;background:rgba(10,10,10,0.9);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222;z-index:900;}
-header h2{color:var(--gold);font-size:1.2rem;flex-grow:1;text-align:center;}
-.btn-logout{color:var(--purple);background:none;border:none;font-size:1.3rem;cursor:pointer;}
-
-.container{max-width:500px;margin:0 auto;padding:0 20px;}
-.links-list{display:flex;flex-direction:column;gap:15px;}
-.link-item{background:#151515;border:1px solid #333;padding:18px;border-radius:12px;text-decoration:none;color:white;display:flex;align-items:center;justify-content:space-between;font-weight:400;transition:var(--transition);opacity:0;transform:translateY(20px);}
-.link-item:hover{border-color:var(--gold);transform:scale(1.02);box-shadow:0 0 15px rgba(212,175,55,0.3);}
-.link-item i{font-size:1.2rem;width:30px;}
-.link-item .icon-right{font-size:0.8rem;color:#444;}
-.show-animate{animation:fadeInUp 0.5s forwards;}
-
-/* COMENTARIOS */
-#comments-section{display:none;margin-top:30px;animation:fadeIn 0.5s ease;}
-textarea{width:100%;background:#111;border:1px solid var(--gold);color:white;padding:10px;border-radius:8px;resize:none;margin-bottom:10px;}
-.btn-send{background:var(--purple);color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;width:100%;}
-.comment-card{background:#151515;border-left:4px solid var(--gold);padding:15px;border-radius:8px;margin-bottom:15px;}
-.comment-card span{color:var(--gold);font-weight:600;font-size:0.8rem;}
-.comment-card p{margin-top:5px;font-size:0.95rem;}
-
-/* FLOATING WHATSAPP */
-.whatsapp-float{position:fixed;bottom:30px;right:30px;background:#25d366;width:60px;height:60px;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:30px;color:white;box-shadow:0 4px 10px rgba(0,0,0,0.3);z-index:1000;animation:pulse 2s infinite;}
-
-/* ANIMACOES */
-@keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-@keyframes pulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(37,211,102,0.7);}70%{transform:scale(1.1);box-shadow:0 0 0 15px rgba(37,211,102,0);}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(37,211,102,0);}}
-</style>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --gold: #d4af37;
+            --purple: #6a0dad;
+            --text-white: #ffffff;
+            --card-bg: rgba(21, 21, 21, 0.95);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: radial-gradient(circle at center, #1a1a1a 0%, var(--bg-color) 100%); color: var(--text-white); min-height: 100vh; overflow-x: hidden; }
+        #login-screen { display: flex; justify-content: center; align-items: center; height: 100vh; width: 100%; position: fixed; z-index: 1000; background: var(--bg-color); }
+        .login-card { background: var(--card-bg); padding: 40px; border-radius: 20px; border: 2px solid var(--gold); text-align: center; backdrop-filter: blur(10px); box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); max-width: 350px; width: 90%; }
+        .login-card h1 { color: var(--gold); margin-bottom: 10px; font-weight: 600; }
+        .btn-google { background: white; color: #000; border: none; padding: 12px 20px; border-radius: 50px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; transition: var(--transition); }
+        .btn-google:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3); }
+        #main-content { display: none; padding-top: 80px; padding-bottom: 50px; }
+        header { position: fixed; top: 0; width: 100%; background: rgba(10, 10, 10, 0.9); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; z-index: 900; }
+        header h2 { color: var(--gold); font-size: 1.2rem; flex-grow: 1; text-align: center; }
+        .btn-logout { color: var(--purple); background: none; border: none; font-size: 1.3rem; cursor: pointer; }
+        .container { max-width: 500px; margin: 0 auto; padding: 0 20px; }
+        .link-item { background: #151515; border: 1px solid #333; padding: 18px; border-radius: 12px; text-decoration: none; color: white; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; transition: var(--transition); opacity: 0; transform: translateY(20px); }
+        .link-item:hover { border-color: var(--gold); transform: scale(1.02); box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; color: white; z-index: 1000; animation: pulse 2s infinite; text-decoration: none; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+        .show-animate { animation: fadeInUp 0.5s forwards; }
+        #comments-section { display: none; margin-top: 30px; }
+        .comment-card { background: #151515; border-left: 4px solid var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+    </style>
 </head>
-
 <body>
-<section id="login-screen">
-  <div class="login-card">
-    <h1>Serralheria do Gil</h1>
-    <p>Acesse para ver orçamentos e rotas</p>
-    <button class="btn-google" onclick="login()">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="20" alt="Google"> Entrar com Google
-    </button>
-  </div>
-</section>
-
-<header id="header-nav" style="display:none;">
-  <div style="width:40px;"></div>
-  <h2>Serralheria do Gil</h2>
-  <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
-</header>
-
-<main id="main-content">
-  <div class="container">
-    <div class="links-list">
-      <a href="https://wa.me/5541995008252?text=Olá,%20tudo%20bem?%20Gostaria%20de%20fazer%20um%20orçamento." class="link-item">
-        <span><i class="fab fa-whatsapp" style="color:#25d366"></i> WhatsApp</span>
-        <i class="fas fa-chevron-right icon-right"></i>
-      </a>
-      <a href="https://instagram.com/serralheriadogil" class="link-item">
-        <span><i class="fab fa-instagram" style="color:#e4405f"></i> Instagram</span>
-        <i class="fas fa-chevron-right icon-right"></i>
-      </a>
-      <a href="https://facebook.com/serralheriadogil" class="link-item">
-        <span><i class="fab fa-facebook" style="color:#1877f2"></i> Facebook</span>
-        <i class="fas fa-chevron-right icon-right"></i>
-      </a>
-      <a href="https://www.google.com/maps/dir/?api=1&destination=Curitiba+PR+Borda+do+Campo" class="link-item">
-        <span><i class="fas fa-map-marker-alt" style="color:#ea4335"></i> Ver Rota</span>
-        <i class="fas fa-chevron-right icon-right"></i>
-      </a>
-      <a href="tel:+5541995008252" class="link-item">
-        <span><i class="fas fa-phone" style="color:var(--gold)"></i> Ligar Agora</span>
-        <i class="fas fa-chevron-right icon-right"></i>
-      </a>
-      <div class="link-item" onclick="toggleComments()">
-        <span><i class="fas fa-star" style="color:#ffcc00"></i> Avaliações</span>
-        <i class="fas fa-chevron-down icon-right"></i>
-      </div>
-    </div>
-
-    <section id="comments-section">
-      <textarea id="comment-text" rows="3" placeholder="Escreva sua avaliação..."></textarea>
-      <button class="btn-send" onclick="sendComment()">Enviar Comentário</button>
-      <div id="comments-display"></div>
+    <section id="login-screen">
+        <div class="login-card">
+            <h1>Serralheria do Gil</h1>
+            <p>Acesse para ver orçamentos e rotas</p>
+            <button class="btn-google" onclick="login()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="20">
+                Entrar com Google
+            </button>
+        </div>
     </section>
-  </div>
-</main>
 
-<a href="https://wa.me/5541995008252" class="whatsapp-float" id="wa-float" style="display:none;">
-  <i class="fab fa-whatsapp"></i>
-</a>
+    <header id="header-nav" style="display: none;">
+        <div style="width: 40px;"></div>
+        <h2>Serralheria do Gil</h2>
+        <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+    </header>
+
+    <main id="main-content">
+        <div class="container">
+            <div class="links-list">
+                <a href="https://wa.me/5541995008252?text=Olá,%20gostaria%20de%20um%20orçamento." class="link-item">
+                    <span><i class="fab fa-whatsapp" style="color: #25d366;"></i> WhatsApp</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="https://instagram.com/serralheriadogil" class="link-item">
+                    <span><i class="fab fa-instagram" style="color: #e4405f;"></i> Instagram</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="https://facebook.com/serralheriadogil" class="link-item">
+                    <span><i class="fab fa-facebook" style="color: #1877f2;"></i> Facebook</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="https://www.google.com/maps?q=Curitiba+PR+Borda+do+Campo" class="link-item">
+                    <span><i class="fas fa-map-marker-alt" style="color: #ea4335;"></i> Ver Rota</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="tel:+5541995008252" class="link-item">
+                    <span><i class="fas fa-phone" style="color: var(--gold);"></i> Ligar Agora</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <div class="link-item" style="cursor: pointer;" onclick="toggleComments()">
+                    <span><i class="fas fa-star" style="color: #ffcc00;"></i> Avaliações</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+
+            <section id="comments-section">
+                <textarea id="comment-text" rows="3" style="width:100%; background:#111; color:white; border:1px solid var(--gold); border-radius:8px; padding:10px; margin-bottom:10px;" placeholder="Sua avaliação..."></textarea>
+                <button onclick="sendComment()" style="background:var(--purple); color:white; border:none; width:100%; padding:10px; border-radius:5px; cursor:pointer;">Enviar</button>
+                <div id="comments-display" style="margin-top:20px;"></div>
+            </section>
+        </div>
+    </main>
+
+    <a href="https://wa.me/5541995008252" class="whatsapp-float" id="wa-float" style="display: none;"><i class="fab fa-whatsapp"></i></a>
+    <script>
+        // CONFIGURAÇÃO DO SEU PROJETO FIREBASE
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY_AQUI",
+            authDomain: "seu-projeto.firebaseapp.com",
+            projectId: "seu-projeto",
+            storageBucket: "seu-projeto.appspot.com",
+            messagingSenderId: "seu-id",
+            appId: "seu-app-id"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const provider = new firebase.auth.GoogleAuthProvider();
+        // Gerenciamento de Autenticação
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                document.getElementById('header-nav').style.display = 'flex';
+                document.getElementById('wa-float').style.display = 'flex';
+                animateButtons();
+                loadComments();
+            } else {
+                document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('main-content').style.display = 'none';
+                document.getElementById('header-nav').style.display = 'none';
+                document.getElementById('wa-float').style.display = 'none';
+            }
+        });
+
+        function login() { auth.signInWithPopup(provider); }
+        function logout() { auth.signOut(); }
+
+        function animateButtons() {
+            const items = document.querySelectorAll('.link-item');
+            items.forEach((item, index) => {
+                setTimeout(() => { item.classList.add('show-animate'); }, index * 100);
+            });
+        }
+
+        function toggleComments() {
+            const s = document.getElementById('comments-section');
+            s.style.display = s.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function sendComment() {
+            const txt = document.getElementById('comment-text').value;
+            if (!txt.trim()) return;
+            db.collection("comments").add({
+                name: auth.currentUser.displayName,
+                text: txt,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => { document.getElementById('comment-text').value = ""; });
+        }
+
+        function loadComments() {
+            db.collection("comments").orderBy("timestamp", "desc").onSnapshot(snap => {
+                const display = document.getElementById('comments-display');
+                display.innerHTML = "";
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    display.innerHTML += `<div class="comment-card"><span>${d.name}</span><p>${d.text}</p></div>`;
+                });
+            });
+        }
+    </script>
 </body>
 </html>
