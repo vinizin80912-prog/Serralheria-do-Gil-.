@@ -10,7 +10,6 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <style>
         * {
             margin: 0;
@@ -31,9 +30,10 @@
             background-color: var(--preto-absoluto);
             color: var(--branco);
             overflow-x: hidden;
+            line-height: 1.6;
         }
         
-        /* TELA DE LOGIN - AGORA OBRIGATÓRIA */
+        /* TELA DE LOGIN */
         #login-screen {
             position: fixed;
             top: 0;
@@ -106,10 +106,12 @@
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
         }
         
-        /* APP PRINCIPAL - COMEÇA ESCONDIDO */
+        /* APP PRINCIPAL */
         #main-app {
             display: none;
             opacity: 0;
+            min-height: 100vh;
+            background-color: var(--preto-absoluto);
         }
         
         /* HEADER */
@@ -119,7 +121,7 @@
             left: 0;
             width: 100%;
             padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
             display: flex;
@@ -153,6 +155,8 @@
             align-items: center;
             gap: 5px;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
         
         .header-btn:hover {
@@ -183,15 +187,14 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 20px;
+            display: inline-block;
         }
         
         .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, var(--amarelo-ouro) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--amarelo-ouro);
+            font-weight: bold;
         }
         
         .hero p {
@@ -270,7 +273,7 @@
     </style>
 </head>
 <body>
-    <!-- TELA DE LOGIN - OBRIGATÓRIA -->
+    <!-- TELA DE LOGIN -->
     <div id="login-screen">
         <div class="login-container">
             <i class="fas fa-hard-hat login-logo"></i>
@@ -283,7 +286,7 @@
         </div>
     </div>
 
-    <!-- APP PRINCIPAL - SÓ APARECE DEPOIS DO LOGIN -->
+    <!-- APP PRINCIPAL -->
     <div id="main-app">
         <!-- HEADER -->
         <header>
@@ -369,7 +372,7 @@
             </div>
         </section>
 
-        <!-- REDES SOCIAIS - FACEBOOK ATUALIZADO -->
+        <!-- REDES SOCIAIS -->
         <section class="redes-sociais">
             <h2 class="section-title">Acompanhe Nosso Trabalho</h2>
             
@@ -391,7 +394,7 @@
             </div>
         </section>
 
-        <!-- MAPA E CONTATO - EMAIL ATUALIZADO -->
+        <!-- CONTATO -->
         <section class="contato-section">
             <h2 class="section-title">Onde Estamos</h2>
             
@@ -413,37 +416,7 @@
             </div>
         </section>
 
-        <!-- SEÇÃO DE COMENTÁRIOS FUNCIONAL -->
-        <section class="comentarios-section">
-            <h2 class="section-title">Avaliações dos Clientes</h2>
-            
-            <!-- Formulário para deixar comentário -->
-            <div class="comentario-form" id="comentario-form">
-                <h3>Deixe sua avaliação</h3>
-                <div class="estrelas-input">
-                    <span>Clique nas estrelas:</span>
-                    <div class="estrelas-select" id="estrelas-select">
-                        <i class="far fa-star" data-valor="1"></i>
-                        <i class="far fa-star" data-valor="2"></i>
-                        <i class="far fa-star" data-valor="3"></i>
-                        <i class="far fa-star" data-valor="4"></i>
-                        <i class="far fa-star" data-valor="5"></i>
-                    </div>
-                </div>
-                <textarea id="comentario-texto" placeholder="Conte sua experiência com a Serralheria do Gil..." rows="4"></textarea>
-                <button class="btn-enviar-comentario" onclick="enviarComentario()">
-                    <i class="fas fa-paper-plane"></i>
-                    Publicar Avaliação
-                </button>
-            </div>
-            
-            <!-- Lista de comentários -->
-            <div class="comentarios-lista" id="comentarios-lista">
-                <!-- Comentários serão carregados aqui -->
-            </div>
-        </section>
-
-        <!-- FOOTER - EMAIL ATUALIZADO -->
+        <!-- FOOTER -->
         <footer>
             <div class="footer-content">
                 <h3>Serralheria do Gil</h3>
@@ -460,10 +433,16 @@
         </footer>
     </div>
 
+    <!-- WHATSAPP FLOATING -->
+    <a href="https://wa.me/5541995008252" class="whatsapp-float" target="_blank" id="whatsapp-float" style="display: none;">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <style>
         /* SEÇÃO SERVIÇOS */
         .servicos {
             padding: 60px 20px;
+            background-color: var(--preto-absoluto);
         }
         
         .section-title {
@@ -471,6 +450,7 @@
             font-size: 1.8rem;
             margin-bottom: 40px;
             color: var(--branco);
+            font-weight: bold;
         }
         
         .servicos-grid {
@@ -482,7 +462,7 @@
         }
         
         .servico-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             padding: 20px;
@@ -496,7 +476,7 @@
         }
         
         .servico-card:hover {
-            background: rgba(255, 215, 0, 0.05);
+            background: rgba(255, 215, 0, 0.1);
             border-color: var(--amarelo-ouro);
             transform: translateX(10px);
         }
@@ -504,18 +484,20 @@
         .servico-icon {
             width: 45px;
             height: 45px;
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(255, 215, 0, 0.2);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--amarelo-ouro);
             font-size: 1.2rem;
+            flex-shrink: 0;
         }
         
         .servico-card span {
             flex: 1;
             font-size: 1rem;
+            font-weight: 500;
         }
         
         .seta {
@@ -531,10 +513,11 @@
         /* ESPECIALIDADES */
         .especialidades {
             padding: 40px 20px;
+            background-color: var(--preto-absoluto);
         }
         
         .espec-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 40px 30px;
@@ -563,7 +546,7 @@
         }
         
         .espec-card p {
-            color: #888;
+            color: #aaa;
             line-height: 1.6;
             font-size: 0.95rem;
         }
@@ -571,6 +554,7 @@
         /* REDES SOCIAIS */
         .redes-sociais {
             padding: 40px 20px;
+            background-color: var(--preto-absoluto);
         }
         
         .botoes-redes {
@@ -591,7 +575,7 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.3s ease;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
         
         /* BOTÕES COM BORDA BRANCA DE 4PX */
@@ -626,10 +610,11 @@
         /* CONTATO */
         .contato-section {
             padding: 40px 20px;
+            background-color: var(--preto-absoluto);
         }
         
         .endereco-card, .email-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 30px;
@@ -667,190 +652,6 @@
         .btn-maps:hover, .btn-email:hover {
             background: var(--amarelo-ouro);
             color: #000;
-        }
-        
-        /* SEÇÃO DE COMENTÁRIOS */
-        .comentarios-section {
-            padding: 60px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        /* Formulário de comentário */
-        .comentario-form {
-            background: rgba(255, 255, 255, 0.03);
-            border: 2px solid var(--amarelo-ouro);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .comentario-form h3 {
-            color: var(--amarelo-ouro);
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.3rem;
-        }
-        
-        .estrelas-input {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .estrelas-input span {
-            display: block;
-            color: #888;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-        }
-        
-        .estrelas-select {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            font-size: 2rem;
-            color: #444;
-            cursor: pointer;
-        }
-        
-        .estrelas-select i {
-            transition: all 0.2s ease;
-        }
-        
-        .estrelas-select i.active {
-            color: var(--amarelo-ouro);
-            transform: scale(1.1);
-        }
-        
-        .estrelas-select i:hover {
-            color: var(--amarelo-ouro);
-        }
-        
-        .comentario-form textarea {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            color: var(--branco);
-            font-family: inherit;
-            font-size: 1rem;
-            resize: vertical;
-            margin-bottom: 20px;
-        }
-        
-        .comentario-form textarea:focus {
-            outline: none;
-            border-color: var(--amarelo-ouro);
-        }
-        
-        .comentario-form textarea::placeholder {
-            color: #666;
-        }
-        
-        .btn-enviar-comentario {
-            width: 100%;
-            padding: 16px;
-            background: var(--amarelo-ouro);
-            color: #000;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-enviar-comentario:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-        }
-        
-        /* Lista de comentários */
-        .comentarios-lista {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .comentario-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            animation: slideIn 0.5s ease;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .comentario-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .comentario-autor {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .comentario-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--amarelo-ouro);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .comentario-info h4 {
-            color: var(--branco);
-            font-size: 1rem;
-            margin-bottom: 3px;
-        }
-        
-        .comentario-info span {
-            color: #666;
-            font-size: 0.8rem;
-        }
-        
-        .comentario-estrelas {
-            color: var(--amarelo-ouro);
-            font-size: 0.9rem;
-        }
-        
-        .comentario-texto {
-            color: #ccc;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-        
-        .sem-comentarios {
-            text-align: center;
-            color: #666;
-            padding: 40px;
-            font-style: italic;
         }
         
         /* FOOTER */
@@ -891,6 +692,7 @@
             color: var(--amarelo-ouro);
             font-size: 1.2rem;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
         
         .footer-social a:hover {
@@ -930,13 +732,8 @@
         }
     </style>
 
-    <!-- WHATSAPP FLOATING -->
-    <a href="https://wa.me/5541995008252" class="whatsapp-float" target="_blank" id="whatsapp-float" style="display: none;">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
     <script>
-        // CONFIGURAÇÃO FIREBASE COM SUAS KEYS
+        // CONFIGURAÇÃO FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
             authDomain: "serralheria-do-gil.firebaseapp.com",
@@ -949,20 +746,13 @@
         
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const db = firebase.firestore();
         
-        // VARIÁVEIS GLOBAIS
-        let estrelasSelecionadas = 0;
-        let usuarioAtual = null;
-        
-        // VERIFICAR ESTADO DE LOGIN - AGORA OBRIGATÓRIO
+        // VERIFICAR LOGIN - OBRIGATÓRIO
         auth.onAuthStateChanged((user) => {
             if (user) {
-                usuarioAtual = user;
                 showMainApp();
-                carregarComentarios();
             } else {
-                // Se não tiver logado, garante que a tela de login está visível
+                // Garante que login está visível
                 document.getElementById('login-screen').style.display = 'flex';
                 document.getElementById('main-app').style.display = 'none';
                 document.getElementById('whatsapp-float').style.display = 'none';
@@ -974,9 +764,7 @@
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider)
                 .then((result) => {
-                    usuarioAtual = result.user;
                     showMainApp();
-                    carregarComentarios();
                 })
                 .catch((error) => {
                     console.error("Erro no login:", error);
@@ -984,20 +772,17 @@
                 });
         }
         
-        // MOSTRAR APP PRINCIPAL
+        // MOSTRAR APP
         function showMainApp() {
             const loginScreen = document.getElementById('login-screen');
             const mainApp = document.getElementById('main-app');
             const whatsappFloat = document.getElementById('whatsapp-float');
             
-            // Esconde login
             loginScreen.style.display = 'none';
-            
-            // Mostra app
             mainApp.style.display = 'block';
             whatsappFloat.style.display = 'flex';
             
-            // Animação de entrada
+            // Animação suave
             gsap.to(mainApp, {
                 opacity: 1,
                 duration: 0.5,
@@ -1021,147 +806,13 @@
                 delay: 0.4
             });
             
-            initScrollReveal();
-            initEstrelas();
-        }
-        
-        // INICIALIZAR SELEÇÃO DE ESTRELAS
-        function initEstrelas() {
-            const estrelas = document.querySelectorAll('.estrelas-select i');
-            
-            estrelas.forEach((estrela, index) => {
-                estrela.addEventListener('click', () => {
-                    estrelasSelecionadas = index + 1;
-                    atualizarEstrelas();
-                });
-                
-                estrela.addEventListener('mouseenter', () => {
-                    highlightEstrelas(index + 1);
-                });
-            });
-            
-            document.querySelector('.estrelas-select').addEventListener('mouseleave', () => {
-                atualizarEstrelas();
-            });
-        }
-        
-        function highlightEstrelas(quantidade) {
-            const estrelas = document.querySelectorAll('.estrelas-select i');
-            estrelas.forEach((estrela, index) => {
-                if (index < quantidade) {
-                    estrela.classList.remove('far');
-                    estrela.classList.add('fas', 'active');
-                } else {
-                    estrela.classList.remove('fas', 'active');
-                    estrela.classList.add('far');
-                }
-            });
-        }
-        
-        function atualizarEstrelas() {
-            highlightEstrelas(estrelasSelecionadas);
-        }
-        
-        // ENVIAR COMENTÁRIO
-        function enviarComentario() {
-            const texto = document.getElementById('comentario-texto').value.trim();
-            
-            if (estrelasSelecionadas === 0) {
-                alert('Por favor, selecione uma avaliação em estrelas!');
-                return;
-            }
-            
-            if (texto === '') {
-                alert('Por favor, escreva um comentário!');
-                return;
-            }
-            
-            if (!usuarioAtual) {
-                alert('Você precisa estar logado para comentar!');
-                return;
-            }
-            
-            const comentario = {
-                nome: usuarioAtual.displayName || 'Usuário',
-                foto: usuarioAtual.photoURL || null,
-                estrelas: estrelasSelecionadas,
-                texto: texto,
-                data: firebase.firestore.FieldValue.serverTimestamp(),
-                userId: usuarioAtual.uid
-            };
-            
-            db.collection('comentarios').add(comentario)
-                .then(() => {
-                    // Limpa formulário
-                    document.getElementById('comentario-texto').value = '';
-                    estrelasSelecionadas = 0;
-                    atualizarEstrelas();
-                    
-                    // Recarrega comentários
-                    carregarComentarios();
-                    
-                    alert('Avaliação publicada com sucesso!');
-                })
-                .catch((error) => {
-                    console.error('Erro ao enviar:', error);
-                    alert('Erro ao publicar. Tente novamente.');
-                });
-        }
-        
-        // CARREGAR COMENTÁRIOS
-        function carregarComentarios() {
-            const container = document.getElementById('comentarios-lista');
-            
-            db.collection('comentarios')
-                .orderBy('data', 'desc')
-                .onSnapshot((snapshot) => {
-                    if (snapshot.empty) {
-                        container.innerHTML = '<div class="sem-comentarios">Nenhuma avaliação ainda. Seja o primeiro!</div>';
-                        return;
-                    }
-                    
-                    container.innerHTML = '';
-                    
-                    snapshot.forEach((doc) => {
-                        const data = doc.data();
-                        const dataFormatada = data.data ? new Date(data.data.toDate()).toLocaleDateString('pt-BR') : 'Agora';
-                        const iniciais = data.nome ? data.nome.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'U';
-                        
-                        const comentarioHTML = `
-                            <div class="comentario-item">
-                                <div class="comentario-header">
-                                    <div class="comentario-autor">
-                                        <div class="comentario-avatar">${iniciais}</div>
-                                        <div class="comentario-info">
-                                            <h4>${data.nome}</h4>
-                                            <span>${dataFormatada}</span>
-                                        </div>
-                                    </div>
-                                    <div class="comentario-estrelas">
-                                        ${'★'.repeat(data.estrelas)}${'☆'.repeat(5 - data.estrelas)}
-                                    </div>
-                                </div>
-                                <p class="comentario-texto">${data.texto}</p>
-                            </div>
-                        `;
-                        
-                        container.innerHTML += comentarioHTML;
-                    });
-                }, (error) => {
-                    console.error('Erro ao carregar:', error);
-                    container.innerHTML = '<div class="sem-comentarios">Erro ao carregar comentários.</div>';
-                });
-        }
-        
-        // SCROLLREVEAL
-        function initScrollReveal() {
+            // ScrollReveal
             ScrollReveal().reveal('.servico-card', {
                 origin: 'left',
                 distance: '50px',
                 duration: 800,
                 delay: 100,
-                interval: 100,
-                easing: 'cubic-bezier(0.5, 0, 0, 1)'
+                interval: 100
             });
             
             ScrollReveal().reveal('.espec-card', {
@@ -1176,12 +827,6 @@
                 distance: '30px',
                 duration: 600,
                 interval: 100
-            });
-            
-            ScrollReveal().reveal('.comentario-form', {
-                origin: 'bottom',
-                distance: '40px',
-                duration: 800
             });
             
             ScrollReveal().reveal('.endereco-card, .email-card', {
