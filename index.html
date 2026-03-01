@@ -3,161 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serralheria do Gil | Oficial</title>
+    <title>Serralheria do Gil | Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
     <style>
-        :root { --bg: #0a0a0a; --gold: #d4af37; --purple: #6a0dad; --glass: rgba(255, 255, 255, 0.03); }
+        :root {
+            --bg: #050505;
+            --gold: #d4af37;
+            --gold-light: #f1d592;
+            --purple: #6a0dad;
+            --card-bg: #121212;
+            --text: #ffffff;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg); color: #fff; min-height: 100vh; overflow-x: hidden; }
-        
+        body { background-color: var(--bg); color: var(--text); overflow-x: hidden; }
+
         /* Login Screen */
-        #login-screen { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a, #000); display: flex; justify-content: center; align-items: center; z-index: 2000; }
-        .login-card { background: var(--glass); backdrop-filter: blur(15px); padding: 40px; border-radius: 24px; border: 1px solid var(--gold); text-align: center; width: 90%; max-width: 380px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        
-        /* Header & Container */
-        header { position: fixed; top: 0; width: 100%; padding: 20px; background: rgba(10,10,10,0.8); backdrop-filter: blur(10px); display: none; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212,175,55,0.2); z-index: 1000; }
-        .container { max-width: 480px; margin: 0 auto; padding: 110px 20px 40px; display: none; }
-        
-        /* Elegant Buttons */
-        .link-item { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 16px; text-decoration: none; color: #fff; display: flex; align-items: center; margin-bottom: 16px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; transform: translateY(30px); }
-        .link-item:hover { border-color: var(--gold); background: rgba(212,175,55,0.05); transform: scale(1.03); box-shadow: 0 10px 20px rgba(0,0,0,0.4), 0 0 15px rgba(212,175,55,0.1); }
-        .link-item i { font-size: 1.4rem; margin-right: 15px; width: 30px; text-align: center; }
-        
-        /* WhatsApp Floating */
-        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; width: 65px; height: 65px; border-radius: 50%; display: none; justify-content: center; align-items: center; font-size: 32px; color: #fff; box-shadow: 0 10px 25px rgba(37,211,102,0.3); animation: pulse 2s infinite; z-index: 1000; }
-        
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,211,102,0.5); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37,211,102,0); } 100% { transform: scale(1); } }
-        .show { animation: fadeInUp 0.6s forwards; }
+        #login-screen {
+            position: fixed; inset: 0; z-index: 9999;
+            background: radial-gradient(circle at top right, #1a1a1a, #000);
+            display: flex; justify-content: center; align-items: center;
+        }
+        .login-card {
+            background: var(--card-bg); border: 1px solid var(--gold);
+            padding: 40px 30px; border-radius: 28px; text-align: center;
+            width: 90%; max-width: 380px; box-shadow: 0 0 40px rgba(212, 175, 55, 0.15);
+        }
+
+        /* App Layout */
+        header {
+            position: fixed; top: 0; width: 100%; height: 70px;
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(15px);
+            display: none; justify-content: space-between; align-items: center;
+            padding: 0 25px; border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000;
+        }
+        .container { 
+            max-width: 500px; margin: 0 auto; padding: 100px 20px 50px; 
+            display: none; flex-direction: column; gap: 15px;
+        }
+
+        /* Buttons Style Video */
+        .btn-link {
+            background: var(--card-bg); border: 1px solid #222;
+            padding: 18px 22px; border-radius: 18px; display: flex;
+            align-items: center; text-decoration: none; color: white;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0; transform: translateY(20px);
+        }
+        .btn-link:hover {
+            border-color: var(--gold); transform: scale(1.05);
+            background: #1a1a1a; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+        .btn-link i { font-size: 1.5rem; margin-right: 20px; width: 35px; text-align: center; }
+        .btn-link span { font-weight: 400; font-size: 1.05rem; flex-grow: 1; }
+        .btn-link .arrow { font-size: 0.8rem; opacity: 0.3; }
+
+        /* Floating Elements */
+        .wa-float {
+            position: fixed; bottom: 30px; right: 30px; background: #25d366;
+            width: 65px; height: 65px; border-radius: 50%; display: none;
+            justify-content: center; align-items: center; font-size: 32px;
+            color: white; box-shadow: 0 10px 30px rgba(37,211,102,0.4);
+            animation: pulse 2s infinite; z-index: 2000;
+        }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.7); } 70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+        .fade-in { animation: fadeInAnim 0.6s forwards; }
+        @keyframes fadeInAnim { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <div id="login-screen">
         <div class="login-card">
-            <h1 style="color:var(--gold); font-size: 1.8rem; margin-bottom: 10px;">Serralheria do Gil</h1>
-            <p style="color: #888; margin-bottom: 30px;">Acesse para ver orçamentos e rotas</p>
-            <button class="btn-google" onclick="login()" style="background:#fff; color:#000; border:none; padding:15px; border-radius:12px; font-weight:600; cursor:pointer; width:100%; display:flex; align-items:center; justify-content:center; gap:12px;">
+            <h1 style="color:var(--gold); font-weight:600; margin-bottom:5px;">Serralheria do Gil</h1>
+            <p style="color:#666; font-size:0.9rem; margin-bottom:35px;">Acesse para ver orçamentos e rotas</p>
+            <button onclick="login()" style="background:#fff; border:none; width:100%; padding:16px; border-radius:14px; display:flex; align-items:center; justify-content:center; gap:12px; cursor:pointer; font-weight:600; transition: 0.3s;">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> Entrar com Google
             </button>
         </div>
     </div>
 
-    <header id="main-header">
+    <header id="app-header">
         <div style="width:40px"></div>
-        <h2 style="color:var(--gold); font-weight:400; letter-spacing:1px;">Serralheria do Gil</h2>
+        <h2 style="color:var(--gold); font-size:1.1rem; letter-spacing:1px;">SERRALHERIA DO GIL</h2>
         <button onclick="logout()" style="background:none; border:none; color:var(--purple); cursor:pointer;"><i class="fas fa-sign-out-alt fa-lg"></i></button>
     </header>
 
-    <div class="container" id="main-app">
-        <div class="links-list">
-            <a href="https://wa.me/5541995008252?text=Olá,%20gostaria%20de%20um%20orçamento." class="link-item">
-                <i class="fab fa-whatsapp" style="color:#25d366"></i> <span>WhatsApp</span>
-            </a>
-            <a href="https://www.instagram.com/serralheriadogil/" class="link-item">
-                <i class="fab fa-instagram" style="color:#e4405f"></i> <span>Instagram</span>
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=100063654495574" class="link-item">
-                <i class="fab fa-facebook" style="color:#1877f2"></i> <span>Facebook</span>
-            </a>
-            <a href="https://www.google.com/maps/dir/?api=1&destination=Rua+Tubarão,+203,+São+José+dos+Pinhais" class="link-item">
-                <i class="fas fa-map-marker-alt" style="color:#ea4335"></i> <span>Ver Rota</span>
-            </a>
-            <a href="tel:+5541995008252" class="link-item">
-                <i class="fas fa-phone" style="color:var(--gold)"></i> <span>Ligar Agora</span>
-            </a>
-            <div class="link-item" style="cursor:pointer" onclick="toggleComments()">
-                <i class="fas fa-star" style="color:#ffcc00"></i> <span>Avaliações</span>
-            </div>
+    <div class="container" id="app-content">
+        <a href="https://wa.me/5541995008252?text=Olá,%20gostaria%20de%20um%20orçamento." class="btn-link">
+            <i class="fab fa-whatsapp" style="color:#25d366"></i><span>WhatsApp</span><i class="fas fa-chevron-right arrow"></i>
+        </a>
+        <a href="https://www.instagram.com/serralheriadogil/" class="btn-link">
+            <i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram</span><i class="fas fa-chevron-right arrow"></i>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=100063654495574" class="btn-link">
+            <i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span><i class="fas fa-chevron-right arrow"></i>
+        </a>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=-25.503451,-49.124578" class="btn-link">
+            <i class="fas fa-map-marker-alt" style="color:#ea4335"></i><span>Ver Rota</span><i class="fas fa-chevron-right arrow"></i>
+        </a>
+        <a href="mailto:Serralheriadogil@hotmail.com" class="btn-link">
+            <i class="fas fa-envelope" style="color:var(--gold)"></i><span>E-mail</span><i class="fas fa-chevron-right arrow"></i>
+        </a>
+        <div class="btn-link" style="cursor:pointer" onclick="toggleComments()">
+            <i class="fas fa-star" style="color:#ffcc00"></i><span>Avaliações</span><i class="fas fa-chevron-down arrow"></i>
         </div>
 
-        <section id="comments-box" style="display:none; margin-top:30px; background: var(--glass); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
-            <textarea id="comment-input" placeholder="Escreva sua avaliação..." style="width:100%; height:90px; background:#000; color:#fff; border:1px solid #333; border-radius:12px; padding:12px; margin-bottom:12px; outline:none;"></textarea>
-            <button onclick="sendComment()" style="width:100%; padding:14px; background:linear-gradient(45deg, var(--purple), #4a0880); color:#fff; border:none; border-radius:12px; font-weight:600; cursor:pointer;">Publicar Avaliação</button>
-            <div id="comments-list" style="margin-top:25px;"></div>
-        </section>
+        <div id="comment-section" style="display:none; margin-top:10px; padding:20px; background:#111; border-radius:20px; border:1px solid #222;">
+            <textarea id="comment-text" placeholder="Como foi sua experiência?" style="width:100%; height:80px; background:#000; color:#fff; border:1px solid #333; border-radius:12px; padding:12px; outline:none; margin-bottom:12px;"></textarea>
+            <button onclick="sendComment()" style="width:100%; padding:15px; background:var(--purple); color:white; border:none; border-radius:12px; font-weight:600; cursor:pointer;">Enviar Feedback</button>
+            <div id="comments-display" style="margin-top:20px;"></div>
+        </div>
     </div>
 
-    <a href="https://wa.me/5541995008252" class="whatsapp-float" id="wa-btn"><i class="fab fa-whatsapp"></i></a>
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
-            authDomain: "serralheria-do-gil.firebaseapp.com",
-            projectId: "serralheria-do-gil",
-            storageBucket: "serralheria-do-gil.firebasestorage.app",
-            messagingSenderId: "267882427773",
-            appId: "1:267882427773:web:bf1689a6adda79f3334814"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const provider = new firebase.auth.GoogleAuthProvider();
+    <a href="https://wa.me/5541995008252" class="wa-float" id="wa-icon"><i class="fab fa-whatsapp"></i></a>
+        // Controle de Sessão Rígido
         auth.onAuthStateChanged(user => {
-            const loginScreen = document.getElementById('login-screen');
-            const mainApp = document.getElementById('main-app');
-            const header = document.getElementById('main-header');
-            const waBtn = document.getElementById('wa-btn');
+            const loginUI = document.getElementById('login-screen');
+            const contentUI = document.getElementById('app-content');
+            const headerUI = document.getElementById('app-header');
+            const waUI = document.getElementById('wa-icon');
 
             if (user) {
-                // Usuário Logado
-                loginScreen.style.transition = "opacity 0.5s";
-                loginScreen.style.opacity = "0";
+                loginUI.style.opacity = "0";
                 setTimeout(() => {
-                    loginScreen.style.display = 'none';
-                    mainApp.style.display = 'block';
-                    header.style.display = 'flex';
-                    waBtn.style.display = 'flex';
-                    // Animação em cascata dos botões
-                    document.querySelectorAll('.link-item').forEach((el, i) => {
-                        setTimeout(() => el.classList.add('show'), i * 150);
+                    loginUI.style.display = 'none';
+                    contentUI.style.display = 'flex';
+                    headerUI.style.display = 'flex';
+                    waUI.style.display = 'flex';
+                    
+                    // Animação Cascata (Estilo Vídeo)
+                    document.querySelectorAll('.btn-link').forEach((btn, i) => {
+                        setTimeout(() => btn.classList.add('fade-in'), i * 120);
                     });
-                }, 500);
+                }, 400);
                 loadComments();
             } else {
-                // Usuário Deslogado
-                loginScreen.style.display = 'flex';
-                loginScreen.style.opacity = "1";
-                mainApp.style.display = 'none';
-                header.style.display = 'none';
-                waBtn.style.display = 'none';
+                loginUI.style.display = 'flex';
+                loginUI.style.opacity = "1";
+                contentUI.style.display = 'none';
+                headerUI.style.display = 'none';
+                waUI.style.display = 'none';
             }
         });
 
-        function login() { auth.signInWithPopup(provider).catch(e => alert("Erro ao logar: " + e.message)); }
-        function logout() { auth.signOut(); }
-        
-        function toggleComments() { 
-            const box = document.getElementById('comments-box');
-            box.style.display = box.style.display === 'none' ? 'block' : 'none';
+        function login() { auth.signInWithPopup(provider).catch(e => console.log(e)); }
+        function logout() { auth.signOut(); window.location.reload(); }
+
+        function toggleComments() {
+            const el = document.getElementById('comment-section');
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
         }
 
         async function sendComment() {
-            const input = document.getElementById('comment-input');
-            if (!input.value.trim()) return;
-            try {
-                await db.collection("comments").add({
-                    user: auth.currentUser.displayName,
-                    text: input.value,
-                    date: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                input.value = "";
-            } catch (e) { alert("Erro ao enviar: " + e.message); }
+            const txt = document.getElementById('comment-text');
+            if(!txt.value.trim()) return;
+            await db.collection("comments").add({
+                user: auth.currentUser.displayName,
+                text: txt.value,
+                date: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            txt.value = "";
         }
 
         function loadComments() {
             db.collection("comments").orderBy("date", "desc").onSnapshot(snap => {
-                const list = document.getElementById('comments-list');
-                list.innerHTML = "";
+                const box = document.getElementById('comments-display');
+                box.innerHTML = "";
                 snap.forEach(doc => {
-                    const c = doc.data();
-                    list.innerHTML += `
-                        <div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; margin-bottom:10px; border-left: 3px solid var(--gold);">
-                            <div style="color:var(--gold); font-size:0.8rem; font-weight:600; margin-bottom:4px;">${c.user}</div>
-                            <div style="color:#ddd; font-size:0.9rem;">${c.text}</div>
+                    const d = doc.data();
+                    box.innerHTML += `
+                        <div style="background:#000; padding:15px; border-radius:12px; margin-bottom:10px; border-left:2px solid var(--gold);">
+                            <strong style="color:var(--gold); font-size:0.8rem;">${d.user}</strong>
+                            <p style="font-size:0.9rem; color:#ccc; margin-top:4px;">${d.text}</p>
                         </div>`;
                 });
             });
