@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Serralheria do Gil | Premium</title>
+    <title>Serralheria do Gil | Contraste Máximo</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
@@ -14,157 +14,117 @@
 
     <style>
         :root {
-            --primary: #FFC107; /* Amarelo Ouro */
+            --primary: #FFEA00; /* Amarelo Neon */
             --bg-site: #000000; /* Fundo Preto Absoluto */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         
-        body { 
-            background: var(--bg-site); 
-            color: white; 
-            overflow-x: hidden; 
-            min-height: 150vh; /* Para garantir o scroll e a animação */
-        }
+        body { background: var(--bg-site); color: white; overflow-x: hidden; min-height: 180vh; }
 
-        /* Header com borda neon */
         header {
-            position: fixed; top: 0; width: 100%; height: 70px;
-            background: #000; border-bottom: 3px solid var(--primary);
+            position: fixed; top: 0; width: 100%; height: 75px;
+            background: #000; border-bottom: 4px solid var(--primary);
             display: flex; justify-content: center; align-items: center; z-index: 1000;
         }
 
-        .container { max-width: 480px; margin: 0 auto; padding: 100px 20px 80px; }
+        .container { max-width: 480px; margin: 0 auto; padding: 120px 20px 100px; }
 
-        /* --- BOTÕES COLORIDOS DE ALTO CONTRASTE (NÃO SÃO PRETOS!) --- */
-        .btn-premium {
+        /* --- BOTÕES COM CORES SÓLIDAS (SEM PRETO, SEM CINZA) --- */
+        .btn-zica {
             position: relative;
             display: flex;
             align-items: center;
             text-decoration: none;
-            color: white; /* Texto sempre branco para ler no fundo colorido */
-            padding: 22px;
-            border-radius: 20px;
-            margin-bottom: 20px;
+            color: #000; /* Texto preto para ler bem nas cores claras */
+            padding: 24px;
+            border-radius: 25px;
+            margin-bottom: 25px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: none;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            overflow: hidden;
+            letter-spacing: 2px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 4px solid #fff; /* Borda branca para destacar no preto */
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
-        /* Efeito de brilho que passa pelo botão */
-        .btn-premium::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shine 4s infinite;
+        /* Cores Fortes */
+        .btn-amarelo { background: #FFEA00; color: #000; } 
+        .btn-verde   { background: #39FF14; color: #000; } /* Verde Neon */
+        .btn-insta   { background: #FF00FF; color: #fff; border-color: #fff; } /* Rosa Choque */
+        .btn-azul    { background: #00BFFF; color: #fff; border-color: #fff; } /* Azul Vivo */
+        .btn-vermelho { background: #FF0000; color: #fff; border-color: #fff; } /* Vermelho Puro */
+
+        .icon-box {
+            width: 50px; height: 50px; background: rgba(0,0,0,0.1);
+            border-radius: 15px; display: flex; align-items: center;
+            justify-content: center; margin-right: 18px; font-size: 1.8rem;
         }
 
-        @keyframes shine {
-            0% { left: -100%; }
-            20% { left: 100%; }
-            100% { left: 100%; }
-        }
-
-        .btn-premium:active { transform: scale(0.95); }
-
-        /* CORES VIVAS PARA OS BOTÕES */
-        .btn-orcamento { background: var(--primary); color: #000; } /* Amarelo Forte */
-        .btn-whats     { background: #25D366; } /* Verde WhatsApp */
-        .btn-insta     { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); } /* Instagram */
-        .btn-face      { background: #1877F2; } /* Azul Facebook */
-        .btn-mail      { background: #EA4335; } /* Vermelho Gmail */
-        .btn-maps      { background: #4285F4; } /* Azul Google */
-
-        .icon-sq {
-            width: 50px; height: 50px; background: rgba(0,0,0,0.2);
-            border-radius: 12px; display: flex; align-items: center;
-            justify-content: center; margin-right: 15px; font-size: 1.5rem;
-        }
-
-        .section-label {
+        .label-redes {
             text-align: center; color: var(--primary); font-weight: 900;
-            margin: 50px 0 20px; letter-spacing: 3px; font-size: 0.9rem;
-            text-transform: uppercase;
+            margin: 80px 0 40px; font-size: 1.5rem; text-shadow: 0 0 10px var(--primary);
         }
 
-        /* LOGIN */
+        /* Login */
         #login-overlay {
             position: fixed; inset: 0; background: #000; z-index: 9999;
             display: flex; align-items: center; justify-content: center;
         }
     </style>
 </head>
-
 <body>
     <div id="login-overlay">
-        <div style="background:#111; padding:40px; border-radius:30px; border:3px solid var(--primary); text-align:center; width:85%; max-width:360px;">
-            <h1 style="color:var(--primary); margin-bottom:25px; font-weight:900;">GIL SERRALHERIA</h1>
-            <button onclick="login()" style="width:100%; padding:20px; border-radius:50px; border:none; background:#fff; font-weight:900; display:flex; align-items:center; justify-content:center; gap:10px; cursor:pointer;">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="22"> ENTRAR AGORA
+        <div style="background:#111; padding:50px; border-radius:40px; border:5px solid var(--primary); text-align:center; width:90%; max-width:380px;">
+            <h1 style="color:var(--primary); font-size:2rem; margin-bottom:30px; font-weight:900;">ENTRAR NO APP</h1>
+            <button onclick="login()" style="width:100%; padding:22px; border-radius:50px; border:none; background:#FFEA00; color:#000; font-weight:900; cursor:pointer; font-size:1.1rem;">
+                LOGIN GOOGLE
             </button>
         </div>
     </div>
 
     <div id="app-content" style="display:none; opacity:0;">
-        <header><span style="font-weight:900; color:var(--primary); letter-spacing:3px;">GIL SERRALHERIA</span></header>
+        <header><span style="font-weight:900; color:var(--primary); font-size:1.2rem;">GIL SERRALHERIA</span></header>
 
         <div class="container">
-            <div style="text-align:center; margin-bottom:40px;">
-                <h2 style="font-size:2.5rem; font-weight:900; line-height:1.1;">QUALIDADE EM <span style="color:var(--primary)">AÇO.</span></h2>
-            </div>
-
-            <a href="https://wa.me/5541995008252?text=Olá,%20gostaria%20de%20fazer%20um%20orçamento%20geral." class="btn-premium btn-orcamento reveal-item">
-                <div class="icon-sq"><i class="fas fa-hammer"></i></div>
-                <div style="flex:1">Orçamento Geral</div>
-                <i class="fas fa-chevron-right"></i>
+            <a href="https://wa.me/5541995008252?text=Olá!%20Quero%20um%20Orçamento%20Geral." class="btn-zica btn-amarelo reveal-item">
+                <div class="icon-box"><i class="fas fa-hammer"></i></div>
+                Orçamento Geral
             </a>
 
-            <a href="https://wa.me/5541995008252?text=Olá,%20gostaria%20de%20um%20orçamento%20de%20uma%20GRADE." class="btn-premium btn-orcamento reveal-item">
-                <div class="icon-sq"><i class="fas fa-shield-alt"></i></div>
-                <div style="flex:1">Orçamento de Grade</div>
-                <i class="fas fa-chevron-right"></i>
+            <a href="https://wa.me/5541995008252?text=Olá!%20Quero%20um%20Orçamento%20de%20Grade." class="btn-zica btn-amarelo reveal-item">
+                <div class="icon-box"><i class="fas fa-shield-alt"></i></div>
+                Orçamento Grade
             </a>
 
-            <div class="section-label reveal-item">Nossas Redes</div>
+            <div class="label-redes reveal-item">NOSSAS REDES</div>
 
-            <div style="margin-bottom: 80px;">
-                <a href="https://wa.me/5541995008252" class="btn-premium btn-whats reveal-item">
-                    <div class="icon-sq"><i class="fab fa-whatsapp"></i></div>
-                    Chamar no WhatsApp
+            <div style="margin-bottom: 150px;">
+                <a href="https://wa.me/5541995008252" class="btn-zica btn-verde reveal-item">
+                    <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
+                    WhatsApp do Gil
                 </a>
 
-                <a href="https://www.instagram.com/serralheriadogil/" class="btn-premium btn-insta reveal-item">
-                    <div class="icon-sq"><i class="fab fa-instagram"></i></div>
-                    Siga no Instagram
+                <a href="https://www.instagram.com/serralheriadogil/" class="btn-zica btn-insta reveal-item">
+                    <div class="icon-box"><i class="fab fa-instagram"></i></div>
+                    Instagram
                 </a>
 
-                <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="btn-premium btn-face reveal-item">
-                    <div class="icon-sq"><i class="fab fa-facebook-f"></i></div>
-                    Página no Facebook
+                <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" target="_blank" class="btn-zica btn-azul reveal-item">
+                    <div class="icon-box"><i class="fab fa-facebook-f"></i></div>
+                    Facebook Oficial
                 </a>
 
-                <a href="mailto:Serralheriadogil@hotmail.com" class="btn-premium btn-mail reveal-item">
-                    <div class="icon-sq"><i class="fas fa-envelope"></i></div>
+                <a href="mailto:Serralheriadogil@hotmail.com" class="btn-zica btn-vermelho reveal-item">
+                    <div class="icon-box"><i class="fas fa-envelope"></i></div>
                     Enviar E-mail
                 </a>
-
-                <a href="https://www.google.com/maps/dir/?api=1&destination=Rua+Tubarão,+203,+São+José+dos+Pinhais0" class="btn-premium btn-maps reveal-item">
-                    <div class="icon-sq"><i class="fas fa-location-dot"></i></div>
-                    Como Chegar
-                </a>
             </div>
 
-            <footer style="text-align:center; color:#333; font-weight:900; padding-bottom:50px;">© 2026 GIL SERRALHERIA</footer>
+            <footer style="text-align:center; color:#555; font-weight:900; padding-bottom:100px;">© 2026 SERRALHERIA DO GIL</footer>
         </div>
     </div>
-
-    <script>
+        <script>
         const firebaseConfig = {
             apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
             authDomain: "serralheria-do-gil.firebaseapp.com",
@@ -179,33 +139,34 @@
 
         auth.onAuthStateChanged(user => {
             if (user) {
-                gsap.to("#login-overlay", { y: -1200, duration: 1, ease: "power4.inOut", onComplete: () => {
+                gsap.to("#login-overlay", { y: "-100%", duration: 1.2, ease: "expo.inOut", onComplete: () => {
                     document.getElementById('login-overlay').style.display = 'none';
                     document.getElementById('app-content').style.display = 'block';
-                    iniciarAnimacoes();
+                    animarEntrada();
                 }});
             }
         });
 
-        function iniciarAnimacoes() {
+        function animarEntrada() {
             gsap.to("#app-content", { opacity: 1, duration: 1 });
 
-            // Animação de Entrada: Botões surgem com impacto
+            // Botões caem girando para dar o efeito "Zica"
             gsap.from(".reveal-item", {
-                y: 100,
-                scale: 0.5,
+                y: 200,
+                rotationX: -45,
+                scale: 0,
                 opacity: 0,
-                duration: 1,
-                stagger: 0.15,
-                ease: "back.out(1.7)"
+                duration: 1.2,
+                stagger: 0.2,
+                ease: "back.out(1.5)"
             });
 
-            // ScrollReveal: Ativa quando rolar a tela
-            const sr = ScrollReveal({ distance: '60px', duration: 1200, delay: 200 });
-            sr.reveal('.btn-premium', { origin: 'bottom', interval: 150 });
+            // ScrollReveal para quando descer a tela
+            const sr = ScrollReveal({ distance: '100px', duration: 1500, delay: 300 });
+            sr.reveal('.btn-zica', { origin: 'bottom', interval: 200 });
         }
 
-        function login() { auth.signInWithPopup(provider).catch(alert); }
+        function login() { auth.signInWithPopup(provider); }
     </script>
 </body>
 </html>
