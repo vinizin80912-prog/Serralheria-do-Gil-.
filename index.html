@@ -2,376 +2,264 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serralheria do Gil</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Serralheria do Gil | Premium</title>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Paleta retirada do vídeo */
-            --primary: #FFC107; /* Amarelo Ouro */
-            --primary-hover: #ffb300;
-            --bg-body: #0a0a0a; /* Preto quase absoluto */
-            --bg-card: #181818; /* Cinza do cartão */
-            --bg-input: #252525;
-            --text-main: #ffffff;
-            --text-muted: #aaaaaa;
-            --border: #333333;
-            --danger: #ff4444;
-            --radius-btn: 50px; /* Botões bem redondos */
-            --radius-card: 16px;
-            --shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            --primary: #FFC107;
+            --bg-dark: #000000;
+            --bg-card: #151515;
+            --border: rgba(255,255,255,0.08);
+            --text-gray: #999;
         }
 
         body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
             overflow-x: hidden;
-            /* Oculta scroll enquanto carrega */
-            overflow-y: hidden; 
         }
-        /* TELA DE LOGIN (BLOQUEIO) */
+
+        /* Tela de Login Travada */
         #login-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: #000;
-            z-index: 9999;
+            z-index: 10000;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             padding: 20px;
         }
 
-        .login-box {
+        .login-card {
             background: var(--bg-card);
-            border: 1px solid var(--border);
+            border: 1px solid var(--primary);
             padding: 40px 30px;
-            border-radius: 24px;
+            border-radius: 30px;
             text-align: center;
             width: 100%;
-            max-width: 380px;
-            box-shadow: 0 0 50px rgba(255, 193, 7, 0.1);
+            max-width: 400px;
+            box-shadow: 0 0 40px rgba(255,193,7,0.1);
         }
 
-        .login-btn {
+        .google-btn {
             background: #fff;
             color: #000;
             border: none;
             padding: 16px;
+            border-radius: 50px;
             width: 100%;
-            border-radius: var(--radius-btn);
-            font-weight: 600;
-            font-size: 16px;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            cursor: pointer;
             margin-top: 25px;
-            transition: transform 0.2s;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .login-btn:active {
-            transform: scale(0.96);
-        }
-        /* HEADER (Barra Fixa) */
-        .app-header {
+        /* Interface Principal */
+        #app-ui { display: none; opacity: 0; }
+
+        header {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
             height: 70px;
-            background: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(12px);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(15px);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid var(--border);
         }
 
-        .brand-name {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background-color: var(--primary);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--primary);
-        }
-
-        .btn-header-cta {
+        .btn-orcamento {
             background: var(--primary);
             color: #000;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 700;
             font-size: 0.85rem;
-            font-weight: 700;
             text-decoration: none;
         }
-        /* CONTEÚDO PRINCIPAL */
-        .main-container {
-            padding: 100px 20px 40px;
-            max-width: 600px;
+        .container {
+            max-width: 500px;
             margin: 0 auto;
-            display: none; /* COMEÇA INVISÍVEL - O JS ATIVA */
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            padding: 100px 20px 40px;
         }
 
-        /* Hero Section */
-        .hero-section {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(255, 193, 7, 0.15);
+        .badge-premium {
+            background: rgba(255,193,7,0.1);
             color: var(--primary);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 1px;
+            border: 1px solid rgba(255,193,7,0.3);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.7rem;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            display: inline-block;
             margin-bottom: 15px;
-            border: 1px solid rgba(255, 193, 7, 0.3);
         }
 
-        .hero-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 10px;
-            line-height: 1.2;
-        }
-
-        .hero-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .btn-large {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 18px;
-            border-radius: var(--radius-btn);
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: #000;
-            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.2);
-            color: #fff;
-        }
-
-        .btn-outline:hover {
-            border-color: #fff;
-            background: rgba(255,255,255,0.05);
-        }
-        /* LISTA DE SERVIÇOS */
-        .section-title {
-            text-align: center;
-            margin: 40px 0 20px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .services-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .service-card {
+        /* Botões de Serviço (Estilo Pílula do Vídeo) */
+        .service-btn {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 18px 24px;
-            border-radius: 16px;
+            padding: 20px 25px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            color: #fff;
+            margin-bottom: 15px;
             text-decoration: none;
-            transition: 0.3s;
+            color: white;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0; /* Começa invisível para o ScrollReveal */
+            transform: translateY(30px);
         }
 
-        .service-card:hover {
+        .service-btn:hover {
             border-color: var(--primary);
-            transform: translateX(5px);
+            background: #1c1c1c;
+            transform: scale(1.02);
         }
 
         .service-icon {
-            font-size: 1.2rem;
-            margin-right: 15px;
-            width: 30px;
-            text-align: center;
-        }
-
-        /* Rodapé de Localização */
-        .location-info {
-            text-align: center;
-            margin-top: 30px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* Seção Especialidades (Aquele Card com Check Amarelo) */
+        .specialty-card {
+            background: linear-gradient(145deg, #151515, #0a0a0a);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .check-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 20px rgba(255,193,7,0.2);
         }
     </style>
 </head>
 <body>
     <div id="login-overlay">
-        <div class="login-box">
-            <div style="width: 60px; height: 60px; background: var(--bg-input); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--primary);">
-                <i class="fas fa-user-lock" style="color: var(--primary); font-size: 24px;"></i>
-            </div>
-            <h2 style="color: #fff; margin-bottom: 10px;">Acesso Restrito</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Para ver orçamentos e serviços exclusivos da Serralheria do Gil, faça login.</p>
-            
-            <button class="login-btn" onclick="executeLogin()">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">
-                Entrar com Google
+        <div class="login-card">
+            <div class="check-icon" style="background: var(--bg-card); color: var(--primary); border: 1px solid var(--primary);"><i class="fas fa-lock"></i></div>
+            <h2 style="font-size: 1.8rem; margin-bottom: 5px;">Serralheria do Gil</h2>
+            <p style="color: var(--text-gray); font-size: 0.9rem;">Portal exclusivo para orçamentos e rotas.</p>
+            <button class="google-btn" onclick="signIn()">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="22"> Entrar com Google
             </button>
-            <p id="login-error" style="color: var(--danger); font-size: 0.8rem; margin-top: 15px; display: none;"></p>
+            <p id="err-msg" style="color: #ff4444; font-size: 0.8rem; margin-top: 15px; display: none;"></p>
         </div>
     </div>
 
-    <div id="app-interface" style="display: none;"> <header class="app-header">
-            <div class="brand-name">
-                <span class="status-dot"></span>
-                Serralheria do Gil
+    <div id="app-ui">
+        <header>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 8px; height: 8px; background: var(--primary); border-radius: 50%;"></div>
+                <span style="font-weight: 700; font-size: 0.9rem; letter-spacing: 1px;">SERRALHERIA DO GIL</span>
             </div>
-            <a href="https://wa.me/5541995008252" class="btn-header-cta">Orçamento</a>
-            <button onclick="logout()" style="background:none; border:none; color: #666; margin-left: 10px; cursor: pointer;">
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
+            <a href="https://wa.me/5541995008252" class="btn-orcamento">Orçamento</a>
         </header>
-        <div class="main-container" id="content-fade">
-            
-            <section class="hero-section">
-                <span class="badge">Tradição e Segurança</span>
-                <h1 class="hero-title">Serralheria do Gil</h1>
-                <p class="hero-desc">
-                    Qualidade em Aço e Serviços Metálicos. Transformando metal em segurança e beleza para seu imóvel em Curitiba e Região.
-                </p>
 
-                <div class="action-buttons">
-                    <a href="https://wa.me/5541995008252?text=Vim%20pelo%20App%20e%20quero%20um%20orçamento!" class="btn-large btn-primary">
-                        <i class="fas fa-file-invoice-dollar"></i> Peça um Orçamento
-                    </a>
-                    <a href="#servicos" class="btn-large btn-outline">
-                        <i class="fas fa-th-list"></i> Nossos Serviços
-                    </a>
-                </div>
+        <div class="container">
+            <div class="hero" style="text-align: center; margin-bottom: 50px;">
+                <span class="badge-premium">Tradição & Segurança</span>
+                <h1 id="title-anim" style="font-size: 2.2rem; line-height: 1.1; margin-bottom: 15px;">Serralheria do Gil</h1>
+                <p style="color: var(--text-gray); font-size: 0.95rem; margin-bottom: 30px;">Qualidade em Aço e Serviços Metálicos em São José dos Pinhais e Região.</p>
                 
-                <div class="location-info">
-                    <i class="fas fa-map-pin" style="color: var(--danger);"></i>
-                    Curitiba - PR | Borda do Campo
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <a href="https://wa.me/5541995008252" class="service-btn" style="background: var(--primary); color: #000; font-weight: 700; border: none; opacity: 1; transform: none;">
+                        <i class="fas fa-file-invoice-dollar" style="margin-right: 12px;"></i> Peça um Orçamento
+                    </a>
+                    <a href="#servicos" class="service-btn" style="justify-content: center; opacity: 1; transform: none;">Nossos Serviços</a>
                 </div>
-            </section>
-            <h3 class="section-title" id="servicos">Nossos Serviços</h3>
+            </div>
+
+            <h3 style="margin-bottom: 25px; font-weight: 600; text-align: center;" id="servicos">Nossos Serviços</h3>
             
-            <div class="services-list">
-                <a href="https://wa.me/5541995008252?text=Tenho%20interesse%20em%20Portões." class="service-card">
+            <div class="services-wrapper">
+                <a href="https://wa.me/5541995008252" class="service-btn">
                     <div class="service-icon"><i class="fas fa-dungeon" style="color: #4CAF50;"></i></div>
-                    <span>Portões sob medida</span>
+                    <span style="flex: 1; font-weight: 600;">Portões sob medida</span>
+                    <i class="fas fa-chevron-right" style="font-size: 0.7rem; opacity: 0.3;"></i>
                 </a>
-                
-                <a href="https://wa.me/5541995008252?text=Tenho%20interesse%20em%20Grades." class="service-card">
+
+                <a href="https://wa.me/5541995008252" class="service-btn">
                     <div class="service-icon"><i class="fas fa-shield-alt" style="color: #2196F3;"></i></div>
-                    <span>Grades de proteção</span>
+                    <span style="flex: 1; font-weight: 600;">Grades de proteção</span>
+                    <i class="fas fa-chevron-right" style="font-size: 0.7rem; opacity: 0.3;"></i>
                 </a>
-                
-                <a href="https://wa.me/5541995008252?text=Tenho%20interesse%20em%20Estruturas." class="service-card">
+
+                <a href="https://wa.me/5541995008252" class="service-btn">
                     <div class="service-icon"><i class="fas fa-warehouse" style="color: #FF9800;"></i></div>
-                    <span>Estruturas metálicas</span>
-                </a>
-                
-                <a href="https://wa.me/5541995008252?text=Preciso%20de%20reforma." class="service-card">
-                    <div class="service-icon"><i class="fas fa-fire" style="color: #f44336;"></i></div>
-                    <span>Soldas e reformas</span>
+                    <span style="flex: 1; font-weight: 600;">Estruturas metálicas</span>
+                    <i class="fas fa-chevron-right" style="font-size: 0.7rem; opacity: 0.3;"></i>
                 </a>
 
-                 <div class="service-card" onclick="toggleComments()" style="cursor: pointer; border-color: rgba(255, 193, 7, 0.3);">
-                    <div class="service-icon"><i class="fas fa-star" style="color: var(--primary);"></i></div>
-                    <span>Avaliações de Clientes</span>
-                    <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 0.8rem; color: #666;"></i>
+                <a href="https://wa.me/5541995008252" class="service-btn">
+                    <div class="service-icon"><i class="fas fa-fire" style="color: #F44336;"></i></div>
+                    <span style="flex: 1; font-weight: 600;">Soldas e reformas</span>
+                    <i class="fas fa-chevron-right" style="font-size: 0.7rem; opacity: 0.3;"></i>
+                </a>
+            </div>
+
+            <div class="specialty-card reveal-up">
+                <div class="check-icon"><i class="fas fa-check"></i></div>
+                <h4 style="margin-bottom: 10px; font-size: 1.2rem;">Garantia de Durabilidade</h4>
+                <p style="color: var(--text-gray); font-size: 0.85rem; line-height: 1.6;">Trabalhamos com materiais de alta qualidade para entregar segurança e beleza duradoura.</p>
+            </div>
+            <div style="margin-top: 50px; text-align: center;">
+                <p style="color: #444; font-size: 0.8rem; margin-bottom: 20px;">ACOMPANHE NOSSO TRABALHO</p>
+                <div style="display: flex; justify-content: center; gap: 15px;">
+                    <a href="https://instagram.com/serralheriadogil" style="color: #fff; background: var(--bg-card); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border);"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/5541995008252" style="color: #fff; background: var(--bg-card); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border);"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" style="color: #fff; background: var(--bg-card); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border);"><i class="fab fa-facebook-f"></i></a>
                 </div>
             </div>
 
-            <div id="comments-section" style="display:none; margin-top: 20px;">
-                <div style="background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border);">
-                    <textarea id="comment-input" placeholder="Deixe seu feedback..." style="width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 10px; border-radius: 8px; min-height: 80px; margin-bottom: 10px;"></textarea>
-                    <button onclick="postComment()" style="background: var(--primary); border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%;">Enviar</button>
-                    <div id="comments-feed" style="margin-top: 20px;"></div>
-                </div>
-            </div>
-
-            <footer style="text-align: center; margin-top: 50px; padding-bottom: 20px; color: #444; font-size: 0.8rem;">
-                <p>&copy; 2026 Serralheria do Gil</p>
-                <p>Desenvolvido para Mobile</p>
+            <footer style="margin-top: 60px; text-align: center; padding-bottom: 30px; border-top: 1px solid var(--border); padding-top: 30px;">
+                <p style="font-size: 0.8rem; color: #555;">© 2026 Serralheria do Gil - Curitiba/SJP</p>
             </footer>
+        </div>
+    </div>
 
-        </div> </div> ```
-
-### Parte 11: Scripts - Configuração Firebase
-As chaves de acesso.
-
-```html
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
@@ -381,106 +269,59 @@ As chaves de acesso.
             messagingSenderId: "267882427773",
             appId: "1:267882427773:web:bf1689a6adda79f3334814"
         };
-
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const db = firebase.firestore();
         const provider = new firebase.auth.GoogleAuthProvider();
-        // === SISTEMA DE BLOQUEIO DE LOGIN ===
-        auth.onAuthStateChanged((user) => {
+        // === Lógica de Autenticação e Bloqueio ===
+        auth.onAuthStateChanged(user => {
             const overlay = document.getElementById('login-overlay');
-            const app = document.getElementById('app-interface');
-            const content = document.getElementById('main-container');
+            const app = document.getElementById('app-ui');
 
             if (user) {
-                // USUÁRIO LOGADO: Destrava tudo
-                console.log("Usuário autenticado:", user.displayName);
-                
-                // 1. Some com a tela de login
-                overlay.style.opacity = '0';
-                overlay.style.pointerEvents = 'none'; // Impede clique fantasma
-                setTimeout(() => { overlay.style.display = 'none'; }, 500);
-
-                // 2. Mostra o app
-                app.style.display = 'block';
-                
-                // 3. Animação de entrada suave
-                const container = document.getElementById('content-fade');
-                container.style.display = 'block';
-                // Pequeno delay para permitir que o display:block renderize antes da opacidade
-                setTimeout(() => { container.style.opacity = '1'; }, 50);
-
-                // 4. Libera o scroll do corpo
-                document.body.style.overflowY = 'auto';
-
-                loadComments(); // Carrega comentários
+                // Esconde login com fade
+                gsap.to(overlay, { opacity: 0, duration: 0.8, onComplete: () => {
+                    overlay.style.display = 'none';
+                    app.style.display = 'block';
+                    
+                    // Inicia animações de entrada do app
+                    startAppAnimations();
+                }});
             } else {
-                // NÃO LOGADO: Garante bloqueio
                 overlay.style.display = 'flex';
-                overlay.style.opacity = '1';
-                overlay.style.pointerEvents = 'all';
-                app.style.display = 'none'; // Garante que o app não existe
-                document.body.style.overflowY = 'hidden'; // Trava scroll
+                app.style.display = 'none';
             }
         });
 
-        function executeLogin() {
-            auth.signInWithPopup(provider)
-                .catch((error) => {
-                    const errorTag = document.getElementById('login-error');
-                    errorTag.innerText = "Erro: " + error.message;
-                    errorTag.style.display = 'block';
-                    if (error.code === 'auth/unauthorized-domain') {
-                        alert("AVISO: Adicione 'vinizin80912-prog.github.io' no Firebase Console > Auth > Settings > Domains");
-                    }
-                });
+        function startAppAnimations() {
+            // GSAP: Faz o app aparecer suavemente
+            gsap.to("#app-ui", { opacity: 1, duration: 1 });
+
+            // GSAP: Anima o título "se montando" (sobe e aparece)
+            gsap.from("#title-anim", { y: 50, opacity: 0, duration: 1.2, ease: "expo.out" });
+
+            // ScrollReveal: Faz os botões aparecerem conforme a pessoa desce a tela
+            const sr = ScrollReveal({
+                origin: 'bottom',
+                distance: '60px',
+                duration: 1000,
+                delay: 200,
+                reset: false // Para animar apenas uma vez ao descer
+            });
+
+            sr.reveal('.service-btn', { interval: 200 }); // "Interval" faz um aparecer depois do outro
+            sr.reveal('.specialty-card', { delay: 400 });
+        }
+
+        function signIn() {
+            auth.signInWithPopup(provider).catch(e => {
+                const err = document.getElementById('err-msg');
+                err.innerText = "Erro: " + e.message;
+                err.style.display = 'block';
+            });
         }
 
         function logout() {
-            auth.signOut();
-            window.location.reload();
-        }
-        function toggleComments() {
-            const section = document.getElementById('comments-section');
-            section.style.display = section.style.display === 'none' ? 'block' : 'none';
-        }
-
-        async function postComment() {
-            const txt = document.getElementById('comment-input');
-            if(!txt.value.trim()) return;
-            
-            try {
-                await db.collection("comments").add({
-                    user: auth.currentUser.displayName,
-                    photo: auth.currentUser.photoURL, // Adicionei foto do perfil
-                    text: txt.value,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                txt.value = "";
-                loadComments();
-            } catch (e) { console.error(e); }
-        }
-
-        function loadComments() {
-            db.collection("comments").orderBy("createdAt", "desc").limit(10).onSnapshot(snap => {
-                const feed = document.getElementById('comments-feed');
-                feed.innerHTML = "";
-                snap.forEach(doc => {
-                    const data = doc.data();
-                    // Proteção contra data nula (pode acontecer no ms do envio)
-                    const time = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString() : 'Agora';
-                    
-                    feed.innerHTML += `
-                        <div style="border-bottom: 1px solid #333; padding: 10px 0; display:flex; gap:10px;">
-                            <img src="${data.photo || 'https://ui-avatars.com/api/?name='+data.user}" style="width:30px; height:30px; border-radius:50%;">
-                            <div>
-                                <div style="font-size:0.85rem; color:var(--primary); font-weight:600;">${data.user} <span style="color:#666; font-size:0.7rem; font-weight:400;">• ${time}</span></div>
-                                <div style="font-size:0.9rem; color:#ddd; margin-top:2px;">${data.text}</div>
-                            </div>
-                        </div>
-                    `;
-                });
-            });
+            auth.signOut().then(() => window.location.reload());
         }
     </script>
 </body>
