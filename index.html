@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Serralheria do Gil | Premium Access</title>
+    <title>Serralheria do Gil | Premium</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
@@ -15,181 +15,86 @@
             --card-bg: #0d0d0d;
             --gold: #FFD700;
             --border-color: #1a1a1a;
-            --text-gray: #888;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            background-color: var(--bg-dark);
-            color: #ffffff;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-dark); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
         .hidden { display: none !important; }
 
-        /* TELA DE LOGIN ESTILO OVERLAY */
-        #login-screen {
+        /* LOGIN */
+        #login-screen { position: fixed; inset: 0; background: var(--bg-dark); display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px; }
+        .login-card { background: #080808; border: 1px solid var(--border-color); padding: 40px 25px; border-radius: 24px; width: 100%; max-width: 350px; text-align: center; }
+
+        /* CONTEÚDO E SCROLL */
+        .container { width: 100%; max-width: 480px; margin: 0 auto; padding: 50px 20px 120px; }
+        .service-item { background: var(--card-bg); border: 1px solid var(--border-color); padding: 22px; border-radius: 16px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #fff; }
+        
+        /* BOTÕES SOCIAIS COM BORDA BRANCA */
+        .btn-social-box { border: 4px solid #ffffff; background: transparent; margin-bottom: 15px; padding: 18px; border-radius: 15px; display: flex; align-items: center; color: #fff; text-decoration: none; font-weight: 700; }
+
+        /* ZAP FLUTUANTE */
+        .whatsapp-float {
             position: fixed;
-            inset: 0;
-            background: var(--bg-dark);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .login-card {
-            background: #080808;
-            border: 1px solid var(--border-color);
-            padding: 40px 25px;
-            border-radius: 24px;
-            width: 100%;
-            max-width: 350px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        /* BOTÃO GOOGLE PREMIUM */
-        .btn-google {
-            background: #ffffff;
-            color: #000;
-            border: none;
-            padding: 16px;
-            width: 100%;
-            border-radius: 12px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: 0.3s;
-        }
-
-        /* CONTEÚDO PRINCIPAL COM SCROLL */
-        .container {
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 50px 20px 100px;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(255, 215, 0, 0.1);
-            color: var(--gold);
-            padding: 5px 15px;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 25px;
+            background-color: #25d366;
+            color: #FFF;
             border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        .service-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 22px;
-            border-radius: 16px;
-            margin-bottom: 15px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            z-index: 1000;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             text-decoration: none;
-            color: #fff;
-        }
-
-        .btn-social-box {
-            border: 4px solid #ffffff; /* Regra de Ouro */
-            background: transparent;
-            margin-top: 15px;
-            padding: 20px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
+            transition: 0.3s;
         }
     </style>
 </head>
 <body>
     <div id="login-screen">
         <div class="login-card">
-            <i class="fas fa-user-shield fa-3x" style="color: var(--gold); margin-bottom: 20px;"></i>
-            <h2 style="font-weight: 800; letter-spacing: -1px;">Acesso Restrito</h2>
-            <p style="color: var(--text-gray); font-size: 0.85rem; margin-top: 10px;">
-                Faça login para ver orçamentos e serviços da Serralheria do Gil.
-            </p>
-            <button id="btnLogin" class="btn-google">
+            <i class="fas fa-lock fa-3x" style="color: var(--gold); margin-bottom: 20px;"></i>
+            <h2>Acesso Restrito</h2>
+            <button id="btnLogin" style="background:#fff; color:#000; padding:15px; width:100%; border-radius:12px; font-weight:800; border:none; margin-top:20px;">
                 <i class="fab fa-google"></i> Entrar com Google
             </button>
-            <button id="btnBypass" style="background:transparent; border:none; color:#333; margin-top:20px; font-size:0.7rem;">
-                Modo Visitante
-            </button>
+            <button id="btnBypass" style="background:transparent; border:none; color:#444; margin-top:15px; font-size:0.7rem;">Entrar como Visitante</button>
         </div>
     </div>
 
     <div id="app-content" class="container hidden">
         <header style="text-align: center; margin-bottom: 40px;">
-            <span class="badge">Tradição & Segurança</span>
             <h1 style="font-size: 2rem; font-weight: 800;">Serralheria do Gil</h1>
-            <p style="color: var(--text-gray); margin-bottom: 20px;">Curitiba e São José dos Pinhais</p>
-            <a href="http://googleusercontent.com/maps.google.com/4" class="btn-google" style="width: auto; display: inline-flex; padding: 8px 20px; font-size: 0.8rem;">
-                <i class="fas fa-location-dot"></i> Ver no Mapa
-            </a>
+            <p style="color: #666;">Curitiba & São José dos Pinhais</p>
         </header>
 
         <section>
-            <h3 style="margin-bottom: 20px; font-weight: 800; color: var(--gold);">NOSSOS SERVIÇOS</h3>
-            
-            <a href="https://wa.me/5541995008252" class="service-item">
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <i class="fas fa-gate" style="color:var(--gold)"></i>
-                    <span style="font-weight:700">Portões sob medida</span>
-                </div>
-                <i class="fas fa-chevron-right" style="color:#333"></i>
-            </a>
-
-            <a href="https://wa.me/5541995008252" class="service-item">
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <i class="fas fa-shield-alt" style="color:var(--gold)"></i>
-                    <span style="font-weight:700">Grades de Proteção</span>
-                </div>
-                <i class="fas fa-chevron-right" style="color:#333"></i>
-            </a>
-
-            <a href="https://wa.me/5541995008252" class="service-item">
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <i class="fas fa-warehouse" style="color:var(--gold)"></i>
-                    <span style="font-weight:700">Estruturas Metálicas</span>
-                </div>
-                <i class="fas fa-chevron-right" style="color:#333"></i>
-            </a>
+            <h3 style="margin-bottom: 20px; color: var(--gold); letter-spacing: 2px;">SERVIÇOS</h3>
+            <a href="https://wa.me/5541995008252" class="service-item"><span><i class="fas fa-gate"></i> Portões</span><i class="fas fa-chevron-right"></i></a>
+            <a href="https://wa.me/5541995008252" class="service-item"><span><i class="fas fa-shield-alt"></i> Grades</span><i class="fas fa-chevron-right"></i></a>
         </section>
 
         <section style="margin-top: 40px;">
-            <h3 style="margin-bottom: 20px; font-weight: 800;">CONTATO</h3>
+            <h3 style="margin-bottom: 20px; letter-spacing: 2px;">CONTATO</h3>
+            <a href="https://instagram.com/serralheriadogil" class="btn-social-box"><i class="fab fa-instagram" style="margin-right:15px;"></i> Instagram</a>
             
-            <a href="https://instagram.com/serralheriadogil" class="btn-social-box">
-                <i class="fab fa-instagram" style="margin-right: 15px; font-size: 1.2rem;"></i> Instagram
-            </a>
-
-            <a href="mailto:Serralheriadogil@hotmail.com" class="btn-social-box">
-                <i class="fas fa-envelope" style="margin-right: 15px; font-size: 1.2rem;"></i> Serralheriadogil@hotmail.com
-            </a>
+            <a href="https://facebook.com/serralheriadogil" class="btn-social-box"><i class="fab fa-facebook-f" style="margin-right:15px;"></i> Facebook</a>
+            
+            <a href="mailto:Serralheriadogil@hotmail.com" class="btn-social-box"><i class="fas fa-envelope" style="margin-right:15px;"></i> Serralheriadogil@hotmail.com</a>
         </section>
+
+        <a href="https://wa.me/5541995008252" class="whatsapp-float" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Chaves Obrigatórias do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
             authDomain: "serralheria-do-gil.firebaseapp.com",
@@ -200,29 +105,16 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        const loginScreen = document.getElementById('login-screen');
-        const appContent = document.getElementById('app-content');
-
-        function unlockApp() {
-            gsap.to(loginScreen, { 
-                opacity: 0, 
-                duration: 0.5, 
-                onComplete: () => {
-                    loginScreen.classList.add('hidden');
-                    appContent.classList.remove('hidden');
-                    // Animação de subida fluida (Estilo App)
-                    gsap.from(".service-item", {
-                        y: 40, opacity: 0, stagger: 0.1, duration: 0.8, ease: "power4.out"
-                    });
-                }
-            });
+        function unlock() {
+            gsap.to("#login-screen", { opacity: 0, duration: 0.5, onComplete: () => {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('app-content').classList.remove('hidden');
+                gsap.from(".service-item, .btn-social-box", { y: 30, opacity: 0, stagger: 0.1 });
+            }});
         }
 
-        document.getElementById('btnLogin').onclick = () => {
-            signInWithPopup(auth, provider).then(() => unlockApp()).catch(err => console.error(err));
-        };
-
-        document.getElementById('btnBypass').onclick = () => unlockApp();
+        document.getElementById('btnLogin').onclick = () => signInWithPopup(auth, provider).then(unlock);
+        document.getElementById('btnBypass').onclick = unlock;
     </script>
 </body>
 </html>
