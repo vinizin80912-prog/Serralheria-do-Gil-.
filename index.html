@@ -11,74 +11,87 @@
 
     <style>
         :root { --gold: #FFD700; --bg: #000; --card: #1a1a1a; }
-        body { background: var(--bg); color: #fff; text-align: center; font-family: sans-serif; margin: 0; overflow-x: hidden; }
+        body { background: var(--bg) !important; color: #fff; text-align: center; font-family: sans-serif; margin: 0; }
 
-        /* Animação de Surgimento Segura (CSS) */
+        /* Animações suaves apenas em CSS para segurança */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .reveal { animation: fadeInUp 0.4s ease forwards; }
 
-        .reveal { animation: fadeInUp 0.5s ease forwards; }
-
-        /* Botões Estilizados */
         .btn-link {
-            display: flex; align-items: center; justify-content: center;
+            display: flex !important; align-items: center; justify-content: center;
             width: 90%; max-width: 400px; margin: 12px auto;
             padding: 20px; border-radius: 12px; text-decoration: none;
-            font-weight: 900; border: 3px solid #fff !important;
+            font-weight: 900; font-size: 1.1rem; border: 3px solid #fff !important;
         }
-        .ouro { background: var(--gold); color: #000; }
-        .social { background: var(--card); color: #fff; }
+        .ouro { background: var(--gold) !important; color: #000 !important; }
+        .social { background: var(--card) !important; color: #fff !important; }
+        .icon-btn { margin-right: 15px; font-size: 1.4rem; width: 30px; text-align: center; }
 
-        /* Seção de Comentários */
+        /* Estilo dos Comentários */
         .comment-card {
             background: var(--card); border-left: 5px solid var(--gold);
-            width: 90%; max-width: 400px; margin: 15px auto;
+            width: 90%; max-width: 400px; margin: 10px auto;
             padding: 15px; text-align: left; border-radius: 8px;
         }
-        .stars { color: var(--gold); margin-bottom: 5px; }
+        .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 5px; }
 
         #login-overlay {
             position: fixed; inset: 0; background: #000; z-index: 9999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
+        h2 { color: var(--gold); margin: 35px 0 15px; text-transform: uppercase; font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
     <div id="login-overlay">
-        <h1 class="reveal" style="color:var(--gold);">GIL SERRALHERIA</h1>
-        <button onclick="login()" style="padding:15px 30px; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:20px;">
+        <h1 style="color:var(--gold);">GIL SERRALHERIA</h1>
+        <button onclick="login()" style="padding:20px 40px; border-radius:10px; font-weight:bold; cursor:pointer;">
             ENTRAR COM GOOGLE
         </button>
     </div>
 
     <div id="app" style="display:none; padding: 20px 0 60px;">
         <h1 style="color:var(--gold);">GIL SERRALHERIA</h1>
-        
-        <div class="reveal" style="animation-delay: 0.1s;">
-            <a href="https://wa.me/5541995008252" class="btn-link ouro">
-                <i class="fas fa-hammer" style="margin-right:10px;"></i> ORÇAMENTO GERAL
+
+        <h2>Nossos Serviços</h2>
+        <div class="reveal">
+            <a href="https://wa.me/5541995008252?text=Orcamento%20Geral" class="btn-link ouro">
+                <i class="fas fa-hammer icon-btn"></i> ORÇAMENTO GERAL
+            </a>
+            <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Portão" class="btn-link ouro">
+                <i class="fas fa-door-open icon-btn"></i> PORTÃO ELETRÔNICO
+            </a>
+            <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Grade" class="btn-link ouro">
+                <i class="fas fa-shield-alt icon-btn"></i> GRADES E JANELAS
+            </a>
+            <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Corrimão" class="btn-link ouro">
+                <i class="fas fa-grip-lines icon-btn"></i> CORRIMÃO E SACADAS
             </a>
         </div>
 
-        <h2 style="color:var(--gold); margin-top:40px;">O QUE DIZEM OS CLIENTES</h2>
-        
-        <div class="comment-card reveal" style="animation-delay: 0.2s;">
+        <h2>O que dizem os clientes</h2>
+        <div class="comment-card reveal">
             <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-            <p><strong>João Silva:</strong> "Trabalho impecável no meu portão. O Gil é fera!"</p>
+            <p style="margin:0; font-size:0.9rem;"><strong>João Silva:</strong> "Trabalho impecável no meu portão!"</p>
         </div>
 
-        <div class="comment-card reveal" style="animation-delay: 0.3s;">
-            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-            <p><strong>Maria Souza:</strong> "Melhor custo-benefício de SJP. Recomendo dms."</p>
-        </div>
-
-        <h2 style="color:var(--gold); margin-top:40px;">REDES SOCIAIS</h2>
-        <a href="https://www.instagram.com/serralheriadogil/" class="btn-link social reveal" style="animation-delay: 0.4s;">
-            <i class="fab fa-instagram" style="margin-right:10px; color:#E1306C;"></i> INSTAGRAM
+        <a href="https://g.page/r/YOUR_GOOGLE_REVIEW_LINK/review" target="_blank" class="btn-link social reveal">
+            <i class="fas fa-comment-dots icon-btn" style="color:var(--gold);"></i> DEIXAR AVALIAÇÃO
         </a>
+
+        <h2>Redes Sociais</h2>
+        <div class="reveal">
+            <a href="https://wa.me/5541995008252" class="btn-link social">
+                <i class="fab fa-whatsapp icon-btn" style="color:#25D366;"></i> WHATSAPP
+            </a>
+            <a href="https://www.instagram.com/serralheriadogil/" class="btn-link social">
+                <i class="fab fa-instagram icon-btn" style="color:#E1306C;"></i> INSTAGRAM
+            </a>
+        </div>
     </div>
 
     <script>
