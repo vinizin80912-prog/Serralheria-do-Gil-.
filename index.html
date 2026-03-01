@@ -3,201 +3,136 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Serralheria do Gil</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<title>Serralheria do Gil | Link Oficial</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Poppins',sans-serif; background:#0b0b0b; color:#fff; overflow-x:hidden;}
-
-/* ===== Login overlay ===== */
-#loginOverlay{
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(11,11,11,0.98);
-  display:flex; justify-content:center; align-items:center;
-  z-index:9999;
-}
-.login-box{
-  background:#111;
-  border:2px solid #d4af37;
-  border-radius:20px;
-  padding:50px 30px;
-  text-align:center;
-  box-shadow:0 0 40px rgba(212,175,55,0.4);
-  animation:fadeIn 0.8s ease;
-}
-.login-box h1{color:#d4af37; margin-bottom:10px; font-size:28px;}
-.login-box p{color:#aaa; margin-bottom:25px;}
-.login-btn{
-  background:linear-gradient(90deg,#d4af37,#a57c1b);
-  color:#000;
-  font-weight:bold;
-  border:none;
-  border-radius:14px;
-  padding:16px 24px;
-  cursor:pointer;
-  font-size:16px;
-  transition:.3s;
-}
-.login-btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px rgba(212,175,55,.7);
+:root {
+    --bg-color: #0a0a0a;
+    --gold: #d4af37;
+    --purple: #6a0dad;
+    --text-white: #ffffff;
+    --card-bg: rgba(21,21,21,0.95);
+    --transition: all 0.3s ease;
 }
 
-/* ===== Top bar fixa com scroll ===== */
-#topBar{
-  position:fixed;
-  top:0; left:0; width:100%;
-  background:#111;
-  border-bottom:2px solid #d4af37;
-  height:60px;
-  display:flex; align-items:center; justify-content:center;
-  z-index:998;
-  transition:.3s;
-  box-shadow:0 2px 15px rgba(0,0,0,.3);
-}
-#topBar.scrolled{box-shadow:0 5px 25px rgba(212,175,55,.4);}
-#topBar h2{color:#d4af37; font-size:20px; font-weight:700;}
+*{margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
+body{background:radial-gradient(circle at center, #1a1a1a 0%, var(--bg-color) 100%); color: var(--text-white); min-height:100vh; overflow-x:hidden;}
 
-/* ===== Conteúdo principal ===== */
-#mainContent{
-  max-width:420px;
-  margin:100px auto 50px auto;
-  text-align:center;
-  display:none;
-  opacity:0;
-  animation:fadeIn 0.8s forwards;
+/* --- LOGIN SCREEN --- */
+#login-screen{
+    display:flex; justify-content:center; align-items:center; height:100vh; width:100%; position:fixed; z-index:1000; background:var(--bg-color);
 }
-h1{font-size:28px; color:#d4af37; margin-bottom:5px;}
-p.location{font-size:14px; opacity:.7; margin-bottom:25px;}
+.login-card{
+    background:var(--card-bg); padding:40px; border-radius:20px; border:2px solid var(--gold); text-align:center; backdrop-filter:blur(10px); box-shadow:0 0 30px rgba(212,175,55,0.2); max-width:350px; width:90%;
+}
+.login-card h1{color:var(--gold); margin-bottom:10px; font-weight:600;}
+.login-card p{font-size:0.9rem; margin-bottom:30px; color:#ccc;}
+.btn-google{
+    background:white; color:#000; border:none; padding:12px 20px; border-radius:50px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; width:100%; transition:var(--transition);
+}
+.btn-google:hover{transform:scale(1.05); box-shadow:0 5px 15px rgba(255,255,255,0.3);}
 
-/* ===== Botões cinematográficos ===== */
-.link-btn{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding:16px;
-  margin:12px auto;
-  border-radius:14px;
-  width:100%;
-  max-width:350px;
-  font-weight:600;
-  text-decoration:none;
-  transition:.5s;
-  cursor:pointer;
-  opacity:0;
-  transform:translateY(30px);
-  animation:fadeUp 0.6s forwards;
+/* --- MAIN CONTENT --- */
+#main-content{display:none; padding-top:80px; padding-bottom:50px;}
+header{
+    position:fixed; top:0; width:100%; background:rgba(10,10,10,0.9); padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #222; z-index:900;
 }
-.link-btn:nth-child(1){animation-delay:.1s;}
-.link-btn:nth-child(2){animation-delay:.2s;}
-.link-btn:nth-child(3){animation-delay:.3s;}
-.link-btn:nth-child(4){animation-delay:.4s;}
-.link-btn:nth-child(5){animation-delay:.5s;}
-.link-btn:nth-child(6){animation-delay:.6s;}
-.link-btn.social{background:#1a1a1a; border:1px solid #d4af37; color:#d4af37;}
-.link-btn.social:hover{
-  background:#d4af37; color:#000;
-  box-shadow:0 0 20px rgba(212,175,55,.5);
-  transform:scale(1.05);
+header h2{color:var(--gold); font-size:1.2rem; flex-grow:1; text-align:center;}
+.btn-logout{color:var(--purple); background:none; border:none; font-size:1.3rem; cursor:pointer;}
+.container{max-width:500px; margin:0 auto; padding:0 20px;}
+
+/* --- BOTÕES ESTILO LINKFL --- */
+.links-list{display:flex; flex-direction:column; gap:15px;}
+.link-item{
+    background:#151515; border:1px solid #333; padding:18px; border-radius:12px; text-decoration:none; color:white; display:flex; align-items:center; justify-content:space-between; font-weight:400; transition:var(--transition); opacity:0; transform:translateY(20px);
 }
-.link-btn.whatsapp{background:#d4af37; color:#000;}
-@keyframes fadeUp{to{opacity:1; transform:translateY(0);}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1;}}
+.link-item:hover{
+    border-color:var(--gold); transform:scale(1.02); box-shadow:0 0 15px rgba(212,175,55,0.3);
+}
+.link-item i{font-size:1.2rem; width:30px;}
+.link-item .icon-right{font-size:0.8rem; color:#444;}
+
+/* --- SEÇÃO COMENTÁRIOS --- */
+#comments-section{display:none; margin-top:30px; animation:fadeIn 0.5s ease;}
+.comment-input-area{margin-bottom:20px;}
+textarea{
+    width:100%; background:#111; border:1px solid var(--gold); color:white; padding:10px; border-radius:8px; resize:none; margin-bottom:10px;
+}
+.btn-send{background:var(--purple); color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; width:100%;}
+.comment-card{background:#151515; border-left:4px solid var(--gold); padding:15px; border-radius:8px; margin-bottom:15px;}
+.comment-card span{color:var(--gold); font-weight:600; font-size:0.8rem;}
+.comment-card p{margin-top:5px; font-size:0.95rem;}
+
+/* --- WHATSAPP FLUTUANTE --- */
+.whatsapp-float{position:fixed; bottom:30px; right:30px; background:#25d366; width:60px; height:60px; border-radius:50%; display:flex; justify-content:center; align-items:center; font-size:30px; color:white; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:1000; animation:pulse 2s infinite; display:none;}
+
+/* --- ANIMAÇÕES --- */
+@keyframes fadeInUp{to{opacity:1; transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+@keyframes pulse{0%{transform:scale(1); box-shadow:0 0 0 0 rgba(37,211,102,0.7);}70%{transform:scale(1.1); box-shadow:0 0 0 15px rgba(37,211,102,0);}100%{transform:scale(1); box-shadow:0 0 0 0 rgba(37,211,102,0);}}
+.show-animate{animation:fadeInUp 0.5s forwards;}
 </style>
 </head>
 <body>
-  <!-- Login Overlay -->
-<div id="loginOverlay">
-  <div class="login-box">
-    <h1>Serralheria do Gil</h1>
-    <p>Acesso exclusivo</p>
-    <button id="loginBtn" class="login-btn"><i class="fab fa-google"></i> Entrar com Google</button>
-  </div>
-</div>
 
-<!-- Top bar fixa -->
-<div id="topBar"><h2>Serralheria do Gil</h2></div>
-
-<!-- Conteúdo principal -->
-<div id="mainContent">
+<section id="login-screen">
+<div class="login-card">
 <h1>Serralheria do Gil</h1>
-<p class="location">Curitiba PR • Borda do Campo</p>
-
-<a class="link-btn whatsapp" href="https://wa.me/5541995008252?text=Ol%C3%A1,%20tudo%20bem%3F%20Gostaria%20de%20fazer%20um%20or%C3%A7amento." target="_blank">
-<i class="fab fa-whatsapp"></i> WhatsApp
-</a>
-
-<a class="link-btn social" href="https://instagram.com/" target="_blank">
-<i class="fab fa-instagram"></i> Instagram
-</a>
-
-<a class="link-btn social" href="https://facebook.com/" target="_blank">
-<i class="fab fa-facebook"></i> Facebook
-</a>
-
-<a class="link-btn social" href="https://www.google.com/maps/search/?api=1&query=Curitiba+PR+Borda+do+Campo" target="_blank">
-<i class="fas fa-map-marker-alt"></i> Ver Rota
-</a>
-
-<a class="link-btn social" href="tel:+5541995008252">
-<i class="fas fa-phone"></i> Ligar
-</a>
-
-<a class="link-btn social" onclick="toggleComments()">
-<i class="fas fa-star"></i> Avaliações
-</a>
-
-<div class="comment-box" id="commentsSection">
-<textarea id="commentInput" rows="3" placeholder="Deixe seu comentário..."></textarea>
-<button onclick="addComment()">Enviar</button>
-<div id="commentsList"></div>
+<p>Acesse para ver orçamentos e rotas</p>
+<button class="btn-google" onclick="login()">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="20" alt="Google">
+Entrar com Google
+</button>
 </div>
+</section>
+
+<header id="header-nav" style="display:none;">
+<div style="width:40px;"></div>
+<h2>Serralheria do Gil</h2>
+<button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+</header>
+
+<main id="main-content">
+<div class="container">
+<div class="links-list">
+<a href="https://wa.me/5541995008252?text=Olá,%20tudo%20bem?%20Gostaria%20de%20fazer%20um%20orçamento." class="link-item"><span><i class="fab fa-whatsapp" style="color:#25d366;"></i> WhatsApp</span><i class="fas fa-chevron-right icon-right"></i></a>
+<a href="https://instagram.com/serralheriadogil" class="link-item"><span><i class="fab fa-instagram" style="color:#e4405f;"></i> Instagram</span><i class="fas fa-chevron-right icon-right"></i></a>
+<a href="https://facebook.com/serralheriadogil" class="link-item"><span><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook</span><i class="fas fa-chevron-right icon-right"></i></a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=Curitiba+PR+Borda+do+Campo" class="link-item"><span><i class="fas fa-map-marker-alt" style="color:#ea4335;"></i> Ver Rota</span><i class="fas fa-chevron-right icon-right"></i></a>
+<a href="tel:+5541995008252" class="link-item"><span><i class="fas fa-phone" style="color:var(--gold);"></i> Ligar Agora</span><i class="fas fa-chevron-right icon-right"></i></a>
+<div class="link-item" style="cursor:pointer;" onclick="toggleComments()"><span><i class="fas fa-star" style="color:#ffcc00;"></i> Avaliações</span><i class="fas fa-chevron-down icon-right"></i></div>
 </div>
-<!-- WhatsApp flutuante -->
-<a href="https://wa.me/5541995008252?text=Ol%C3%A1,%20tudo%20bem%3F%20Gostaria%20de%20fazer%20um%20or%C3%A7amento." target="_blank" id="whatsappFloat">
-<i class="fab fa-whatsapp"></i>
-</a>
 
-<script>
-const topBar = document.getElementById("topBar");
-window.addEventListener("scroll",()=>{
-  if(window.scrollY>10) topBar.classList.add("scrolled");
-  else topBar.classList.remove("scrolled");
-});
-</script>
+<section id="comments-section">
+<div class="comment-input-area">
+<textarea id="comment-text" rows="3" placeholder="Escreva sua avaliação..."></textarea>
+<button class="btn-send" onclick="sendComment()">Enviar Comentário</button>
+</div>
+<div id="comments-display"></div>
+</section>
 
-<style>
-#whatsappFloat{
-  position:fixed; bottom:20px; right:20px; background:#d4af37;
-  color:#000; border-radius:50%; width:60px; height:60px;
-  display:flex; justify-content:center; align-items:center;
-  font-size:28px; cursor:pointer;
-  box-shadow:0 0 20px rgba(212,175,55,.6);
-  animation:pulse 2s infinite;
-  z-index:1000;
-}
-@keyframes pulse{
-  0%,100%{transform:scale(1); box-shadow:0 0 20px rgba(212,175,55,.6);}
-  50%{transform:scale(1.1); box-shadow:0 0 35px rgba(212,175,55,.9);}
-}
-</style>
+</div>
+</main>
 
-  <script type="module">
+<a href="https://wa.me/5541995008252?text=Olá,%20Gostaria%20de%20um%20atendimento." class="whatsapp-float" id="wa-float"><i class="fab fa-whatsapp"></i></a>
+
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
-// Firebase config
+// CONFIGURAÇÃO FIREBASE REAL
 const firebaseConfig = {
-  apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
-  authDomain: "serralheria-do-gil.firebaseapp.com",
-  projectId: "serralheria-do-gil",
-  storageBucket: "serralheria-do-gil.firebasestorage.app",
-  messagingSenderId: "267882427773",
-  appId: "1:267882427773:web:bf1689a6adda79f3334814"
+    apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
+    authDomain: "serralheria-do-gil.firebaseapp.com",
+    projectId: "serralheria-do-gil",
+    storageBucket: "serralheria-do-gil.firebasestorage.app",
+    messagingSenderId: "267882427773",
+    appId: "1:267882427773:web:bf1689a6adda79f3334814",
+    measurementId: "G-1Z6NCYH6CE"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -205,61 +140,68 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-// Login
-const loginBtn = document.getElementById("loginBtn");
-const loginOverlay = document.getElementById("loginOverlay");
-const mainContent = document.getElementById("mainContent");
+// LOGIN / LOGOUT
+function login(){signInWithPopup(auth, provider).catch(e=>alert(e.message));}
+function logout(){signOut(auth);}
 
-loginBtn.onclick = async () => {
-  try{
-    await signInWithPopup(auth, provider);
-    loginOverlay.style.display="none";
-    mainContent.style.display="block";
-    mainContent.style.opacity=1;
-  }catch(err){
-    alert("Erro no login: "+err.message);
-  }
-}
-
-// Comentários Firestore
-async function addComment(){
-  const text=document.getElementById("commentInput").value;
-  if(!text) return;
-  await addDoc(collection(db,"comments"),{text:text,date:Date.now()});
-  document.getElementById("commentInput").value="";
-  loadComments();
-}
-    async function loadComments(){
-  const q=query(collection(db,"comments"),orderBy("date","desc"));
-  const snapshot=await getDocs(q);
-  const list=document.getElementById("commentsList");
-  list.innerHTML="";
-  snapshot.forEach(doc=>{
-    const div=document.createElement("div");
-    div.className="comment";
-    div.innerText=doc.data().text;
-    list.appendChild(div);
-  });
-}
-
-function toggleComments(){
-  const section=document.getElementById("commentsSection");
-  section.style.display = section.style.display==="block"?"none":"block";
-}
-
-// Mantém login
-window.onload = () => {
-  auth.onAuthStateChanged(user=>{
+// CONTROLE DE ESTADO
+onAuthStateChanged(auth, user=>{
     if(user){
-      loginOverlay.style.display="none";
-      mainContent.style.display="block";
-      mainContent.style.opacity=1;
-      loadComments();
+        document.getElementById('login-screen').style.display='none';
+        document.getElementById('main-content').style.display='block';
+        document.getElementById('wa-float').style.display='flex';
+        document.getElementById('header-nav').style.display='flex';
+        animateButtons();
+        loadComments();
     }else{
-      loginOverlay.style.display="flex";
-      mainContent.style.display="none";
+        document.getElementById('login-screen').style.display='flex';
+        document.getElementById('main-content').style.display='none';
+        document.getElementById('wa-float').style.display='none';
+        document.getElementById('header-nav').style.display='none';
     }
-  });
+});
+
+// ANIMAÇÃO BOTÕES
+function animateButtons(){
+    const items = document.querySelectorAll('.link-item');
+    items.forEach((item,i)=>setTimeout(()=>item.classList.add('show-animate'), i*100));
+}
+
+// TOGGLE COMENTÁRIOS
+function toggleComments(){
+    const sec = document.getElementById('comments-section');
+    sec.style.display = sec.style.display==='block'?'none':'block';
+}
+
+// COMENTÁRIOS FIRESTORE
+async function sendComment(){
+    const text = document.getElementById('comment-text').value;
+    const user = auth.currentUser;
+    if(!text || !user) return;
+
+    await addDoc(collection(db,'comments'),{
+        name: user.displayName,
+        text: text,
+        timestamp: serverTimestamp()
+    });
+
+    document.getElementById('comment-text').value='';
+}
+
+function loadComments(){
+    const q = query(collection(db,'comments'), orderBy('timestamp','desc'));
+    onSnapshot(q, snapshot=>{
+        const container = document.getElementById('comments-display');
+        container.innerHTML='';
+        snapshot.forEach(doc=>{
+            const data = doc.data();
+            container.innerHTML+=`
+            <div class="comment-card">
+                <span>${data.name}</span>
+                <p>${data.text}</p>
+            </div>`;
+        });
+    });
 }
 </script>
 </body>
