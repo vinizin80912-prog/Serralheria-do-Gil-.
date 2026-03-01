@@ -10,54 +10,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        :root { --gold: #FFD700; --bg: #000; --card: #1a1a1a; }
+        :root { --gold: #FFD700; --bg: #000; }
         body { background: var(--bg) !important; color: #fff; text-align: center; font-family: sans-serif; margin: 0; }
 
-        /* Animações suaves apenas em CSS para segurança */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* Animação CSS que não trava a tela */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .reveal { animation: fadeInUp 0.4s ease forwards; }
 
         .btn-link {
             display: flex !important; align-items: center; justify-content: center;
             width: 90%; max-width: 400px; margin: 12px auto;
-            padding: 20px; border-radius: 12px; text-decoration: none;
-            font-weight: 900; font-size: 1.1rem; border: 3px solid #fff !important;
+            padding: 22px; border-radius: 12px; text-decoration: none;
+            font-weight: 900; font-size: 1.1rem; border: 4px solid #fff !important;
         }
         .ouro { background: var(--gold) !important; color: #000 !important; }
-        .social { background: var(--card) !important; color: #fff !important; }
+        .social { background: #1a1a1a !important; color: #fff !important; }
         .icon-btn { margin-right: 15px; font-size: 1.4rem; width: 30px; text-align: center; }
 
-        /* Estilo dos Comentários */
         .comment-card {
-            background: var(--card); border-left: 5px solid var(--gold);
-            width: 90%; max-width: 400px; margin: 10px auto;
-            padding: 15px; text-align: left; border-radius: 8px;
+            background: #1a1a1a; border-left: 5px solid var(--gold);
+            width: 85%; max-width: 400px; margin: 10px auto; padding: 15px;
+            text-align: left; border-radius: 8px; font-size: 0.9rem;
         }
-        .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 5px; }
 
         #login-overlay {
             position: fixed; inset: 0; background: #000; z-index: 9999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        h2 { color: var(--gold); margin: 35px 0 15px; text-transform: uppercase; font-size: 1.2rem; }
+        h2 { color: var(--gold); margin: 30px 0 10px; text-transform: uppercase; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
     <div id="login-overlay">
         <h1 style="color:var(--gold);">GIL SERRALHERIA</h1>
-        <button onclick="login()" style="padding:20px 40px; border-radius:10px; font-weight:bold; cursor:pointer;">
+        <button onclick="login()" style="padding:20px 40px; border-radius:10px; font-weight:bold; cursor:pointer; font-size:1.1rem;">
             ENTRAR COM GOOGLE
         </button>
     </div>
 
-    <div id="app" style="display:none; padding: 20px 0 60px;">
-        <h1 style="color:var(--gold);">GIL SERRALHERIA</h1>
+    <div id="app" style="display:none; padding-bottom: 50px;">
+        <h1 style="color:var(--gold); margin-top:20px;">GIL SERRALHERIA</h1>
 
-        <h2>Nossos Serviços</h2>
+        <h2>Orçamentos</h2>
         <div class="reveal">
             <a href="https://wa.me/5541995008252?text=Orcamento%20Geral" class="btn-link ouro">
                 <i class="fas fa-hammer icon-btn"></i> ORÇAMENTO GERAL
@@ -68,18 +63,18 @@
             <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Grade" class="btn-link ouro">
                 <i class="fas fa-shield-alt icon-btn"></i> GRADES E JANELAS
             </a>
-            <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Corrimão" class="btn-link ouro">
-                <i class="fas fa-grip-lines icon-btn"></i> CORRIMÃO E SACADAS
+            <a href="https://wa.me/5541995008252?text=Orcamento%20de%20Cobertura" class="btn-link ouro">
+                <i class="fas fa-tools icon-btn"></i> COBERTURAS
             </a>
         </div>
 
         <h2>O que dizem os clientes</h2>
         <div class="comment-card reveal">
-            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-            <p style="margin:0; font-size:0.9rem;"><strong>João Silva:</strong> "Trabalho impecável no meu portão!"</p>
+            <div style="color:var(--gold); margin-bottom:5px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p style="margin:0;"><strong>João Silva:</strong> "Trabalho excelente no portão!"</p>
         </div>
 
-        <a href="https://g.page/r/YOUR_GOOGLE_REVIEW_LINK/review" target="_blank" class="btn-link social reveal">
+        <a href="https://wa.me/5541995008252?text=Quero%20deixar%20um%20elogio" class="btn-link social reveal">
             <i class="fas fa-comment-dots icon-btn" style="color:var(--gold);"></i> DEIXAR AVALIAÇÃO
         </a>
 
@@ -90,6 +85,9 @@
             </a>
             <a href="https://www.instagram.com/serralheriadogil/" class="btn-link social">
                 <i class="fab fa-instagram icon-btn" style="color:#E1306C;"></i> INSTAGRAM
+            </a>
+            <a href="https://www.facebook.com/share/1BBUJxg1jk/?mibextid=wwXIfr" class="btn-link social">
+                <i class="fab fa-facebook-f icon-btn" style="color:#1877F2;"></i> FACEBOOK
             </a>
         </div>
     </div>
