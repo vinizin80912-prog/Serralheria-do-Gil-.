@@ -8,213 +8,108 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
-body{
-  margin:0;
-  padding:0;
-  font-family:'Poppins',sans-serif;
-  background:#0b0b0b;
-  color:#fff;
-  overflow-x:hidden;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif; background:#0b0b0b; color:#fff; overflow-x:hidden;}
 
-/* === Login overlay === */
+/* ===== Login overlay ===== */
 #loginOverlay{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:#0b0b0b;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(11,11,11,0.98);
+  display:flex; justify-content:center; align-items:center;
   z-index:9999;
 }
-
 .login-box{
   background:#111;
   border:2px solid #d4af37;
-  border-radius:18px;
-  padding:40px 30px;
+  border-radius:20px;
+  padding:50px 30px;
   text-align:center;
-  box-shadow:0 0 25px rgba(212,175,55,0.3);
+  box-shadow:0 0 40px rgba(212,175,55,0.4);
   animation:fadeIn 0.8s ease;
 }
-
-.login-box h1{
-  color:#d4af37;
-  margin-bottom:10px;
-}
-
-.login-box p{
-  color:#aaa;
-  margin-bottom:25px;
-}
-
+.login-box h1{color:#d4af37; margin-bottom:10px; font-size:28px;}
+.login-box p{color:#aaa; margin-bottom:25px;}
 .login-btn{
   background:linear-gradient(90deg,#d4af37,#a57c1b);
   color:#000;
   font-weight:bold;
   border:none;
-  border-radius:12px;
-  padding:14px 20px;
+  border-radius:14px;
+  padding:16px 24px;
   cursor:pointer;
   font-size:16px;
   transition:.3s;
 }
-
 .login-btn:hover{
   transform:scale(1.05);
-  box-shadow:0 0 15px rgba(212,175,55,.6);
+  box-shadow:0 0 20px rgba(212,175,55,.7);
 }
 
-/* === Conteúdo principal === */
+/* ===== Top bar fixa com scroll ===== */
+#topBar{
+  position:fixed;
+  top:0; left:0; width:100%;
+  background:#111;
+  border-bottom:2px solid #d4af37;
+  height:60px;
+  display:flex; align-items:center; justify-content:center;
+  z-index:998;
+  transition:.3s;
+  box-shadow:0 2px 15px rgba(0,0,0,.3);
+}
+#topBar.scrolled{box-shadow:0 5px 25px rgba(212,175,55,.4);}
+#topBar h2{color:#d4af37; font-size:20px; font-weight:700;}
+
+/* ===== Conteúdo principal ===== */
 #mainContent{
   max-width:420px;
-  margin:50px auto;
+  margin:100px auto 50px auto;
   text-align:center;
-  display:none; /* escondido até login */
+  display:none;
   opacity:0;
   animation:fadeIn 0.8s forwards;
 }
+h1{font-size:28px; color:#d4af37; margin-bottom:5px;}
+p.location{font-size:14px; opacity:.7; margin-bottom:25px;}
 
-h1{
-  font-size:28px;
-  color:#d4af37;
-  margin-bottom:5px;
-}
-
-p.location{
-  font-size:14px;
-  opacity:.7;
-  margin-bottom:25px;
-}
-
+/* ===== Botões cinematográficos ===== */
 .link-btn{
   display:flex;
   align-items:center;
   justify-content:center;
   gap:10px;
-  padding:14px;
-  margin:10px auto;
-  border-radius:12px;
+  padding:16px;
+  margin:12px auto;
+  border-radius:14px;
   width:100%;
   max-width:350px;
-  text-decoration:none;
   font-weight:600;
-  transition:.4s;
+  text-decoration:none;
+  transition:.5s;
   cursor:pointer;
-  border:none;
   opacity:0;
-  transform:translateY(20px);
-  animation:fadeUp 0.5s forwards;
+  transform:translateY(30px);
+  animation:fadeUp 0.6s forwards;
 }
-
-.link-btn:nth-child(1){animation-delay:.1s}
-.link-btn:nth-child(2){animation-delay:.2s}
-.link-btn:nth-child(3){animation-delay:.3s}
-.link-btn:nth-child(4){animation-delay:.4s}
-.link-btn:nth-child(5){animation-delay:.5s}
-.link-btn:nth-child(6){animation-delay:.6s}
-
-@keyframes fadeUp{
-  to{opacity:1; transform:translateY(0);}
-}
-
-.social{
-  background:#1a1a1a;
-  border:1px solid #d4af37;
-  color:#d4af37;
-}
-
-.social:hover{
-  background:#d4af37;
-  color:#000;
-  box-shadow:0 0 15px rgba(212,175,55,.4);
+.link-btn:nth-child(1){animation-delay:.1s;}
+.link-btn:nth-child(2){animation-delay:.2s;}
+.link-btn:nth-child(3){animation-delay:.3s;}
+.link-btn:nth-child(4){animation-delay:.4s;}
+.link-btn:nth-child(5){animation-delay:.5s;}
+.link-btn:nth-child(6){animation-delay:.6s;}
+.link-btn.social{background:#1a1a1a; border:1px solid #d4af37; color:#d4af37;}
+.link-btn.social:hover{
+  background:#d4af37; color:#000;
+  box-shadow:0 0 20px rgba(212,175,55,.5);
   transform:scale(1.05);
 }
-
-.whatsapp{
-  background:#d4af37;
-  color:#000;
-}
-
-/* === Comentários === */
-.comment-box{
-  margin-top:25px;
-  text-align:left;
-  display:none;
-  animation:fadeIn 0.5s forwards;
-}
-
-.comment-box textarea{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-  resize:none;
-  margin-bottom:10px;
-}
-
-.comment-box button{
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  background:#d4af37;
-  color:#000;
-  font-weight:bold;
-  cursor:pointer;
-  transition:.3s;
-}
-
-.comment-box button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 10px rgba(212,175,55,.6);
-}
-
-.comment{
-  background:#1a1a1a;
-  padding:10px;
-  border-radius:8px;
-  margin-top:10px;
-  color:#fff;
-  animation:fadeIn 0.5s forwards;
-}
-
-@keyframes fadeIn{
-  from{opacity:0}
-  to{opacity:1}
-}
-
-/* === WhatsApp flutuante === */
-#whatsappFloat{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#d4af37;
-  color:#000;
-  border-radius:50%;
-  width:60px;
-  height:60px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:28px;
-  cursor:pointer;
-  box-shadow:0 0 15px rgba(212,175,55,.5);
-  transition:.3s;
-}
-
-#whatsappFloat:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 25px rgba(212,175,55,.8);
-}
+.link-btn.whatsapp{background:#d4af37; color:#000;}
+@keyframes fadeUp{to{opacity:1; transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1;}}
 </style>
 </head>
 <body>
-
-<!-- Login Overlay -->
+  <!-- Login Overlay -->
 <div id="loginOverlay">
   <div class="login-box">
     <h1>Serralheria do Gil</h1>
@@ -222,6 +117,9 @@ p.location{
     <button id="loginBtn" class="login-btn"><i class="fab fa-google"></i> Entrar com Google</button>
   </div>
 </div>
+
+<!-- Top bar fixa -->
+<div id="topBar"><h2>Serralheria do Gil</h2></div>
 
 <!-- Conteúdo principal -->
 <div id="mainContent">
@@ -258,13 +156,36 @@ p.location{
 <div id="commentsList"></div>
 </div>
 </div>
-
 <!-- WhatsApp flutuante -->
 <a href="https://wa.me/5541995008252?text=Ol%C3%A1,%20tudo%20bem%3F%20Gostaria%20de%20fazer%20um%20or%C3%A7amento." target="_blank" id="whatsappFloat">
 <i class="fab fa-whatsapp"></i>
 </a>
 
-<script type="module">
+<script>
+const topBar = document.getElementById("topBar");
+window.addEventListener("scroll",()=>{
+  if(window.scrollY>10) topBar.classList.add("scrolled");
+  else topBar.classList.remove("scrolled");
+});
+</script>
+
+<style>
+#whatsappFloat{
+  position:fixed; bottom:20px; right:20px; background:#d4af37;
+  color:#000; border-radius:50%; width:60px; height:60px;
+  display:flex; justify-content:center; align-items:center;
+  font-size:28px; cursor:pointer;
+  box-shadow:0 0 20px rgba(212,175,55,.6);
+  animation:pulse 2s infinite;
+  z-index:1000;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1); box-shadow:0 0 20px rgba(212,175,55,.6);}
+  50%{transform:scale(1.1); box-shadow:0 0 35px rgba(212,175,55,.9);}
+}
+</style>
+
+  <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
@@ -300,7 +221,7 @@ loginBtn.onclick = async () => {
   }
 }
 
-// Comentários
+// Comentários Firestore
 async function addComment(){
   const text=document.getElementById("commentInput").value;
   if(!text) return;
@@ -308,8 +229,7 @@ async function addComment(){
   document.getElementById("commentInput").value="";
   loadComments();
 }
-
-async function loadComments(){
+    async function loadComments(){
   const q=query(collection(db,"comments"),orderBy("date","desc"));
   const snapshot=await getDocs(q);
   const list=document.getElementById("commentsList");
@@ -327,7 +247,7 @@ function toggleComments(){
   section.style.display = section.style.display==="block"?"none":"block";
 }
 
-// Carrega comentários quando a página abrir
+// Mantém login
 window.onload = () => {
   auth.onAuthStateChanged(user=>{
     if(user){
