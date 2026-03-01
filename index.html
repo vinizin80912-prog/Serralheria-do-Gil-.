@@ -3,368 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serralheria do Gil - Premium</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Serralheria do Gil | Premium</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://unpkg.com/scrollreveal"></script>
 
     <style>
-        /* RESET E BASE */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
+        :root {
+            --gold-gradient: linear-gradient(135deg, #FFD700 0%, #B8860B 50%, #FFD700 100%);
+            --black-abs: #050505;
+            --dark-card: #0c0c0c;
         }
 
         body {
-            background-color: #000000; /* Preto Absoluto */
-            color: #ffffff;
-            overflow-x: hidden;
+            background-color: var(--black-abs);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
         }
 
-        /* UTILITÁRIOS */
-        .container {
-            width: 90%;
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-            padding-bottom: 50px;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* TELA DE LOGIN */
-        #login-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .main-container {
             width: 100%;
-            height: 100vh;
-            background-color: #000000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
+            max-width: 450px;
             padding: 20px;
+            text-align: center;
         }
 
-        .logo-area {
-            margin-bottom: 40px;
+        /* HEADER PREMIUM */
+        header {
+            padding: 40px 0;
         }
 
-        .logo-area h1 {
-            font-size: 2.5rem;
-            color: #FFD700;
+        .logo-shield {
+            font-size: 50px;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        }
+
+        h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 3px;
+            margin-top: 15px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
-        /* ESTILOS DE BOTÕES - HIERARQUIA */
-        
-        /* Botão Principal (Ouro) */
+        /* BOTÃO DE OURO (AGRESSIVO) */
         .btn-gold {
-            background-color: #FFD700;
-            color: #000000; /* Texto preto para leitura */
-            width: 90%;
-            padding: 18px;
-            margin: 10px auto;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 800;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            background: var(--gold-gradient);
+            color: #000;
+            text-decoration: none;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn-gold:active {
-            transform: scale(0.98);
-        }
-
-        /* Botão Secundário (Redes Sociais - Alto Contraste) */
-        .btn-sec {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            width: 90%;
-            padding: 15px;
-            margin: 10px auto;
-            border: 4px solid #ffffff; /* Borda Branca Sólida 4px */
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        /* Botão Terciário (Links menores) */
-        .btn-small {
-            background: transparent;
-            border: 1px solid #FFD700;
-            color: #FFD700;
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            margin-top: 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        /* ÁREA DE AVALIAÇÕES */
-        .reviews-section {
-            margin-top: 40px;
-            border-top: 1px solid #333;
-            padding-top: 20px;
-        }
-
-        .review-card {
-            background: #111;
-            border: 1px solid #333;
-            padding: 15px;
-            border-radius: 10px;
+            justify-content: space-between;
+            padding: 20px 25px;
             margin-bottom: 15px;
-            text-align: left;
+            border-radius: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 2px 2px rgba(255,255,255,0.5);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            position: relative;
+            overflow: hidden;
         }
 
-        .stars {
-            color: #FFD700;
-            margin-bottom: 5px;
+        .btn-gold::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
         }
 
-        .review-text {
-            font-style: italic;
-            font-size: 0.9rem;
-            color: #ccc;
-        }
-        
-        .client-name {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #FFD700;
-        }
+        .btn-gold:hover::after { left: 100%; }
 
-        /* FOOTER */
-        footer {
-            margin-top: 40px;
-            color: #555;
-            font-size: 0.8rem;
+        /* BOTÃO SOCIAL (BORDA BRANCA AGRESSIVA) */
+        .btn-social {
+            background: var(--dark-card);
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 18px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            border: 4px solid #ffffff; /* A regra de ouro para acessibilidade */
+            font-weight: 700;
+            transition: 0.3s;
         }
-    </style>
-</head>
+        </head>
 <body>
-        <div id="login-screen">
-        <div class="logo-area">
-            <i class="fas fa-hammer fa-3x" style="color: #FFD700; margin-bottom: 15px;"></i>
-            <h1>Serralheria<br>do Gil</h1>
-        </div>
-        
-        <p style="color: #ccc; margin-bottom: 30px;">Qualidade e Segurança em Aço</p>
-        
-        <button id="btnLogin" class="btn-gold" style="max-width: 300px;">
-            <i class="fab fa-google"></i> Acessar Orçamentos
-        </button>
-        
-        <button id="btnBypass" class="btn-small" style="margin-top: 20px; border-color: #333; color: #555;">
-            Entrar sem Login (Modo Teste)
-        </button>
-    </div>
-
-    <div id="app-content" class="container hidden">
-        
-        <header style="padding: 30px 0;">
-            <i class="fas fa-shield-alt fa-2x" style="color: #FFD700;"></i>
-            <h2 style="margin-top: 10px;">Serralheria do Gil</h2>
-            <p style="font-size: 0.9rem; color: #888;">Curitiba e São José dos Pinhais</p>
-            <a href="https://maps.google.com/?q=Serralheria+do+Gil+Curitiba" target="_blank" class="btn-small">
-                <i class="fas fa-map-marker-alt"></i> Ver no Mapa
+    <div class="main-container">
+        <header>
+            <div class="logo-shield"><i class="fas fa-shield-halved"></i></div>
+            <h1>Serralheria do Gil</h1>
+            <p style="color: #666; font-weight: 700; font-size: 0.8rem;">CURITIBA & SÃO JOSÉ DOS PINHAIS</p>
+            <a href="https://maps.app.goo.gl/link" class="maps-tag">
+                <i class="fas fa-location-dot"></i> VER NO MAPA
             </a>
         </header>
 
-        <div class="gsap-item">
-            <h3 style="color: #fff; margin-bottom: 15px; border-bottom: 2px solid #FFD700; display: inline-block;">SOLICITAR ORÇAMENTO</h3>
+        <section id="orcamentos">
+            <h2 class="section-title">SOLICITAR ORÇAMENTO</h2>
             
-            <a href="https://wa.me/5541995008252?text=Olá,%20gostaria%20de%20um%20orçamento%20geral." class="btn-gold pulse-effect">
-                <i class="fab fa-whatsapp"></i> Orçamento Geral
+            <a href="https://wa.me/5541995008252" class="btn-gold pulse">
+                <span><i class="fab fa-whatsapp"></i> ORÇAMENTO GERAL</span>
+                <i class="fas fa-chevron-right"></i>
             </a>
 
-            <a href="https://wa.me/5541995008252?text=Olá,%20tenho%20interesse%20em%20Portão%20Eletrônico." class="btn-gold">
-                <i class="fas fa-door-open"></i> Portão Eletrônico
+            <a href="https://wa.me/5541995008252" class="btn-gold">
+                <span><i class="fas fa-gate"></i> PORTÃO ELETRÔNICO</span>
+                <i class="fas fa-chevron-right"></i>
             </a>
 
-            <a href="https://wa.me/5541995008252?text=Olá,%20preciso%20de%20Grades%20e%20Janelas." class="btn-gold">
-                <i class="fas fa-border-all"></i> Grades e Janelas
+            <a href="https://wa.me/5541995008252" class="btn-gold">
+                <span><i class="fas fa-border-all"></i> GRADES E JANELAS</span>
+                <i class="fas fa-chevron-right"></i>
             </a>
 
-            <a href="https://wa.me/5541995008252?text=Olá,%20quero%20um%20orçamento%20para%20Corrimão%20ou%20Sacada." class="btn-gold">
-                <i class="fas fa-stairs"></i> Corrimão e Sacadas
+            <a href="https://wa.me/5541995008252" class="btn-gold">
+                <span><i class="fas fa-stairs"></i> CORRIMÃO E SACADAS</span>
+                <i class="fas fa-chevron-right"></i>
             </a>
 
-            <a href="https://wa.me/5541995008252?text=Olá,%20gostaria%20de%20saber%20sobre%20Coberturas%20Metálicas." class="btn-gold">
-                <i class="fas fa-warehouse"></i> Coberturas Metálicas
+            <a href="https://wa.me/5541995008252" class="btn-gold">
+                <span><i class="fas fa-warehouse"></i> COBERTURAS METÁLICAS</span>
+                <i class="fas fa-chevron-right"></i>
             </a>
-        </div>
+        </section>
 
-        <div class="gsap-item" style="margin-top: 40px;">
-            <h3 style="color: #fff; margin-bottom: 15px;">ACOMPANHE NOSSA OBRA</h3>
+        <section style="margin-top: 40px;">
+            <h2 class="section-title">ACOMPANHE NOSSA OBRA</h2>
             
-            <a href="https://instagram.com/serralheriadogil" target="_blank" class="btn-sec">
-                <i class="fab fa-instagram"></i> Instagram
+            <a href="https://instagram.com/serralheriadogil" class="btn-social">
+                <i class="fab fa-instagram"></i> Instagram Oficial
             </a>
-            
-            <a href="https://facebook.com" target="_blank" class="btn-sec">
-                <i class="fab fa-facebook-f"></i> Facebook
-            </a>
-            
-            <a href="mailto:gil.serralheria@gmail.com" class="btn-sec">
-                <i class="fas fa-envelope"></i> Enviar E-mail
-            </a>
-        </div>
 
-        <div class="reviews-section gsap-item">
-            <h3 style="color: #FFD700; margin-bottom: 20px;">O QUE DIZEM NOSSOS CLIENTES</h3>
-            
-            <div class="review-card">
-                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <p class="review-text">"Trabalho impecável. O portão ficou perfeito e a instalação foi super rápida."</p>
-                <span class="client-name">- Ricardo S.</span>
+            <a href="https://facebook.com" class="btn-social">
+                <i class="fab fa-facebook-f"></i> Página Facebook
+            </a>
+
+            <a href="mailto:gil.serralheria@gmail.com" class="btn-social">
+                <i class="fas fa-envelope"></i> gil.serralheria@gmail.com
+            </a>
+        </section>
+                <div style="margin-top: 50px; background: #111; padding: 20px; border-radius: 20px; border: 1px solid #222;">
+            <div style="color: #FFD700; margin-bottom: 10px;">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
             </div>
-
-            <div class="review-card">
-                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <p class="review-text">"Atendimento excelente em SJP. Recomendo muito o Gil."</p>
-                <span class="client-name">- Ana Paula M.</span>
-            </div>
-
-            <button class="btn-small" style="margin-top: 10px;">
-                <i class="fas fa-pencil-alt"></i> DEIXAR AVALIAÇÃO
-            </button>
+            <p style="font-style: italic; color: #aaa; font-size: 0.9rem;">"O melhor acabamento de Curitiba. Trabalho de mestre!"</p>
+            <p style="font-weight: 700; margin-top: 10px; font-size: 0.8rem;">- CLIENTE SATISFEITO</p>
         </div>
 
-        <footer>
-            <p>&copy; 2024 Serralheria do Gil.</p>
-            <p>Desenvolvido com Alta Performance.</p>
+        <footer style="margin: 50px 0; color: #444; font-size: 0.7rem; letter-spacing: 2px;">
+            © 2026 SERRALHERIA DO GIL | QUALIDADE ABSOLUTA
         </footer>
     </div>
-        <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Configuração Firebase (Suas Chaves)
-        const firebaseConfig = {
-            apiKey: "AIzaSyC3S-rA3fIDUlT5jKZXsFOB-6OQyuj6y68",
-            authDomain: "serralheria-do-gil.firebaseapp.com",
-            projectId: "serralheria-do-gil",
-            storageBucket: "serralheria-do-gil.appspot.com",
-            messagingSenderId: "267882427773",
-            appId: "1:267882427773:web:bf1689a6adda79f3334814"
-        };
-
-        // Inicializar Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        // Elementos do DOM
-        const loginScreen = document.getElementById('login-screen');
-        const appContent = document.getElementById('app-content');
-        const btnLogin = document.getElementById('btnLogin');
-        const btnBypass = document.getElementById('btnBypass');
-
-        // Função de Animação de Entrada (GSAP)
-        function startAppAnimations() {
-            // Troca Instantânea de Display
-            loginScreen.classList.add('hidden');
-            appContent.classList.remove('hidden');
-
-            // Animação de Cascata nos Elementos
-            gsap.from("#app-content header", {
-                duration: 1,
-                y: -50,
-                opacity: 0,
-                ease: "power4.out"
-            });
-
-            gsap.from(".btn-gold", {
-                duration: 0.8,
-                y: 50,
-                opacity: 0,
-                stagger: 0.1, // Um após o outro
-                ease: "power4.out",
-                delay: 0.2
-            });
-
-            gsap.from(".btn-sec", {
-                duration: 0.8,
-                x: -50,
-                opacity: 0,
-                stagger: 0.1,
-                ease: "power4.out",
-                delay: 0.6
-            });
-            
-            gsap.from(".review-card", {
-                duration: 1,
-                scale: 0.8,
-                opacity: 0,
-                stagger: 0.2,
-                ease: "elastic.out(1, 0.7)",
-                delay: 1
-            });
+    <style>
+        .section-title {
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            color: #555;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+        
+        .maps-tag {
+            display: inline-block;
+            padding: 8px 15px;
+            border: 1px solid #FFD700;
+            color: #FFD700;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-top: 10px;
         }
 
-        // Lógica de Login
-        btnLogin.addEventListener('click', () => {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    console.log("Login Sucesso:", result.user);
-                    startAppAnimations();
-                }).catch((error) => {
-                    console.error("Erro Login:", error);
-                    alert("Erro ao logar. Verifique o console ou use o botão de teste.");
-                });
+        .pulse {
+            animation: pulse-gold 2s infinite;
+        }
+
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+    </style>
+
+    <script>
+        // Animação de entrada fluida
+        gsap.from(".btn-gold", {
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            stagger: 0.1,
+            ease: "power4.out",
+            delay: 0.5
         });
 
-        // Modo Teste (Caso Firebase não esteja configurado no domínio local)
-        btnBypass.addEventListener('click', () => {
-            startAppAnimations();
+        gsap.from(".btn-social", {
+            duration: 1,
+            x: -30,
+            opacity: 0,
+            stagger: 0.1,
+            ease: "power4.out",
+            delay: 1
         });
 
-        // Efeito "Pulse" contínuo no botão principal
-        gsap.to(".pulse-effect", {
-            scale: 1.05,
-            boxShadow: "0 0 25px rgba(255, 215, 0, 0.6)",
-            duration: 0.8,
-            yoyo: true,
-            repeat: -1,
-            ease: "sine.inOut"
+        gsap.from("header", {
+            duration: 1.5,
+            opacity: 0,
+            y: -20,
+            ease: "expo.out"
         });
-
-        // ScrollReveal para elementos conforme rola a página
-        ScrollReveal().reveal('.reviews-section', { 
-            delay: 300, 
-            distance: '50px', 
-            origin: 'bottom',
-            easing: 'ease-in-out'
-        });
-
     </script>
 </body>
 </html>
+
+
+        .btn-social i { margin-right: 15px; font-size: 1.3rem; }
+        
